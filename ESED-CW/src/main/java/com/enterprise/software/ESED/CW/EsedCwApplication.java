@@ -10,6 +10,4 @@ public class EsedCwApplication {
 		SpringApplication.run(EsedCwApplication.class, args);
 	}
 
-
-
 }

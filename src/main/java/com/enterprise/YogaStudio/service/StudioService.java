@@ -1,8 +1,5 @@
 package com.enterprise.YogaStudio.service;
 
-import com.enterprise.YogaStudio.model.Manager;
-import com.enterprise.YogaStudio.model.Studio;
-import com.enterprise.YogaStudio.model.UpdateStudioDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

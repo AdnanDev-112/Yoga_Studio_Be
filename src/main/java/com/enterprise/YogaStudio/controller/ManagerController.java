@@ -1,6 +1,5 @@
 package com.enterprise.YogaStudio.controller;
 
-import com.enterprise.YogaStudio.model.Manager;
 import com.enterprise.YogaStudio.service.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

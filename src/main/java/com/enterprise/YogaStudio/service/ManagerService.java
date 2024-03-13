@@ -1,6 +1,5 @@
 package com.enterprise.YogaStudio.service;
 
-import com.enterprise.YogaStudio.model.Manager;
 import org.springframework.stereotype.Service;
 
 @Service

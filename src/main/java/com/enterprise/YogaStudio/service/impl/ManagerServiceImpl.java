@@ -1,16 +1,11 @@
 package com.enterprise.YogaStudio.service.impl;
 
-import com.enterprise.YogaStudio.model.Manager;
-import com.enterprise.YogaStudio.model.Studio;
 import com.enterprise.YogaStudio.repository.ManagerRepository;
-import com.enterprise.YogaStudio.repository.StudioRepository;
 import com.enterprise.YogaStudio.service.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.List;
 
 @Service
 public class ManagerServiceImpl implements ManagerService {

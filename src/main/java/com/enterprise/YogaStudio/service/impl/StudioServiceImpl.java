@@ -1,8 +1,5 @@
 package com.enterprise.YogaStudio.service.impl;
 
-import com.enterprise.YogaStudio.model.Manager;
-import com.enterprise.YogaStudio.model.Studio;
-import com.enterprise.YogaStudio.model.UpdateStudioDetails;
 import com.enterprise.YogaStudio.repository.ManagerRepository;
 import com.enterprise.YogaStudio.repository.StudioRepository;
 import com.enterprise.YogaStudio.service.StudioService;
@@ -12,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
-import java.util.Optional;
 
 
 @Service

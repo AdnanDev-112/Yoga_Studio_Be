@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 @Getter
 @Setter
 @Entity
@@ -15,7 +18,21 @@ public class Booking {
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "activity_id", nullable = false)
-    private Activity activity;
+    @JoinColumn(name = "client_id", nullable = false)
+    private Client client;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "yoga_session_id", nullable = false)
+    private YogaSession yogaSession;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "retreat_id", nullable = false)
+    private YogaRetreat retreat;
+
+    @OneToMany(mappedBy = "booking")
+    private Set<Discount> discounts = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "booking")
+    private Set<Schedule> schedules = new LinkedHashSet<>();
 
 }

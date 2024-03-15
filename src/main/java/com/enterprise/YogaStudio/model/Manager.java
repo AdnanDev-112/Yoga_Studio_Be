@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 @Getter
 @Setter
 @Entity
@@ -29,5 +32,14 @@ public class Manager {
     @Lob
     @Column(name = "manager_type", nullable = false)
     private String managerType;
+
+    @OneToMany(mappedBy = "manager")
+    private Set<Studio> studios = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "manager")
+    private Set<WaitingList> waitingLists = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "manager")
+    private Set<YogaSession> yogaSessions = new LinkedHashSet<>();
 
 }

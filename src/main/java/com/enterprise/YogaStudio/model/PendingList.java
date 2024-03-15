@@ -20,8 +20,8 @@ public class PendingList {
     private LocalDate bookedTime;
 
     @Lob
-    @Column(name = "type", nullable = false)
-    private String type;
+    @Column(name = "category_type", nullable = false)
+    private String categoryType;
 
     @Column(name = "category_id", nullable = false)
     private Integer categoryId;

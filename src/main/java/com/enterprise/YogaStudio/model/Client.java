@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -33,5 +35,21 @@ public class Client {
 
     @Column(name = "client_discount_status", nullable = false)
     private Boolean clientDiscountStatus = false;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "studio_id", nullable = false)
+    private Studio studio;
+
+    @OneToMany(mappedBy = "client")
+    private Set<Booking> bookings = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "client")
+    private Set<PendingList> pendingLists = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "client")
+    private Set<Reservation> reservations = new LinkedHashSet<>();
+
+    @OneToMany(mappedBy = "client")
+    private Set<WaitingList> waitingLists = new LinkedHashSet<>();
 
 }

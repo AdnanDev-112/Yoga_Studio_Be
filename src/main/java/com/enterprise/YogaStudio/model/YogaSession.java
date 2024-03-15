@@ -57,13 +57,13 @@ public class YogaSession {
     @JoinColumn(name = "studio_id", nullable = false)
     private Studio studio;
 
-    @OneToMany(mappedBy = "yogaSession")
+    @OneToMany(mappedBy = "yogaSession", cascade = CascadeType.ALL)
     private Set<Booking> bookings = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "yogaSession")
+    @OneToMany(mappedBy = "yogaSession", cascade = CascadeType.ALL)
     private Set<Reservation> reservations = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "yogaSession")
+    @OneToMany(mappedBy = "yogaSession", cascade = CascadeType.ALL)
     private Set<YogaRetreat> yogaRetreats = new LinkedHashSet<>();
 
 }

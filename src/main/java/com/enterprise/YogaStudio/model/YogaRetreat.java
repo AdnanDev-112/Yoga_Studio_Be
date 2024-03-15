@@ -39,10 +39,10 @@ public class YogaRetreat {
     @JoinColumn(name = "yoga_session_id", nullable = false)
     private YogaSession yogaSession;
 
-    @OneToMany(mappedBy = "retreat")
+    @OneToMany(mappedBy = "retreat", cascade = CascadeType.ALL)
     private Set<Booking> bookings = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "retreat")
+    @OneToMany(mappedBy = "retreat", cascade = CascadeType.ALL)
     private Set<Reservation> reservations = new LinkedHashSet<>();
 
 }

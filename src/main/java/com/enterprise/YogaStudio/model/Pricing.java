@@ -14,11 +14,11 @@ public class Pricing {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "pricing_id", nullable = false)
-    private Integer id;
+    private Integer pricingid;
 
     @Lob
     @Column(name = "type", nullable = false)
-    private String type;
+    private String pricingtype;
 
     @Lob
     @Column(name = "level", nullable = false)

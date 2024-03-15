@@ -1,5 +1,6 @@
 package com.enterprise.YogaStudio.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,7 +18,7 @@ public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "course_id", nullable = false)
-    private Integer id;
+    private Integer courseid;
 
     @Column(name = "course_name", nullable = false, length = 150)
     private String courseName;
@@ -36,9 +37,10 @@ public class Course {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "studio_id", nullable = false)
+    @JsonIgnore
     private Studio studio;
 
-    @OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course" , cascade = CascadeType.ALL)
     private Set<Reservation> reservations = new LinkedHashSet<>();
 
 }

@@ -29,14 +29,16 @@ public class YogaRetreat {
     private String meal;
 
     @Lob
-    @Column(name = "ancillary_activity", nullable = false)
-    private String ancillaryActivity;
+    @Column(name = "activity_type", nullable = false)
+    private String activityType;
 
     @Column(name = "date")
     private LocalDate date;
 
-    @Column(name = "price", nullable = false, precision = 13, scale = 2)
-    private BigDecimal price;
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "pricing_id", nullable = false)
+    private Pricing price;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

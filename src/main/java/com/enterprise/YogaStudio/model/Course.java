@@ -43,4 +43,9 @@ public class Course {
     @OneToMany(mappedBy = "course" , cascade = CascadeType.ALL)
     private Set<Reservation> reservations = new LinkedHashSet<>();
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "pricing_id", nullable = false)
+    @JsonIgnore
+    private Pricing pricing;
+
 }

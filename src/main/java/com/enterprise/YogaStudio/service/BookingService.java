@@ -12,4 +12,5 @@ public interface BookingService {
     List<Booking> getAllBooking();
 
     List<Booking> getBookingsByClientId(Integer clientId);
+
 }

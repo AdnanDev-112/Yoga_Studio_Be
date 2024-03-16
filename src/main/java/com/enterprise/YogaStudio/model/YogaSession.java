@@ -33,9 +33,6 @@ public class YogaSession {
     @Column(name = "max_capacity", nullable = false)
     private Integer maxCapacity;
 
-    @Column(name = "price", nullable = false, precision = 13, scale = 2)
-    private BigDecimal price;
-
     @Column(name = "start_date")
     private LocalDate startDate;
 
@@ -52,6 +49,10 @@ public class YogaSession {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "instructor_id", nullable = false)
     private Instructor instructor;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "pricing_id", nullable = false)
+    private Pricing price;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

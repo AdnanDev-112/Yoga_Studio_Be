@@ -21,9 +21,11 @@ public class Booking {
     @Column(name = "booking_id", nullable = false)
     private Integer bookingid;
 
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "client_id", nullable = false)
     private Client client;
+
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "yoga_session_id", nullable = false)
@@ -33,11 +35,11 @@ public class Booking {
     @JoinColumn(name = "retreat_id", nullable = false)
     private YogaRetreat retreat;
 
-    @JsonIgnore
+
     @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL)
     private Set<Discount> discounts = new LinkedHashSet<>();
 
-    @JsonIgnore
+
     @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL)
     private Set<Schedule> schedules = new LinkedHashSet<>();
 

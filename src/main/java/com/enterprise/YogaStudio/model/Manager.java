@@ -1,16 +1,15 @@
 package com.enterprise.YogaStudio.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
-
 @Getter
 @Setter
 @Entity
-@Table(name = "MANAGER")
+@Table(name = "manager")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Manager {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,14 +31,5 @@ public class Manager {
     @Lob
     @Column(name = "manager_type", nullable = false)
     private String managerType;
-
-    @OneToMany(mappedBy = "manager")
-    private Set<Studio> studios = new LinkedHashSet<>();
-
-    @OneToMany(mappedBy = "manager")
-    private Set<WaitingList> waitingLists = new LinkedHashSet<>();
-
-    @OneToMany(mappedBy = "manager")
-    private Set<YogaSession> yogaSessions = new LinkedHashSet<>();
 
 }

@@ -6,15 +6,12 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "YOGA_RETREAT")
+@Table(name = "yoga_retreat")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class YogaRetreat {
     @Id
@@ -38,7 +35,7 @@ public class YogaRetreat {
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "pricing_id", nullable = false)
-    private Pricing price;
+    private Pricing pricing;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -46,11 +43,8 @@ public class YogaRetreat {
     private YogaSession yogaSession;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "retreat", cascade = CascadeType.ALL)
-    private Set<Booking> bookings = new LinkedHashSet<>();
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "retreat", cascade = CascadeType.ALL)
-    private Set<Reservation> reservations = new LinkedHashSet<>();
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "instructor_id", nullable = false)
+    private Instructor instructor;
 
 }

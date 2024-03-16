@@ -5,13 +5,10 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
-
 @Getter
 @Setter
 @Entity
-@Table(name = "INSTRUCTOR")
+@Table(name = "instructor")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Instructor {
     @Id
@@ -24,8 +21,5 @@ public class Instructor {
 
     @Column(name = "telnum", nullable = false, length = 16)
     private String telnum;
-
-    @OneToMany(mappedBy = "instructor")
-    private Set<YogaSession> yogaSessions = new LinkedHashSet<>();
 
 }

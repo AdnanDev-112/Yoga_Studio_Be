@@ -7,19 +7,17 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "CLIENT")
+@Table(name = "client")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "client_id", nullable = false)
-    private Integer clientid;
+    private Integer id;
 
     @Column(name = "client_name", nullable = false, length = 150)
     private String clientName;
@@ -43,21 +41,5 @@ public class Client {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "studio_id", nullable = false)
     private Studio studio;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
-    private Set<Booking> bookings = new LinkedHashSet<>();
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
-    private Set<PendingList> pendingLists = new LinkedHashSet<>();
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
-    private Set<Reservation> reservations = new LinkedHashSet<>();
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
-    private Set<WaitingList> waitingLists = new LinkedHashSet<>();
 
 }

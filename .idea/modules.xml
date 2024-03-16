@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/ESED CW.iml" filepath="$PROJECT_DIR$/.idea/ESED CW.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/YogaStudio.main.iml" filepath="$PROJECT_DIR$/.idea/modules/YogaStudio.main.iml" />
     </modules>
   </component>
 </project>

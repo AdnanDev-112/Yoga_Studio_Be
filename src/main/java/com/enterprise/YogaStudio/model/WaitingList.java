@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Entity
-@Table(name = "WAITING_LIST")
+@Table(name = "waiting_list")
 public class WaitingList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,9 +23,6 @@ public class WaitingList {
     @Column(name = "category_type", nullable = false)
     private String categoryType;
 
-    @Column(name = "category_id", nullable = false)
-    private Integer categoryId;
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "client_id", nullable = false)
     private Client client;
@@ -33,5 +30,17 @@ public class WaitingList {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "manager_id", nullable = false)
     private Manager manager;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "pending_id", nullable = false)
+    private PendingList pending;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "booking_id", nullable = false)
+    private Booking booking;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "yoga_session_id", nullable = false)
+    private YogaSession yogaSession;
 
 }

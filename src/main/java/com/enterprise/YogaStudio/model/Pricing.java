@@ -9,16 +9,16 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @Entity
-@Table(name = "PRICING")
+@Table(name = "pricing")
 public class Pricing {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "pricing_id", nullable = false)
-    private Integer pricingid;
+    private Integer id;
 
     @Lob
     @Column(name = "type", nullable = false)
-    private String pricingtype;
+    private String type;
 
     @Lob
     @Column(name = "level", nullable = false)

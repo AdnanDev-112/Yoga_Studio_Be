@@ -7,19 +7,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "RESERVATION")
+@Table(name = "reservation")
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "reservation_id", nullable = false)
     private Integer id;
-
-    @Lob
-    @Column(name = "category_type", nullable = false)
-    private String categoryType;
-
-    @Column(name = "category_id", nullable = false)
-    private Integer categoryId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "client_id", nullable = false)
@@ -36,5 +29,9 @@ public class Reservation {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "retreat_id", nullable = false)
     private YogaRetreat retreat;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "pending_id", nullable = false)
+    private PendingList pending;
 
 }

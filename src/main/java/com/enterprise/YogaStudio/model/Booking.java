@@ -3,6 +3,7 @@ package com.enterprise.YogaStudio.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +14,7 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "BOOKING")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,21 +23,21 @@ public class Booking {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "client_id", nullable = false)
-    @JsonIgnoreProperties
     private Client client;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "yoga_session_id", nullable = false)
-    @JsonIgnoreProperties
     private YogaSession yogaSession;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "retreat_id", nullable = false)
     private YogaRetreat retreat;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL)
     private Set<Discount> discounts = new LinkedHashSet<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL)
     private Set<Schedule> schedules = new LinkedHashSet<>();
 

@@ -19,12 +19,9 @@ public class BookingController {
     private BookingService bookingService;
 
     @GetMapping("/getbookingdetails")
-    public ResponseEntity<List<BookingDTO>> getAllBooking() {
-        List<BookingDTO> dtos = bookingService.getAllBooking();
-        return ResponseEntity.ok(dtos);
-    }
-//    public List<Booking> getBookingDetails(){
-//        return bookingService.getBookingDetails();
-//    }
+    public ResponseEntity<List<Booking>> getBookingByClient() {
+    List<Booking> bookings = bookingService.getBookingsByClientId(1);
+    return ResponseEntity.ok(bookings);
+}
 
 }

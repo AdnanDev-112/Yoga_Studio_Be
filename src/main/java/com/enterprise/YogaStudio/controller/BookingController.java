@@ -1,5 +1,7 @@
 package com.enterprise.YogaStudio.controller;
 
+import com.enterprise.YogaStudio.dto.BookingDTO;
+import com.enterprise.YogaStudio.dto.CourseDTO;
 import com.enterprise.YogaStudio.model.Booking;
 import com.enterprise.YogaStudio.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +19,9 @@ public class BookingController {
     private BookingService bookingService;
 
     @GetMapping("/getbookingdetails")
-    public List<Booking> getBookingDetails(){
-        return bookingService.getBookingDetails();
-    }
+    public ResponseEntity<List<Booking>> getBookingByClient() {
+    List<Booking> bookings = bookingService.getBookingsByClientId(1);
+    return ResponseEntity.ok(bookings);
+}
 
 }

@@ -1,5 +1,6 @@
 package com.enterprise.YogaStudio.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -25,6 +26,8 @@ public class Instructor {
     @Column(name = "telnum", nullable = false, length = 16)
     private String telnum;
 
+
+    @JsonIgnore
     @OneToMany(mappedBy = "instructor")
     private Set<YogaSession> yogaSessions = new LinkedHashSet<>();
 

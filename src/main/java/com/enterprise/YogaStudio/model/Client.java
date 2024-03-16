@@ -1,5 +1,7 @@
 package com.enterprise.YogaStudio.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,6 +12,7 @@ import java.time.LocalDate;
 @Setter
 @Entity
 @Table(name = "client")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,6 +37,7 @@ public class Client {
     @Column(name = "client_discount_status", nullable = false)
     private Boolean clientDiscountStatus = false;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "studio_id", nullable = false)
     private Studio studio;

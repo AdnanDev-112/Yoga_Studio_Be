@@ -1,5 +1,6 @@
 package com.enterprise.YogaStudio.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,6 +9,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "instructor")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Instructor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

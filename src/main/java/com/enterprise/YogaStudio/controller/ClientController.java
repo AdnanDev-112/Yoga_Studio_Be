@@ -1,8 +1,10 @@
 package com.enterprise.YogaStudio.controller;
 
 import com.enterprise.YogaStudio.model.Client;
+import com.enterprise.YogaStudio.model.Instructor;
 import com.enterprise.YogaStudio.model.Studio;
 import com.enterprise.YogaStudio.service.ClientService;
+import com.enterprise.YogaStudio.service.InstructorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

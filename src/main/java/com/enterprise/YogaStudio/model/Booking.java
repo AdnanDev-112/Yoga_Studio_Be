@@ -3,12 +3,8 @@ package com.enterprise.YogaStudio.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -19,7 +15,7 @@ public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "booking_id", nullable = false)
-    private Integer id;
+    private Integer bookingid;
 
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -27,13 +23,27 @@ public class Booking {
     private Client client;
 
 
+    @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "yoga_session_id", nullable = false)
+    private YogaSession yogaSession;
+
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "schedule_id", nullable = false)
-    private Schedule schedule;
+    @JoinColumn(name = "retreat_id", nullable = false)
+    private YogaRetreat retreat;
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "discount_id", nullable = true)
-    private Discount discountId;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "course_id", nullable = false)
+    private Course course;
+
+    @Lob
+    @Column(name = "category_type", nullable = false)
+    private String categoryType;
+
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "discount_id", nullable = false)
+    private Discount discount;
 
 }

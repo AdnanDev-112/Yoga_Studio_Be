@@ -5,6 +5,7 @@ import com.enterprise.YogaStudio.repository.ClientRepository;
 import com.enterprise.YogaStudio.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service

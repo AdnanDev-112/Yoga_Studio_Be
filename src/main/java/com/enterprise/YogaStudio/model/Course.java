@@ -45,4 +45,5 @@ public class Course {
     @JoinColumn(name = "pricing_id", nullable = false)
     private Pricing pricing;
 
+
 }

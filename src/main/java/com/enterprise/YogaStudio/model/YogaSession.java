@@ -46,7 +46,7 @@ public class YogaSession {
     @Column(name = "recurring", nullable = false)
     private Boolean recurring = false;
 
-    @JsonIgnore
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "instructor_id", nullable = false)
     private Instructor instructor;

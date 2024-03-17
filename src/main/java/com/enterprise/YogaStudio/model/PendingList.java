@@ -19,6 +19,7 @@ public class PendingList {
     @Column(name = "pending_id", nullable = false)
     private Integer id;
 
+
     @Column(name = "booked_time")
     private LocalDate bookedTime;
 

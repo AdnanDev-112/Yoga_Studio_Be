@@ -16,24 +16,24 @@ public class YogaRetreatController {
     @Autowired
     private YogaRetreatService yogaRetreatService;
 
-    @GetMapping
+    @GetMapping("/getyogaretreatlist")
     public List<YogaRetreat> getAllYogaRetreats() {
         return yogaRetreatService.getAllYogaRetreats();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/getyogaretreat/{id}")
     public ResponseEntity<YogaRetreat> getYogaRetreatById(@PathVariable Integer id) {
         YogaRetreat yogaRetreat = yogaRetreatService.getYogaRetreatById(id);
         return yogaRetreat != null ? ResponseEntity.ok(yogaRetreat) : ResponseEntity.notFound().build();
     }
 
-    @PostMapping
+    @PostMapping("/addyogaretreat")
     public ResponseEntity<Void> addYogaRetreat(@RequestBody YogaRetreat yogaRetreat) {
         yogaRetreatService.addYogaRetreat(yogaRetreat);
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/updateyogaretreat/{id}")
     public ResponseEntity<Void> updateYogaRetreat(@PathVariable Integer id, @RequestBody YogaRetreat yogaRetreatDetails) {
         if (yogaRetreatService.updateYogaRetreat(id, yogaRetreatDetails) != null) {
             return ResponseEntity.ok().build();
@@ -41,7 +41,7 @@ public class YogaRetreatController {
         return ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/deleteyogaretreat/{id}")
     public ResponseEntity<Void> deleteYogaRetreat(@PathVariable Integer id) {
         yogaRetreatService.deleteYogaRetreat(id);
         return ResponseEntity.noContent().build();

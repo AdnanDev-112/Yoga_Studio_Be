@@ -13,4 +13,8 @@ public interface BookingService {
     List<Booking> getBookingsByClientId(Integer clientId);
 
     List<Booking> getAllBookings();
+
+    void deleteBooking(Integer id);
+
+    List<BookingDTO> getBookingDetails(Integer clientId);
 }

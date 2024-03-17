@@ -29,17 +29,12 @@ public class Schedule {
     @Column(name = "end_time")
     private LocalTime endTime;
 
-    @JsonIgnore
+
     @Lob
     @Column(name = "category_type", nullable = false)
     private String categoryType;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "booking_id", nullable = false)
-    private Booking booking;
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "yoga_session_id", nullable = false)
     private YogaSession yogaSession;

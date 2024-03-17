@@ -19,8 +19,8 @@ public class BookingController {
     private BookingService bookingService;
 
     @GetMapping("/getbookingdetails")
-    public ResponseEntity<List<Booking>> getBookingsByClientId(Integer clientId) {
-    List<Booking> bookings = bookingService.getBookingsByClientId(clientId);
+    public ResponseEntity<List<BookingDTO>> getBookingDetails(Integer id) {
+    List<BookingDTO> bookings = bookingService.getBookingDetails(id);
     return ResponseEntity.ok(bookings);
 }
 
@@ -29,6 +29,12 @@ public class BookingController {
     public ResponseEntity<List<Booking>> getAllBookings() {
         List<Booking> bookings = bookingService.getAllBookings();
         return ResponseEntity.ok(bookings);
+    }
+
+    @DeleteMapping("/deletebooking/{id}")
+    public ResponseEntity<Void> deleteBooking(@PathVariable Integer id) {
+        bookingService.deleteBooking(id);
+        return ResponseEntity.noContent().build();
     }
 
 }

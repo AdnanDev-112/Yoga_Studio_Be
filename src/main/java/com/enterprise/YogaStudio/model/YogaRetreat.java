@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.math.BigDecimal;
+
 
 @Getter
 @Setter
@@ -46,5 +48,12 @@ public class YogaRetreat {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "instructor_id", nullable = false)
     private Instructor instructor;
+
+    // Additional fields for JSON representation
+    @Transient
+    private String instructorName;
+
+    @Transient
+    private BigDecimal pricingAmount;
 
 }

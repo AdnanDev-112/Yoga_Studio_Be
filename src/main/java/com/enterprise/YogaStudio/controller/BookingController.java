@@ -20,14 +20,15 @@ public class BookingController {
 
     @GetMapping("/getbookingdetails")
     public ResponseEntity<List<Booking>> getBookingsByClientId(Integer clientId) {
-    List<Booking> bookings = bookingService.getBookingsByClientId(2);
+    List<Booking> bookings = bookingService.getBookingsByClientId(clientId);
     return ResponseEntity.ok(bookings);
 }
 
 
-    @GetMapping("/getstudiodetails")
-    public List<Booking> getAllBooking(){
-        return bookingService.getAllBooking();
+    @GetMapping("/getallbooking")
+    public ResponseEntity<List<Booking>> getAllBookings() {
+        List<Booking> bookings = bookingService.getAllBookings();
+        return ResponseEntity.ok(bookings);
     }
 
 }

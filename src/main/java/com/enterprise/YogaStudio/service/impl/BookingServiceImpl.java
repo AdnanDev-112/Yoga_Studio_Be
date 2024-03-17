@@ -13,10 +13,7 @@ public class BookingServiceImpl implements BookingService {
     @Autowired
     private BookingRepository bookingRepository;
 
-    @Override
-    public List<Booking> getAllBooking() {
-        return bookingRepository.findAll();
-    }
+
 
     @Override
     public List<Booking> getBookingsByClientId(Integer clientId) {
@@ -24,7 +21,10 @@ public class BookingServiceImpl implements BookingService {
         return bookingRepository.findByClientId(2);
     }
 
-
+    @Override
+    public List<Booking> getAllBookings() {
+        return bookingRepository.findAll();
+    }
 
 
 //    Another method Beliw is to only set the required DTO fields and return but then

@@ -45,9 +45,5 @@ public class Course {
     @JoinColumn(name = "pricing_id", nullable = false)
     private Pricing pricing;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "pricing_id", nullable = false)
-    @JsonIgnore
-    private Pricing pricing;
 
 }

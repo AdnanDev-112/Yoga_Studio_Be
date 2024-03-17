@@ -1,12 +1,16 @@
 package com.enterprise.YogaStudio.service.impl;
+import com.enterprise.YogaStudio.dto.BookingDTO;
 import com.enterprise.YogaStudio.model.Booking;
+import com.enterprise.YogaStudio.model.YogaSession;
 import com.enterprise.YogaStudio.repository.BookingRepository;
 import com.enterprise.YogaStudio.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BookingServiceImpl implements BookingService {
@@ -26,25 +30,34 @@ public class BookingServiceImpl implements BookingService {
         return bookingRepository.findAll();
     }
 
+    @Override
+    public void deleteBooking(Integer id) {
+        bookingRepository.deleteById(id);
+    }
 
-//    Another method Beliw is to only set the required DTO fields and return but then
-//    You would have to make so many specific use cases DTO? SO better use the above one
-//    with the custom Query in the Repository
-//    @Override
-//public List<BookingDTO> getAllBooking() {
-//    List<Booking> allBookings = bookingRepository.findAll();
-//    List<BookingDTO> newDto = new ArrayList<>();
-//
-//    for(Booking oneBooking : allBookings){
-//        BookingDTO dto = new BookingDTO();
-//        dto.setBookingid(oneBooking.getBookingid());
-//        dto.setClientId(oneBooking.getClient().getClientid());
-//        dto.setClientName(oneBooking.getClient().getClientName());
-//        dto.setYogaSessionId(oneBooking.getYogaSession().getId());
-//        dto.setActivityType(oneBooking.getYogaSession().getActivityType());
-//        dto.setLevel(oneBooking.getYogaSession().getLevel());
-//        newDto.add(dto);
-//    }
-//    return newDto;
-//}
+    public List<BookingDTO> getBookingDetails(Integer id) {
+        List<Booking> bookings = bookingRepository.findAll();
+
+       return bookings.stream().map(booking -> {
+               BookingDTO bookingDTO = new BookingDTO();
+               bookingDTO.setCategoryType(booking.getSchedule().getCategoryType());
+               bookingDTO.setStartTime(booking.getSchedule().getStartTime());
+
+           if (booking.getSchedule().getYogaSession() != null) {
+               YogaSession yogaSession = booking.getSchedule().getYogaSession();
+               bookingDTO.setLevel(yogaSession.getLevel());
+               bookingDTO.setInstructorName(yogaSession.getInstructor().getInstructorName());
+               bookingDTO.setDuration(yogaSession.getDuration());
+
+               // Check if Pricing is not null before accessing it
+               if (yogaSession.getPricing() != null) {
+                   bookingDTO.setAmount(yogaSession.getPricing().getAmount());
+               }
+           }
+           return bookingDTO;
+       }).collect(Collectors.toList());
+
+
+    }
+
 }

@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Getter
@@ -22,7 +21,7 @@ public class BookingDTO {
     private String categoryType;
     private String level;
     private BigDecimal amount;
-    private LocalDate startDate;
+    private LocalTime startTime;
     private String instructorName;
     private Integer duration;
 }

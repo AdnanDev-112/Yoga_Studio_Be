@@ -1,6 +1,5 @@
 package com.enterprise.YogaStudio.model;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
@@ -36,17 +35,16 @@ public class Schedule {
     private String categoryType;
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "yoga_session_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "yoga_session_id", nullable = false)
     private YogaSession yogaSession;
 
-
-
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;
 
-
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "retreat_id", nullable = false)
     private YogaRetreat retreat;

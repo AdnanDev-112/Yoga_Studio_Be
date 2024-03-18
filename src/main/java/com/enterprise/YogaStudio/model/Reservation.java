@@ -13,34 +13,31 @@ import lombok.Setter;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Reservation {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "reservation_id", nullable = false)
     private Integer id;
 
-    @Lob
-    @Column(name = "category_type", nullable = false)
-    private String categoryType;
-
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "client_id", nullable = false)
     private Client client;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "course_id")
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "course_id", nullable = false)
     private Course course;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "yoga_session_id")
-    private YogaSession yogaSession;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "retreat_id")
-    private YogaRetreat retreat;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "schedule_id", nullable = false)
-    private Schedule schedule;
+    @JoinColumn(name = "yoga_session_id", nullable = false)
+    private YogaSession yogaSession;
 
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "retreat_id", nullable = false)
+    private YogaRetreat retreat;
+
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "pending_id", nullable = false)
     private PendingList pending;

@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @Entity
@@ -28,13 +30,15 @@ public class YogaSession {
     @Column(name = "max_capacity", nullable = false)
     private Integer maxCapacity;
 
-    @Column(name = "session_name", nullable = false)
-    private String sessionName;
-
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "pricing_id", nullable = false)
     private Pricing pricing;
+
+    @Column(name = "start_date")
+    private LocalDate startDate;
+
+    @Column(name = "end_date")
+    private LocalDate endDate;
 
     @Column(name = "duration")
     private Integer duration;
@@ -47,7 +51,10 @@ public class YogaSession {
     @JoinColumn(name = "instructor_id", nullable = false)
     private Instructor instructor;
 
-
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "manager_id", nullable = false)
+    private Manager manager;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

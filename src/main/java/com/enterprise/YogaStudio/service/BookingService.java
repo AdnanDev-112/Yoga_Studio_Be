@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public interface BookingService {
 
-    List<Booking> getBookingsByClientId(Integer clientId);
+   // List<Booking> getBookingsByClientId(Integer clientId);
 
     List<Booking> getAllBookings();
 

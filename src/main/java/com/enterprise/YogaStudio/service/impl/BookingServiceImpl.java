@@ -19,11 +19,11 @@ public class BookingServiceImpl implements BookingService {
 
 
 
-    @Override
-    public List<Booking> getBookingsByClientId(Integer clientId) {
-
-        return bookingRepository.findByClientId(2);
-    }
+//    @Override
+//    public List<Booking> getBookingsByClientId(Integer clientId) {
+//
+//        return bookingRepository.findByClientId(2);
+//    }
 
     @Override
     public List<Booking> getAllBookings() {
@@ -36,12 +36,12 @@ public class BookingServiceImpl implements BookingService {
     }
 
     public List<BookingDTO> getBookingDetails(Integer id) {
-        List<Booking> bookings = bookingRepository.findAll();
+        List<Booking> bookings = bookingRepository.findByClientId(id);
 
        return bookings.stream().map(booking -> {
                BookingDTO bookingDTO = new BookingDTO();
                bookingDTO.setCategoryType(booking.getSchedule().getCategoryType());
-               bookingDTO.setStartTime(booking.getSchedule().getStartTime());
+               bookingDTO.setStartDate(booking.getSchedule().getDate());
 
            if (booking.getSchedule().getYogaSession() != null) {
                YogaSession yogaSession = booking.getSchedule().getYogaSession();

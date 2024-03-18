@@ -1,7 +1,6 @@
 package com.enterprise.YogaStudio.controller;
 
 import com.enterprise.YogaStudio.dto.BookingDTO;
-import com.enterprise.YogaStudio.dto.CourseDTO;
 import com.enterprise.YogaStudio.model.Booking;
 import com.enterprise.YogaStudio.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +17,8 @@ public class BookingController {
     @Autowired
     private BookingService bookingService;
 
-    @GetMapping("/getbookingdetails")
-    public ResponseEntity<List<BookingDTO>> getBookingDetails(Integer id) {
+    @GetMapping("/getbookingdetails/{id}")
+    public ResponseEntity<List<BookingDTO>> getBookingDetails(@PathVariable Integer id) {
     List<BookingDTO> bookings = bookingService.getBookingDetails(id);
     return ResponseEntity.ok(bookings);
 }

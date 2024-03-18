@@ -20,6 +20,11 @@ public class BookingController {
     @Autowired
     private BookingService bookingService;
 
+    @GetMapping("/getbookingdetails")
+    public ResponseEntity<List<Booking>> getBookingByClient() {
+        List<Booking> bookings = bookingService.getBookingsByClientId(1);
+        return ResponseEntity.ok(bookings);
+    }
     @GetMapping("/getbookingdetails/{id}")
     public ResponseEntity<List<BookingDTO>> getBookingDetails(@PathVariable Integer id) {
     List<BookingDTO> bookings = bookingService.getBookingDetails(id);

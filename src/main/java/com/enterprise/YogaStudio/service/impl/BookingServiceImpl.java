@@ -1,8 +1,17 @@
 package com.enterprise.YogaStudio.service.impl;
+<<<<<<<<< Temporary merge branch 1
+import com.enterprise.YogaStudio.dto.BookingDTO;
+import com.enterprise.YogaStudio.model.Booking;
+import com.enterprise.YogaStudio.model.YogaSession;
+=========
 
 import com.enterprise.YogaStudio.dto.AddBookingDTO;
 import com.enterprise.YogaStudio.dto.BookingDTO;
 import com.enterprise.YogaStudio.model.*;
+import com.enterprise.YogaStudio.model.Booking;
+import com.enterprise.YogaStudio.model.Client;
+import com.enterprise.YogaStudio.model.Discount;
+import com.enterprise.YogaStudio.model.Schedule;
 import com.enterprise.YogaStudio.repository.BookingRepository;
 import com.enterprise.YogaStudio.service.BookingService;
 import com.enterprise.YogaStudio.service.ClientService;
@@ -21,6 +30,15 @@ public class BookingServiceImpl implements BookingService {
     @Autowired
     private BookingRepository bookingRepository;
 
+<<<<<<<<< Temporary merge branch 1
+
+
+//    @Override
+//    public List<Booking> getBookingsByClientId(Integer clientId) {
+//
+//        return bookingRepository.findByClientId(2);
+//    }
+=========
     @Autowired
     private DiscountCalculationService discountCalculationService;
 
@@ -58,7 +76,11 @@ public class BookingServiceImpl implements BookingService {
                 bookingDTO.setLevel(yogaSession.getLevel());
                 bookingDTO.setInstructorName(yogaSession.getInstructor().getInstructorName());
                 bookingDTO.setDuration(yogaSession.getDuration());
+    @Override
+    public List<Booking> getBookingsByClientId(Integer clientId) {
 
+        return bookingRepository.findByClientId(2);
+    }
                 // Check if Pricing is not null before accessing it
                 if (yogaSession.getPricing() != null) {
                     bookingDTO.setAmount(yogaSession.getPricing().getAmount());
@@ -68,6 +90,13 @@ public class BookingServiceImpl implements BookingService {
         }).collect(Collectors.toList());
     }
 
+    @Override
+    public Booking addBooking(AddBookingDTO bookingData) {
+        Booking booking = new Booking();
+        Client client = clientService.getClientById(bookingData.getClientId());
+        Schedule schedule = new Schedule();
+        // Setters on Objects
+        schedule.setId(bookingData.getScheduleId());
         @Override
         public Booking addBooking (AddBookingDTO bookingData){
             Booking booking = new Booking();
@@ -91,6 +120,9 @@ public class BookingServiceImpl implements BookingService {
             // Save the booking
             return bookingRepository.save(booking);
         }
+        // Save the booking
+        return bookingRepository.save(booking);
+    }
 
 //    @Override
 //    public void addSchedule(ScheduleRequest request) {

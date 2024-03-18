@@ -3,19 +3,14 @@ package com.enterprise.YogaStudio.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.antlr.v4.runtime.misc.NotNull;
 
 import java.time.LocalDate;
 
 @Getter
 @Setter
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "client")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Client {
@@ -43,8 +38,8 @@ public class Client {
     private Boolean clientDiscountStatus = false;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinColumn(name = "studio_id", nullable = true)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "studio_id", nullable = false)
     private Studio studio;
 
 }

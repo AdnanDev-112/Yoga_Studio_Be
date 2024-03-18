@@ -23,4 +23,20 @@ public class ScheduleController {
     return ResponseEntity.ok(schedules);
     }
 
+
+    @GetMapping("/getschedulebycategorytype")
+    public ResponseEntity<List<Schedule>> getScheduleByCategoryType(@RequestParam String categoryType) {
+
+        List<Schedule> schedules = scheduleService.getScheduleByCategoryType(categoryType);
+
+
+        return ResponseEntity.ok(schedules);
+    }
+
+
+    @PostMapping("/addnewscheduleentry")
+    public Schedule addNewScheduleEntry(@RequestBody Schedule newEntry) {
+        return scheduleService.addNewScheduleEntry(newEntry);
+    }
+
 }

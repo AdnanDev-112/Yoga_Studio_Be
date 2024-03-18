@@ -12,4 +12,8 @@ public interface ScheduleService {
 
 
     public List<Schedule> getBookingsByCategoryType(String categoryType, String clientID);
+
+    List<Schedule> getScheduleByCategoryType(String categoryType);
+
+    Schedule addNewScheduleEntry(Schedule newEntry);
 }

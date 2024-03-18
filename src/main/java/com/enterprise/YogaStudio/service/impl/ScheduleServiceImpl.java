@@ -77,5 +77,17 @@ public class ScheduleServiceImpl implements ScheduleService {
         return scheduleList;
     }
 
-}
+    @Override
+    public List<Schedule> getScheduleByCategoryType(String categoryType) {
+        List<Schedule> scheduleList =  scheduleRepository.findByCategoryType(categoryType);
+        return scheduleList;
+    }
+
+    @Override
+    public Schedule addNewScheduleEntry(Schedule newEntry) {
+       return scheduleRepository.save(newEntry);
+    }
+    }
+
+
 

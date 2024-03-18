@@ -1,8 +1,5 @@
 package com.enterprise.YogaStudio.dto;
 
-import com.enterprise.YogaStudio.model.Client;
-import com.enterprise.YogaStudio.model.Pricing;
-import com.enterprise.YogaStudio.model.YogaSession;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,13 +12,16 @@ import java.time.LocalTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BookingDTO {
-
-
+public class ScheduleDTO {
     private String categoryType;
     private String level;
     private BigDecimal amount;
     private LocalTime startTime;
     private String instructorName;
     private Integer duration;
+    private Integer maxCapacity;
+    private Boolean recurring;
+    private String managerName;
+    private String address;
+
 }

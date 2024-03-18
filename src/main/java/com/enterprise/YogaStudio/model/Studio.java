@@ -6,13 +6,10 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
-
 @Getter
 @Setter
 @Entity
-@Table(name = "STUDIO")
+@Table(name = "studio")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Studio {
     @Id
@@ -26,21 +23,9 @@ public class Studio {
     @Column(name = "telnum", nullable = false, length = 16)
     private String telnum;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "manager_id", nullable = false)
     private Manager manager;
-
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "studio")
-    private Set<Client> clients = new LinkedHashSet<>();
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "studio")
-    private Set<Course> courses = new LinkedHashSet<>();
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "studio")
-    private Set<YogaSession> yogaSessions = new LinkedHashSet<>();
 
 }

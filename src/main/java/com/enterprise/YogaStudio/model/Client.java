@@ -3,23 +3,26 @@ package com.enterprise.YogaStudio.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.antlr.v4.runtime.misc.NotNull;
 
 import java.time.LocalDate;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "CLIENT")
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "client")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "client_id", nullable = false)
-    private Integer clientid;
+    private Integer id;
 
     @Column(name = "client_name", nullable = false, length = 150)
     private String clientName;
@@ -40,24 +43,8 @@ public class Client {
     private Boolean clientDiscountStatus = false;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "studio_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "studio_id", nullable = true)
     private Studio studio;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
-    private Set<Booking> bookings = new LinkedHashSet<>();
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
-    private Set<PendingList> pendingLists = new LinkedHashSet<>();
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
-    private Set<Reservation> reservations = new LinkedHashSet<>();
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
-    private Set<WaitingList> waitingLists = new LinkedHashSet<>();
 
 }

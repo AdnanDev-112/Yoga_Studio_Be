@@ -3,17 +3,13 @@ package com.enterprise.YogaStudio.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "BOOKING")
+@Table(name = "booking")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Booking {
     @Id
@@ -21,24 +17,17 @@ public class Booking {
     @Column(name = "booking_id", nullable = false)
     private Integer bookingid;
 
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "client_id", nullable = false)
     private Client client;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "yoga_session_id", nullable = false)
-    private YogaSession yogaSession;
+    @JoinColumn(name = "schedule_id", nullable = false)
+ private Schedule schedule;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "retreat_id", nullable = false)
-    private YogaRetreat retreat;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL)
-    private Set<Discount> discounts = new LinkedHashSet<>();
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL)
-    private Set<Schedule> schedules = new LinkedHashSet<>();
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "discount_id", nullable = false)
+    private Discount discount;
 
 }

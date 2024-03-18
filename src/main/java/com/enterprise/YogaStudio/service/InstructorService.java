@@ -1,5 +1,6 @@
 package com.enterprise.YogaStudio.service;
 
+import com.enterprise.YogaStudio.model.Client;
 import com.enterprise.YogaStudio.model.Instructor;
 import org.springframework.stereotype.Service;
 
@@ -15,4 +16,5 @@ public interface InstructorService {
     Instructor updateInstructor(Integer id, Instructor instructorDetails);
 
     void deleteInstructor(Integer id);
+
 }

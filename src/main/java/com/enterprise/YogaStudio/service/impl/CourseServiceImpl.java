@@ -34,7 +34,7 @@ public class CourseServiceImpl implements CourseService {
 
     public CourseDTO convertToDTO(Course course) {
         CourseDTO dto = new CourseDTO();
-        dto.setCourseId(course.getCourseid());
+        dto.setCourseId(course.getId());
         dto.setCourseName(course.getCourseName());
         dto.setStudio(convertToStudioDTO(course.getStudio()));
         // Set other fields similarly

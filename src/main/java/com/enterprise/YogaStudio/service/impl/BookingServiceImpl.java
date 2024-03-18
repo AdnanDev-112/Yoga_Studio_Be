@@ -40,11 +40,11 @@ public class BookingServiceImpl implements BookingService {
     private ClientService clientService;
 
 
-//    @Override
-//    public List<Booking> getBookingsByClientId(Integer clientId) {
-//
-//        return bookingRepository.findByClientId(2);
-//    }
+    @Override
+    public List<Booking> getBookingsByClientId(Integer clientId) {
+
+        return bookingRepository.findByClientId(2);
+    }
 
 
 
@@ -76,40 +76,35 @@ public class BookingServiceImpl implements BookingService {
         }).collect(Collectors.toList());
     }
 
-//
-//    @Override
-//    public Booking addBooking(AddBookingDTO bookingData) {
-//        Booking booking = new Booking();
-//        Client client = clientService.getClientById(bookingData.getClientId());
-//        Schedule schedule = new Schedule();
-//        // Setters on Objects
-//        schedule.setId(bookingData.getScheduleId());
-//        @Override
-//        public Booking addBooking (AddBookingDTO bookingData){
-//            Booking booking = new Booking();
-//            Client client = clientService.getClientById(bookingData.getClientId());
-//            Schedule schedule = new Schedule();
-//            // Setters on Objects
-//            schedule.setId(bookingData.getScheduleId());
-//
-////        Processing
-//            if (bookingData.getCategory_type().equals("course")) {
-//                int clientAge = discountCalculationService.calculateAge(client.getDob());
-//                List<Discount> discounts = discountService.getDiscountList();
-//                Discount applicableDiscount = discountCalculationService.getApplicableDiscount(clientAge, discounts);
-//                booking.setDiscountId(applicableDiscount);
-//            }
-//
-//            // Setters on Booking
-//            booking.setClient(client);
-//            booking.setSchedule(schedule);
-//
-//            // Save the booking
-//            return bookingRepository.save(booking);
-//        }
-//        // Save the booking
-//        return bookingRepository.save(booking);
-//    }
+
+
+    @Override
+    public Booking addBooking(AddBookingDTO bookingData) {
+        Booking booking = new Booking();
+        Client client = clientService.getClientById(bookingData.getClientId());
+        Schedule schedule = new Schedule();
+        // Setters on Objects
+        schedule.setId(bookingData.getScheduleId());
+
+
+//        Processing
+            if (bookingData.getCategory_type().equals("course")) {
+                int clientAge = discountCalculationService.calculateAge(client.getDob());
+                List<Discount> discounts = discountService.getDiscountList();
+                Discount applicableDiscount = discountCalculationService.getApplicableDiscount(clientAge, discounts);
+                booking.setDiscountId(applicableDiscount);
+            }
+
+            // Setters on Booking
+            booking.setClient(client);
+            booking.setSchedule(schedule);
+
+            // Save the booking
+            return bookingRepository.save(booking);
+        }
+
+    }
+
 
 //    @Override
 //    public void addSchedule(ScheduleRequest request) {
@@ -125,8 +120,3 @@ public class BookingServiceImpl implements BookingService {
 //    }
 
 
-    @Override
-    public List<Booking> getBookingsByClientId(Integer clientId) {
-        return null;
-    }
-}

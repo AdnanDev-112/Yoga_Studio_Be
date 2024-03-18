@@ -1,5 +1,6 @@
 package com.enterprise.YogaStudio.controller;
 
+import com.enterprise.YogaStudio.dto.AddBookingDTO;
 import com.enterprise.YogaStudio.dto.BookingDTO;
 import com.enterprise.YogaStudio.dto.CourseDTO;
 import com.enterprise.YogaStudio.model.Booking;
@@ -20,8 +21,14 @@ public class BookingController {
 
     @GetMapping("/getbookingdetails")
     public ResponseEntity<List<Booking>> getBookingByClient() {
-    List<Booking> bookings = bookingService.getBookingsByClientId(1);
-    return ResponseEntity.ok(bookings);
-}
+        List<Booking> bookings = bookingService.getBookingsByClientId(1);
+        return ResponseEntity.ok(bookings);
+    }
 
+    @PostMapping("/addbooking")
+    public ResponseEntity<Booking> addBooking(@RequestBody AddBookingDTO bookingData) {
+       Booking newBooking =  bookingService.addBooking(bookingData);
+        return ResponseEntity.ok().build();
+
+    }
 }

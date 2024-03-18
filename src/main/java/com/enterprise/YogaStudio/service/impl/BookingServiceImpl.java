@@ -1,7 +1,15 @@
 package com.enterprise.YogaStudio.service.impl;
+
+import com.enterprise.YogaStudio.dto.AddBookingDTO;
 import com.enterprise.YogaStudio.model.Booking;
+import com.enterprise.YogaStudio.model.Client;
+import com.enterprise.YogaStudio.model.Discount;
+import com.enterprise.YogaStudio.model.Schedule;
 import com.enterprise.YogaStudio.repository.BookingRepository;
 import com.enterprise.YogaStudio.service.BookingService;
+import com.enterprise.YogaStudio.service.ClientService;
+import com.enterprise.YogaStudio.service.DiscountCalculationService;
+import com.enterprise.YogaStudio.service.DiscountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +20,15 @@ import java.util.List;
 public class BookingServiceImpl implements BookingService {
     @Autowired
     private BookingRepository bookingRepository;
+
+    @Autowired
+    private DiscountCalculationService discountCalculationService;
+
+    @Autowired
+    private DiscountService discountService;
+
+    @Autowired
+    private ClientService clientService;
 
     @Override
     public List<Booking> getAllBooking() {
@@ -24,25 +41,28 @@ public class BookingServiceImpl implements BookingService {
         return bookingRepository.findByClientId(2);
     }
 
+    @Override
+    public Booking addBooking(AddBookingDTO bookingData) {
+        Booking booking = new Booking();
+        Client client = clientService.getClientById(bookingData.getClientId());
+        Schedule schedule = new Schedule();
+        // Setters on Objects
+        schedule.setId(bookingData.getScheduleId());
 
-//    Another method Beliw is to only set the required DTO fields and return but then
-//    You would have to make so many specific use cases DTO? SO better use the above one
-//    with the custom Query in the Repository
-//    @Override
-//public List<BookingDTO> getAllBooking() {
-//    List<Booking> allBookings = bookingRepository.findAll();
-//    List<BookingDTO> newDto = new ArrayList<>();
-//
-//    for(Booking oneBooking : allBookings){
-//        BookingDTO dto = new BookingDTO();
-//        dto.setBookingid(oneBooking.getBookingid());
-//        dto.setClientId(oneBooking.getClient().getClientid());
-//        dto.setClientName(oneBooking.getClient().getClientName());
-//        dto.setYogaSessionId(oneBooking.getYogaSession().getId());
-//        dto.setActivityType(oneBooking.getYogaSession().getActivityType());
-//        dto.setLevel(oneBooking.getYogaSession().getLevel());
-//        newDto.add(dto);
-//    }
-//    return newDto;
-//}
+//        Processing
+        if (bookingData.getCategory_type().equals("course")) {
+            int clientAge = discountCalculationService.calculateAge(client.getDob());
+            List<Discount> discounts = discountService.getDiscountList();
+            Discount applicableDiscount = discountCalculationService.getApplicableDiscount(clientAge, discounts);
+            booking.setDiscountId(applicableDiscount);
+        }
+
+        // Setters on Booking
+        booking.setClient(client);
+        booking.setSchedule(schedule);
+
+        // Save the booking
+        return bookingRepository.save(booking);
+    }
+
 }

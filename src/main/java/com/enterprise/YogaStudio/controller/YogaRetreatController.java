@@ -1,5 +1,9 @@
 package com.enterprise.YogaStudio.controller;
 
+import com.enterprise.YogaStudio.model.Pricing;
+import com.enterprise.YogaStudio.model.Instructor;
+import com.enterprise.YogaStudio.model.YogaSession;
+
 import com.enterprise.YogaStudio.model.YogaRetreat;
 import com.enterprise.YogaStudio.service.YogaRetreatService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +33,21 @@ public class YogaRetreatController {
 
     @PostMapping("/addyogaretreat")
     public ResponseEntity<Void> addYogaRetreat(@RequestBody YogaRetreat yogaRetreat) {
+
+        Pricing prc = new Pricing();
+        prc.setId(1);
+        yogaRetreat.setPricing(prc);
+
+        Instructor instr = new Instructor();
+        instr.setId(1);
+        yogaRetreat.setInstructor(instr);
+
+        YogaSession yogasess = new YogaSession();
+        yogasess.setId(1);
+        yogaRetreat.setYogaSession(yogasess);
+
+
+
         yogaRetreatService.addYogaRetreat(yogaRetreat);
         return ResponseEntity.ok().build();
     }

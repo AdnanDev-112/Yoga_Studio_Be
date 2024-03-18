@@ -1,6 +1,7 @@
 package com.enterprise.YogaStudio.controller;
 
 import com.enterprise.YogaStudio.dto.BookingDTO;
+import com.enterprise.YogaStudio.dto.CourseDTO;
 import com.enterprise.YogaStudio.model.Booking;
 import com.enterprise.YogaStudio.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,12 @@ public class BookingController {
     return ResponseEntity.ok(bookings);
 }
 
+    @PostMapping("/addbooking")
+    public ResponseEntity<Booking> addBooking(@RequestBody AddBookingDTO bookingData) {
+       Booking newBooking =  bookingService.addBooking(bookingData);
+        return ResponseEntity.ok().build();
+
+    }
 
     @GetMapping("/getallbooking")
     public ResponseEntity<List<Booking>> getAllBookings() {

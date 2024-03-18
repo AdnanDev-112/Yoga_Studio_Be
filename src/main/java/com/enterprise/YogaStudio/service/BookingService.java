@@ -9,12 +9,12 @@ import java.util.List;
 
 @Service
 public interface BookingService {
-
-   // List<Booking> getBookingsByClientId(Integer clientId);
+    List<Booking> getAllBooking();
 
     List<Booking> getAllBookings();
 
-    void deleteBooking(Integer id);
-
     List<BookingDTO> getBookingDetails(Integer clientId);
+    List<Booking> getBookingsByClientId(Integer clientId);
+
+    Booking addBooking(AddBookingDTO bookingData);
 }

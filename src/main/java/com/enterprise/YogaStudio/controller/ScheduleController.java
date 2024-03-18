@@ -21,6 +21,15 @@ public class ScheduleController {
     @Autowired
     private ScheduleService scheduleService;
 
+    @GetMapping("/getschedulebycategory")
+    public ResponseEntity<List<Schedule>> getBookingByCategory(@RequestParam String categoryType, @RequestParam String clientID) {
+
+    List<Schedule> schedules = scheduleService.getBookingsByCategoryType(categoryType, clientID);
+
+
+    return ResponseEntity.ok(schedules);
+    }
+
     @PostMapping("/addschedule")
     public ResponseEntity<Schedule> addSchedule(@RequestBody ScheduleFormDTO scheduleform) {
         scheduleService.addSchedule(scheduleform);

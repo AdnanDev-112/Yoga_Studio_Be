@@ -6,4 +6,15 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ScheduleRepository extends JpaRepository<Schedule, Integer> {
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public interface ScheduleRepository extends JpaRepository<Schedule, Integer>{
+
+    @Query("SELECT s FROM Schedule s WHERE s.categoryType = :categoryType")
+    List<Schedule> findByCategoryType(String categoryType);
+
 }

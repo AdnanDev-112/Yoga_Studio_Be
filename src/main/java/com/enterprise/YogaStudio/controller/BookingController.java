@@ -1,10 +1,12 @@
 package com.enterprise.YogaStudio.controller;
 
+import com.enterprise.YogaStudio.dto.AddBookingDTO;
 import com.enterprise.YogaStudio.dto.BookingDTO;
 import com.enterprise.YogaStudio.dto.CourseDTO;
 import com.enterprise.YogaStudio.model.Booking;
 import com.enterprise.YogaStudio.service.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,10 +39,22 @@ public class BookingController {
         return ResponseEntity.ok(bookings);
     }
 
-    @DeleteMapping("/deletebooking/{id}")
-    public ResponseEntity<Void> deleteBooking(@PathVariable Integer id) {
-        bookingService.deleteBooking(id);
-        return ResponseEntity.noContent().build();
-    }
+//    @DeleteMapping("/deletebooking/{id}")
+//    public ResponseEntity<Void> deleteBooking(@PathVariable Integer id) {
+//        bookingService.deleteBooking(id);
+//        return ResponseEntity.noContent().build();
+//    }
+
+//    @PostMapping("/addschedule")
+//    public ResponseEntity<?> addSchedule(@RequestBody ScheduleRequest request) {
+//        try {
+//            bookingService.addSchedule(request);
+//            return ResponseEntity.ok("Booking added successfully!");
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding booking: " + e.getMessage());
+//        }
+//    }
+
+
 
 }

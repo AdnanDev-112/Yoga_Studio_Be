@@ -1,9 +1,6 @@
 package com.enterprise.YogaStudio.controller;
 
 import com.enterprise.YogaStudio.dto.CourseDTO;
-import com.enterprise.YogaStudio.model.Booking;
-import com.enterprise.YogaStudio.model.Course;
-import com.enterprise.YogaStudio.service.BookingService;
 import com.enterprise.YogaStudio.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

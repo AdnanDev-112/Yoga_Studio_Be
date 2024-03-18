@@ -34,6 +34,12 @@ public class YogaSession {
     @JoinColumn(name = "pricing_id", nullable = false)
     private Pricing pricing;
 
+    @Column(name = "start_date")
+    private LocalDate startDate;
+
+    @Column(name = "end_date")
+    private LocalDate endDate;
+
     @Column(name = "duration")
     private Integer duration;
 

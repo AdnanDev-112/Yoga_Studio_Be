@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.Period;
 import java.util.List;
 
 @Service
@@ -52,8 +51,6 @@ public class ScheduleServiceImpl implements ScheduleService {
                 BigDecimal amount = oneSchedule.getCourse().getPricing().getAmount();
 
                 Discount applicableDiscount = discountCalculationService.getApplicableDiscount(age, discounts);
-
-
                 BigDecimal originalPrice = new BigDecimal(String.valueOf(amount));
                 BigDecimal discountPercent = new BigDecimal(applicableDiscount.getDiscountValue());
                 BigDecimal discountedPrice = discountCalculationService.calculateDiscountedPrice(originalPrice, discountPercent);

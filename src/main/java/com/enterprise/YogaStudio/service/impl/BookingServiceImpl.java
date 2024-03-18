@@ -1,25 +1,26 @@
 package com.enterprise.YogaStudio.service.impl;
 
 import com.enterprise.YogaStudio.dto.AddBookingDTO;
-import com.enterprise.YogaStudio.model.Booking;
-import com.enterprise.YogaStudio.model.Client;
-import com.enterprise.YogaStudio.model.Discount;
-import com.enterprise.YogaStudio.model.Schedule;
+import com.enterprise.YogaStudio.model.*;
 import com.enterprise.YogaStudio.repository.BookingRepository;
-import com.enterprise.YogaStudio.service.BookingService;
-import com.enterprise.YogaStudio.service.ClientService;
-import com.enterprise.YogaStudio.service.DiscountCalculationService;
-import com.enterprise.YogaStudio.service.DiscountService;
+import com.enterprise.YogaStudio.repository.PendingRepository;
+import com.enterprise.YogaStudio.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 public class BookingServiceImpl implements BookingService {
     @Autowired
     private BookingRepository bookingRepository;
+
+    @Autowired
+    private PendingListService pendingListService;
 
     @Autowired
     private DiscountCalculationService discountCalculationService;
@@ -29,6 +30,9 @@ public class BookingServiceImpl implements BookingService {
 
     @Autowired
     private ClientService clientService;
+
+    @Autowired
+    private PendingRepository pendingRepository;
 
     @Override
     public List<Booking> getAllBooking() {
@@ -45,6 +49,7 @@ public class BookingServiceImpl implements BookingService {
     public Booking addBooking(AddBookingDTO bookingData) {
         Booking booking = new Booking();
         Client client = clientService.getClientById(bookingData.getClientId());
+
         Schedule schedule = new Schedule();
         // Setters on Objects
         schedule.setId(bookingData.getScheduleId());
@@ -62,7 +67,25 @@ public class BookingServiceImpl implements BookingService {
         booking.setSchedule(schedule);
 
         // Save the booking
-        return bookingRepository.save(booking);
+        Booking newBooking =  bookingRepository.save(booking);
+
+//        Creating a new Pending List
+        LocalDateTime date = LocalDateTime.now();
+        PendingList pendingList = new PendingList();
+        pendingList.setBookedTime(date);
+        pendingList.setClient(client);
+        pendingList.setBooking(newBooking);
+        pendingList.setConfirmedStatus(false);
+
+        //Save the pending list
+        pendingListService.addPendingList(pendingList);
+
+
+
+
+        return newBooking;
     }
+
+
 
 }

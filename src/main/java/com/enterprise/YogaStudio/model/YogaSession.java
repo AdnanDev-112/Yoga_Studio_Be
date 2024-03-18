@@ -28,6 +28,9 @@ public class YogaSession {
     @Column(name = "max_capacity", nullable = false)
     private Integer maxCapacity;
 
+    @Column(name = "session_name", nullable = false)
+    private String sessionName;
+
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "pricing_id", nullable = false)

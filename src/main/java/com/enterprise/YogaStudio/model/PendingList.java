@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -20,14 +21,16 @@ public class PendingList {
     private Integer id;
 
     @Column(name = "booked_time")
-    private LocalDate bookedTime;
+    private LocalDateTime bookedTime;
 
-    @JsonIgnore
+    @Column(name = "confirmed_status")
+    private Boolean confirmedStatus;
+
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "client_id", nullable = false)
     private Client client;
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "booking_id", nullable = false)
     private Booking booking;

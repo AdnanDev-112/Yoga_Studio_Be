@@ -40,7 +40,7 @@ public class Course {
     @JoinColumn(name = "studio_id", nullable = false)
     private Studio studio;
 
-
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "pricing_id", nullable = false)
     private Pricing pricing;

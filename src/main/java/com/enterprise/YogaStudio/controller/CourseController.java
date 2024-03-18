@@ -21,30 +21,30 @@ public class CourseController {
     private CourseService courseService;
 
     @GetMapping("/getcoursedetails")
-    public ResponseEntity<List<CourseDTO>> getAllCourses() {
-        List<CourseDTO> dtos = courseService.getAllCourses();
+    public ResponseEntity<List<Course>> getAllCourses() {
+        List<Course> dtos = courseService.getAllCourses();
         return ResponseEntity.ok(dtos);
     }
 
     @PostMapping("/addCourse")
     public ResponseEntity<Course> addCourse(@RequestBody Course course) {
-        CourseService.addCourse(course);
+        courseService.addCourse(course);
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("updateCourse/{id}")
+    @PutMapping("/updateCourse/{id}")
     public ResponseEntity<Course> updateCourse(@PathVariable Integer id, @RequestBody Course courseDetails) {
-        Course updatedCourse = CourseService.updateCourse(id, courseDetails);
+        Course updatedCourse = courseService.updateCourse(id, courseDetails);
         if (updatedCourse != null) {
             return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.notFound().build();
-        }
+        }}
 
-    @DeleteMapping("/deleteCourse/{id}")
+    @DeleteMapping("deletecourse/{id}")
     public ResponseEntity<Void> deleteCourse(@PathVariable Integer id) {
-        CourseService.deleteCourse(id);
-        return ResponseEntity.noContent().build();
-        }
+    courseService.deleteCourse(id);
+    return ResponseEntity.noContent().build();
+    }
 
-}}
+}

@@ -12,8 +12,8 @@ import java.util.List;
 @Service
 public interface CourseService {
 
-    List<CourseDTO> getAllCourses();
-    void addCourse (Course course);
+    List<Course> getAllCourses();
+     void addCourse(Course course);
 
     Course updateCourse(Integer id, Course courseDetails);
 

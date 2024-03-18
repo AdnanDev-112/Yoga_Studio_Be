@@ -44,24 +44,6 @@ public class ScheduleController {
         return ResponseEntity.ok(schedule);
     }
 
-    @GetMapping("/getschedulebycategory")
-    public ResponseEntity<List<Schedule>> getBookingByCategory(@RequestParam String categoryType, @RequestParam String clientID) {
-
-    List<Schedule> schedules = scheduleService.getBookingsByCategoryType(categoryType, clientID);
-
-
-    return ResponseEntity.ok(schedules);
-    }
-
-
-    @GetMapping("/getschedulebycategorytype")
-    public ResponseEntity<List<Schedule>> getScheduleByCategoryType(@RequestParam String categoryType) {
-
-        List<Schedule> schedules = scheduleService.getScheduleByCategoryType(categoryType);
-
-
-        return ResponseEntity.ok(schedules);
-    }
 
 
     @PostMapping("/addnewscheduleentry")

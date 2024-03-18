@@ -1,6 +1,5 @@
 package com.enterprise.YogaStudio.service;
 
-<<<<<<<<< Temporary merge branch 1
 import com.enterprise.YogaStudio.dto.ScheduleDTO;
 import com.enterprise.YogaStudio.dto.ScheduleFormDTO;
 import com.enterprise.YogaStudio.model.Client;
@@ -16,8 +15,6 @@ public interface ScheduleService {
 
     public List<Schedule> getBookingsByCategoryType(String categoryType, String clientID);
     List<ScheduleDTO> getScheduleList();
-
-    public List<Schedule> getBookingsByCategoryType(String categoryType, String clientID);
 
     List<Schedule> getScheduleByCategoryType(String categoryType);
 

@@ -41,15 +41,11 @@ public class Schedule {
     private Booking booking;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "yoga_session_id", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "yoga_session_id")
     private YogaSession yogaSession;
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "course_id")
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "course_id", nullable = false)

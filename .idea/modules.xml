@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/YogaStudio.iml" filepath="$PROJECT_DIR$/.idea/modules/YogaStudio.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/YogaStudio.main.iml" filepath="$PROJECT_DIR$/.idea/modules/YogaStudio.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/YogaStudio.test.iml" filepath="$PROJECT_DIR$/.idea/modules/YogaStudio.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.enterprise.YogaStudio.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.enterprise.YogaStudio.main.iml" />
     </modules>
   </component>
 </project>

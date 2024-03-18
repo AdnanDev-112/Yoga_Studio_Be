@@ -1,8 +1,17 @@
 package com.enterprise.YogaStudio.service.impl;
 
+import com.enterprise.YogaStudio.dto.BookingDTO;
+import com.enterprise.YogaStudio.model.Booking;
+import com.enterprise.YogaStudio.model.YogaSession;
+
+
 import com.enterprise.YogaStudio.dto.AddBookingDTO;
 import com.enterprise.YogaStudio.dto.BookingDTO;
 import com.enterprise.YogaStudio.model.*;
+import com.enterprise.YogaStudio.model.Booking;
+import com.enterprise.YogaStudio.model.Client;
+import com.enterprise.YogaStudio.model.Discount;
+import com.enterprise.YogaStudio.model.Schedule;
 import com.enterprise.YogaStudio.repository.BookingRepository;
 import com.enterprise.YogaStudio.service.BookingService;
 import com.enterprise.YogaStudio.service.ClientService;
@@ -58,7 +67,6 @@ public class BookingServiceImpl implements BookingService {
                 bookingDTO.setLevel(yogaSession.getLevel());
                 bookingDTO.setInstructorName(yogaSession.getInstructor().getInstructorName());
                 bookingDTO.setDuration(yogaSession.getDuration());
-
                 // Check if Pricing is not null before accessing it
                 if (yogaSession.getPricing() != null) {
                     bookingDTO.setAmount(yogaSession.getPricing().getAmount());
@@ -68,29 +76,40 @@ public class BookingServiceImpl implements BookingService {
         }).collect(Collectors.toList());
     }
 
-        @Override
-        public Booking addBooking (AddBookingDTO bookingData){
-            Booking booking = new Booking();
-            Client client = clientService.getClientById(bookingData.getClientId());
-            Schedule schedule = new Schedule();
-            // Setters on Objects
-            schedule.setId(bookingData.getScheduleId());
-
-//        Processing
-            if (bookingData.getCategory_type().equals("course")) {
-                int clientAge = discountCalculationService.calculateAge(client.getDob());
-                List<Discount> discounts = discountService.getDiscountList();
-                Discount applicableDiscount = discountCalculationService.getApplicableDiscount(clientAge, discounts);
-                booking.setDiscountId(applicableDiscount);
-            }
-
-            // Setters on Booking
-            booking.setClient(client);
-            booking.setSchedule(schedule);
-
-            // Save the booking
-            return bookingRepository.save(booking);
-        }
+//
+//    @Override
+//    public Booking addBooking(AddBookingDTO bookingData) {
+//        Booking booking = new Booking();
+//        Client client = clientService.getClientById(bookingData.getClientId());
+//        Schedule schedule = new Schedule();
+//        // Setters on Objects
+//        schedule.setId(bookingData.getScheduleId());
+//        @Override
+//        public Booking addBooking (AddBookingDTO bookingData){
+//            Booking booking = new Booking();
+//            Client client = clientService.getClientById(bookingData.getClientId());
+//            Schedule schedule = new Schedule();
+//            // Setters on Objects
+//            schedule.setId(bookingData.getScheduleId());
+//
+////        Processing
+//            if (bookingData.getCategory_type().equals("course")) {
+//                int clientAge = discountCalculationService.calculateAge(client.getDob());
+//                List<Discount> discounts = discountService.getDiscountList();
+//                Discount applicableDiscount = discountCalculationService.getApplicableDiscount(clientAge, discounts);
+//                booking.setDiscountId(applicableDiscount);
+//            }
+//
+//            // Setters on Booking
+//            booking.setClient(client);
+//            booking.setSchedule(schedule);
+//
+//            // Save the booking
+//            return bookingRepository.save(booking);
+//        }
+//        // Save the booking
+//        return bookingRepository.save(booking);
+//    }
 
 //    @Override
 //    public void addSchedule(ScheduleRequest request) {

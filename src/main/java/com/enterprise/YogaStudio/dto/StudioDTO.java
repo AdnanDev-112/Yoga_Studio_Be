@@ -14,6 +14,6 @@ public class StudioDTO {
     private String address;
     private String telnum;
     private ManagerDTO manager;
-
+    private String location;
 
 }

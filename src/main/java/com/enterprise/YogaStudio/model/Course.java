@@ -32,18 +32,17 @@ public class Course {
     @Column(name = "number_of_classes", nullable = false)
     private Integer numberOfClasses;
 
-    @Column(name = "price", nullable = false, precision = 13, scale = 2)
-    private BigDecimal price;
-
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "studio_id", nullable = false)
     private Studio studio;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "pricing_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pricing_id")
     private Pricing pricing;
+
+
 
 
 }

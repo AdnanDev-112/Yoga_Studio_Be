@@ -28,4 +28,7 @@ public class Studio {
     @JoinColumn(name = "manager_id", nullable = false)
     private Manager manager;
 
+    @Column(name = "location", nullable = false)
+    private String location;
+
 }

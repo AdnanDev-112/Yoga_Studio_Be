@@ -30,6 +30,11 @@ public class CourseServiceImpl implements CourseService {
         return dtos;
     }
 
+    @Override
+    public List<?> getCourses() {
+       return courseRepository.findAll();
+    }
+
     public CourseDTO convertToDTO(Course course) {
         CourseDTO dto = new CourseDTO();
         dto.setCourseId(course.getId());

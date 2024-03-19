@@ -47,4 +47,32 @@ public class YogaSessionController {
 
         return ResponseEntity.ok().build();
     }
+
+    @DeleteMapping("/deletesession/{id}")
+    public ResponseEntity<Void> deleteSchedule(@PathVariable Integer id) {
+        yogaSessionService.deleteYogaSession(id);
+        return ResponseEntity.noContent().build();
+    }
+
+
+    @PutMapping("/updatesession/{id}")
+    public ResponseEntity<Instructor> updatesession(@PathVariable Integer id, @RequestBody YogaSession yogaSession) {
+        YogaSession updatedyogaSession = yogaSessionService.updateYogaSession(id, yogaSession);
+        if (updatedyogaSession != null) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/getoneyogasession/{id}")
+    public ResponseEntity<YogaSession> getYogaSessionById(@PathVariable Integer id) {
+        YogaSession yogaSession = yogaSessionService.getYogaSessionById(id);
+        if (yogaSession != null) {
+            return ResponseEntity.ok(yogaSession);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }

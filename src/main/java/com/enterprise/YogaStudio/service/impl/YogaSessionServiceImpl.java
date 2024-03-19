@@ -1,5 +1,6 @@
 package com.enterprise.YogaStudio.service.impl;
 
+import com.enterprise.YogaStudio.model.Instructor;
 import com.enterprise.YogaStudio.model.YogaSession;
 
 import com.enterprise.YogaStudio.repository.YogaSessionRepository;
@@ -32,5 +33,18 @@ public class YogaSessionServiceImpl implements YogaSessionService {
     @Override
     public void deleteYogaSession(Integer id) {
         yogaSessionRepository.deleteById(id);
+    }
+
+    @Override
+    public YogaSession updateYogaSession(Integer id, YogaSession yogaSessionDetails) {
+        return yogaSessionRepository.findById(id)
+                .map(yogaSession -> {
+                    yogaSession.setDuration(yogaSessionDetails.getDuration());
+                    yogaSession.setLevel(yogaSessionDetails.getLevel());
+                    yogaSession.setActivityType(yogaSessionDetails.getActivityType());
+                    // Set other fields as needed
+                    return yogaSessionRepository.save(yogaSession);
+                })
+                .orElse(null);
     }
 }

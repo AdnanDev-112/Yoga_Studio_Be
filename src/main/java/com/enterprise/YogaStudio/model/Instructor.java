@@ -22,4 +22,12 @@ public class Instructor {
     @Column(name = "telnum", nullable = false, length = 16)
     private String telnum;
 
+    public void getInstructorName() {
+    }
+    public void setInstructorName() {
+    }
+    public void getTelnum() {
+    }
+    public void setTelnum() {
+    }
 }

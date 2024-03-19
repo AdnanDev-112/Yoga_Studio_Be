@@ -49,3 +49,15 @@ public Instructor updateInstructor(Integer id, Instructor instructorDetails) {
             .orElse(null);
 }
 }
+
+//public Instructor updateInstructor(Integer id, Instructor instructorDetails) {
+//    return instructorRepository.findById(id)
+//            .map(instructor -> {
+//                instructor.setInstructorName(instructorDetails.getInstructorName());
+//                instructor.setTelnum(instructorDetails.getTelnum());
+//                // Set other fields as needed
+//                return instructorRepository.save(instructor);
+//            })
+//            .orElse(null);
+// Also go to Instructor class in model to remove functions if needs be
+//}

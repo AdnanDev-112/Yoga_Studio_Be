@@ -24,6 +24,7 @@ public class CourseController {
     public ResponseEntity<List<Course>> getAllCourses() {
         List<Course> dtos = courseService.getAllCourses();
         return ResponseEntity.ok(dtos);
+
     }
 
     @PostMapping("/addCourse")

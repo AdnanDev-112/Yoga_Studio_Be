@@ -143,6 +143,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         return scheduleRepository.save(schedule);
     }
 
+
     private Schedule scheduleFormtoDTO(ScheduleRequest newEntry) {
         Schedule schedule = new Schedule();
         schedule.setCategoryType(newEntry.getCategory_type());
@@ -153,44 +154,24 @@ public class ScheduleServiceImpl implements ScheduleService {
         return schedule;
     }
 
+    @Override
+    public Schedule getScheduleById(Integer id) {
+        return scheduleRepository.findById(id).orElse(null);
+    }
 
-//
-//    // Calculate the discounted price
-//
-//    public List<Schedule> getBookingsByCategoryType(String categoryType, String clientID) {
-//        List<Schedule> scheduleList = scheduleRepository.findByCategoryType(categoryType);
-//
-//        Client client = clientRepository.findById(Integer.parseInt(clientID)).orElse(null);
-//        List<Discount> discounts = discountService.getDiscountList();
-//
-//        LocalDate dob = client.getDob();
-//
-//        int age = discountCalculationService.calculateAge(dob);
-//        System.out.println("Age is " + age);
-//
-//
-//        if (categoryType.equals("course")) {
-//            for (int i = 0; i < scheduleList.size(); i++) {
-//                Schedule oneSchedule = scheduleList.get(i);
-//                BigDecimal amount = oneSchedule.getCourse().getPricing().getAmount();
-//
-//                Discount applicableDiscount = discountCalculationService.getApplicableDiscount(age, discounts);
-//                BigDecimal originalPrice = new BigDecimal(String.valueOf(amount));
-//                BigDecimal discountPercent = new BigDecimal(applicableDiscount.getDiscountValue());
-//                BigDecimal discountedPrice = discountCalculationService.calculateDiscountedPrice(originalPrice, discountPercent);
-//                oneSchedule.getCourse().getPricing().setDiscountAppliedPrice(discountedPrice);
-//                oneSchedule.getCourse().getPricing().setDiscountId(applicableDiscount.getId());
-//
-//
-//            }
-//
-//
-//        }
-//        ;
-//
-//
-//        return scheduleList;
-//    }
+    @Override
+    public Schedule updateSchedule(Integer id, Schedule schedule) {
+        return scheduleRepository.findById(id)
+                .map(schedule1 -> {
+                    schedule1.setCategoryType(schedule.getCategoryType());
+                    schedule1.setDate(schedule1.getDate());
+                    schedule1.setStartTime(schedule1.getStartTime());
+                    schedule1.setEndTime(schedule1.getEndTime());
+                    return scheduleRepository.save(schedule1);
+                })
+                .orElse(null);
+    }
+
 
 }
 

@@ -42,8 +42,8 @@ public class ScheduleController {
 
     @GetMapping("/getcategorizedschedule")
     public ResponseEntity<List<?>> getScheduleByCategory(@RequestParam String categoryType) {
-    List<?> schedules = scheduleService.getScheduleByCategory(categoryType);
-    return ResponseEntity.ok(schedules);
+        List<?> schedules = scheduleService.getScheduleByCategory(categoryType);
+        return ResponseEntity.ok(schedules);
     }
 
     @PostMapping("/addnewscheduleentry")
@@ -52,5 +52,23 @@ public class ScheduleController {
         return ResponseEntity.ok(schedule);
     }
 
+    @GetMapping("/getschedule/{id}")
+    public ResponseEntity<Schedule> getScheduleById(@PathVariable Integer id) {
+        Schedule schedule = scheduleService.getScheduleById(id);
+        if (schedule != null) {
+            return ResponseEntity.ok(schedule);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
+    @PutMapping("/updateclient/{id}")
+    public ResponseEntity<Schedule> updateSchedule(@PathVariable Integer id, @RequestBody Schedule schedule) {
+        Schedule updateschedule = scheduleService.updateSchedule(id, schedule);
+        if (updateschedule != null) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

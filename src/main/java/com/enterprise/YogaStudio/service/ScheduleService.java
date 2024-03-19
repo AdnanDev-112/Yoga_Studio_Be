@@ -23,4 +23,7 @@ public interface ScheduleService {
 
     Schedule addNewScheduleEntry(ScheduleRequest newEntry);
 
+    Schedule getScheduleById(Integer id);
+
+    Schedule updateSchedule(Integer id, Schedule schedule);
 }

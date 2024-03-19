@@ -1,5 +1,6 @@
 package com.enterprise.YogaStudio.service;
 
+import com.enterprise.YogaStudio.dto.YogaRetreatDTO;
 import com.enterprise.YogaStudio.model.YogaRetreat;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,7 @@ public interface YogaRetreatService {
 
     YogaRetreat getYogaRetreatById(Integer id);
 
-    YogaRetreat updateYogaRetreat(Integer id, YogaRetreat yogaRetreatDetails);
+    YogaRetreat updateYogaRetreat(Integer id, YogaRetreatDTO yogaRetreatDetails);
 
     void deleteYogaRetreat(Integer id);
 }

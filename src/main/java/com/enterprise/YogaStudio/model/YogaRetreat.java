@@ -51,6 +51,10 @@ public class YogaRetreat {
 
     // Additional fields for JSON representation
     @Transient
+    private Integer instructorId;
+
+    // Additional fields for JSON representation
+    @Transient
     private String instructorName;
 
     @Transient

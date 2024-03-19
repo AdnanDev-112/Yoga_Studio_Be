@@ -1,8 +1,12 @@
 package com.enterprise.YogaStudio.service.impl;
 
+<<<<<<< HEAD
 import com.enterprise.YogaStudio.model.Instructor;
 import com.enterprise.YogaStudio.model.YogaSession;
 
+=======
+import com.enterprise.YogaStudio.model.YogaSession;
+>>>>>>> 9479aafbfcb6bf616af271fbfcec23239bf9122a
 import com.enterprise.YogaStudio.repository.YogaSessionRepository;
 import com.enterprise.YogaStudio.service.YogaSessionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +16,7 @@ import java.util.List;
 
 @Service
 public class YogaSessionServiceImpl implements YogaSessionService {
+<<<<<<< HEAD
     @Autowired
     private YogaSessionRepository yogaSessionRepository;
     @Override
@@ -47,4 +52,14 @@ public class YogaSessionServiceImpl implements YogaSessionService {
                 })
                 .orElse(null);
     }
+=======
+
+    @Autowired
+    private YogaSessionRepository yogaSessionRepository;
+
+    @Override
+    public List<YogaSession> getAllYogaSessions() {
+        return yogaSessionRepository.findAll();
+    }
+>>>>>>> 9479aafbfcb6bf616af271fbfcec23239bf9122a
 }

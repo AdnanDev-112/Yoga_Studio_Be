@@ -2,9 +2,7 @@ package com.enterprise.YogaStudio.controller;
 
 import com.enterprise.YogaStudio.dto.ScheduleDTO;
 import com.enterprise.YogaStudio.dto.ScheduleFormDTO;
-import com.enterprise.YogaStudio.model.Client;
-import com.enterprise.YogaStudio.model.Instructor;
-import com.enterprise.YogaStudio.model.Schedule;
+import com.enterprise.YogaStudio.model.*;
 import com.enterprise.YogaStudio.service.ClientService;
 import com.enterprise.YogaStudio.model.Schedule;
 import com.enterprise.YogaStudio.service.ScheduleService;
@@ -23,15 +21,6 @@ public class ScheduleController {
     @Autowired
     private ScheduleService scheduleService;
 
-    @GetMapping("/getschedulebycategory")
-    public ResponseEntity<List<Schedule>> getBookingByCategory(@RequestParam String categoryType, @RequestParam String clientID) {
-
-    List<Schedule> schedules = scheduleService.getBookingsByCategoryType(categoryType, clientID);
-
-
-    return ResponseEntity.ok(schedules);
-    }
-
     @PostMapping("/addschedule")
     public ResponseEntity<Schedule> addSchedule(@RequestBody ScheduleFormDTO scheduleform) {
         scheduleService.addSchedule(scheduleform);
@@ -44,17 +33,27 @@ public class ScheduleController {
         return ResponseEntity.ok(schedule);
     }
 
-
-
-    @PostMapping("/addnewscheduleentry")
-    public Schedule addNewScheduleEntry(@RequestBody Schedule newEntry) {
-        return scheduleService.addNewScheduleEntry(newEntry);
-    }
-
     @DeleteMapping("/deleteschedule/{id}")
     public ResponseEntity<Void> deleteSchedule(@PathVariable Integer id) {
         scheduleService.deleteSchedule(id);
         return ResponseEntity.noContent().build();
     }
 
+<<<<<<< HEAD
+=======
+
+    @GetMapping("/getcategorizedschedule")
+    public ResponseEntity<List<?>> getScheduleByCategory(@RequestParam String categoryType) {
+    List<?> schedules = scheduleService.getScheduleByCategory(categoryType);
+    return ResponseEntity.ok(schedules);
+    }
+
+    @PostMapping("/addnewscheduleentry")
+    public ResponseEntity<Schedule> addNewScheduleEntry(@RequestBody ScheduleRequest newEntry) {
+        Schedule schedule = scheduleService.addNewScheduleEntry(newEntry);
+        return ResponseEntity.ok(schedule);
+    }
+
+
+>>>>>>> 9479aafbfcb6bf616af271fbfcec23239bf9122a
 }

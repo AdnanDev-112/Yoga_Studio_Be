@@ -16,6 +16,8 @@ public interface BookingService {
     List<BookingDTO> getBookingDetails(Integer clientId);
   //  List<Booking> getAllBooking();
 
+    List<Booking> getAllBooking();
+
     List<Booking> getBookingsByClientId(Integer clientId);
 
    Booking addBooking(AddBookingDTO bookingData);

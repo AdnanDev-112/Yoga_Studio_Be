@@ -7,9 +7,6 @@ import com.enterprise.YogaStudio.model.YogaSession;
 
 import com.enterprise.YogaStudio.dto.AddBookingDTO;
 import com.enterprise.YogaStudio.model.*;
-import com.enterprise.YogaStudio.dto.BookingDTO;
-import com.enterprise.YogaStudio.model.*;
-import com.enterprise.YogaStudio.model.Booking;
 import com.enterprise.YogaStudio.model.Client;
 import com.enterprise.YogaStudio.model.Discount;
 import com.enterprise.YogaStudio.model.Schedule;
@@ -17,13 +14,10 @@ import com.enterprise.YogaStudio.repository.BookingRepository;
 import com.enterprise.YogaStudio.repository.PendingRepository;
 import com.enterprise.YogaStudio.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

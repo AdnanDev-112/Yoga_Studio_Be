@@ -135,7 +135,6 @@ public class ScheduleServiceImpl implements ScheduleService {
             // Check if Pricing is not null before accessing it
             if (yogaSession.getPricing() != null) {
                 dto.setAmount(yogaSession.getPricing().getAmount());
-                dto.setManagerName(yogaSession.getManager().getManagerName());
             }
 
             if (yogaSession.getStudio() != null) {

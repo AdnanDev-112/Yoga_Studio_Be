@@ -52,13 +52,13 @@ public class YogaSession {
     @Transient
     private String price;
 
-    @JsonIgnore
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "instructor_id", nullable = false)
     private Instructor instructor;
 
 
-    @JsonIgnore
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "studio_id", nullable = false)
     private Studio studio;

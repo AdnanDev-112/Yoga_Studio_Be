@@ -23,6 +23,9 @@ public class Studio {
     @Column(name = "telnum", nullable = false, length = 16)
     private String telnum;
 
+    @Column(name = "location", nullable = false)
+    private String location;
+
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "manager_id", nullable = false)

@@ -43,11 +43,22 @@ public class YogaSession {
     private Boolean recurring = false;
 
 
+    @Transient
+    private String instructorId;
+
+    @Transient
+    private String studioId;
+
+    @Transient
+    private String price;
+
+
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "instructor_id", nullable = false)
     private Instructor instructor;
 
-    @JsonIgnore
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "studio_id", nullable = false)
     private Studio studio;

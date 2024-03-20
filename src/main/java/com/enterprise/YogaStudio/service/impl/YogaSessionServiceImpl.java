@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.function.Function;
 
 @Service
 public class YogaSessionServiceImpl implements YogaSessionService {
@@ -54,6 +55,16 @@ public class YogaSessionServiceImpl implements YogaSessionService {
         yogaSessionRepository.save(yogaSession);
     }
 
+    private <T> T getEntityById(Object id, Function<Integer, T> fetchEntityFunction) {
+    Integer entityId = null;
+    if (id instanceof String) {
+        entityId = Integer.valueOf((String) id);
+    } else if (id instanceof Integer) {
+        entityId = (Integer) id;
+    }
+    return entityId != null ? fetchEntityFunction.apply(entityId) : null;
+}
+
     @Override
     public YogaSession getYogaSessionById(Integer id) {
         return yogaSessionRepository.findById(id).orElse(null);
@@ -63,27 +74,13 @@ public class YogaSessionServiceImpl implements YogaSessionService {
     public void deleteYogaSession(Integer id) {
         yogaSessionRepository.deleteById(id);
     }
-
     @Override
     public YogaSession updateYogaSession(Integer id, YogaSession yogaSessionDetails) {
         return yogaSessionRepository.findById(id).map(yogaSession -> {
-            Object studioId = yogaSessionDetails.getStudioId();
-            Object instructorId = yogaSessionDetails.getInstructorId();
 
-            Studio studio = null;
-            Instructor instructor = null;
+            Studio studio = getEntityById(yogaSessionDetails.getStudioId(), studioService::getStudioById);
+            Instructor instructor = getEntityById(yogaSessionDetails.getInstructorId(), instructorService::getInstructorById);
 
-            if (studioId instanceof String) {
-                studio = studioService.getStudioById(Integer.valueOf((String) studioId));
-            } else if (studioId instanceof Integer) {
-                studio = studioService.getStudioById((Integer) studioId);
-            }
-
-            if (instructorId instanceof String) {
-                instructor = instructorService.getInstructorById(Integer.valueOf((String) instructorId));
-            } else if (instructorId instanceof Integer) {
-                instructor = instructorService.getInstructorById((Integer) instructorId);
-            }
 
             String priceFromForm = yogaSessionDetails.getPrice();
             BigDecimal priceFromFormDecimal = new BigDecimal(priceFromForm);

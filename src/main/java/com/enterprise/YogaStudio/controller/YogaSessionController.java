@@ -1,9 +1,4 @@
 package com.enterprise.YogaStudio.controller;
-
-
-import com.enterprise.YogaStudio.model.Instructor;
-import com.enterprise.YogaStudio.model.Pricing;
-import com.enterprise.YogaStudio.model.Studio;
 import com.enterprise.YogaStudio.model.YogaSession;
 import com.enterprise.YogaStudio.service.InstructorService;
 import com.enterprise.YogaStudio.service.PricingService;
@@ -39,27 +34,7 @@ public class YogaSessionController {
 
     @PostMapping("/addYogaSession")
     public ResponseEntity<YogaSession> addYogaSession(@RequestBody YogaSession yogaSession) {
-
-        Studio studio = studioService.getStudioById(Integer.valueOf(yogaSession.getStudioId()));
-        Instructor instructor = instructorService.getInstructorById(Integer.valueOf(yogaSession.getInstructorId()));
-
-        String priceFromForm = yogaSession.getPrice();
-        BigDecimal price = new BigDecimal(priceFromForm);
-        Pricing pricing = new Pricing();
-        pricing.setAmount(price);
-        pricing.setLevel(yogaSession.getLevel());
-        pricing.setType("yoga_session");
-
-
-
-        Pricing savedPrice = pricingService.addPricingDetails(pricing);
-
-        yogaSession.setStudio(studio);
-        yogaSession.setPricing(savedPrice);
-        yogaSession.setInstructor(instructor);
-
         yogaSessionService.addYogaSession(yogaSession);
-
         return ResponseEntity.ok().build();
     }
 

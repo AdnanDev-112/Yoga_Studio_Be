@@ -39,6 +39,14 @@ public class Schedule {
     @JoinColumn(name = "yoga_session_id")
     private YogaSession yogaSession;
 
+    @Transient
+    private Integer yogasessionId;
+
+    @Transient
+    private Integer courseId;
+
+    @Transient
+    private Integer retreatId;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)

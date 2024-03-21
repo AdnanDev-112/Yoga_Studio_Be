@@ -47,10 +47,6 @@ public class YogaSession {
     @JoinColumn(name = "instructor_id", nullable = false)
     private Instructor instructor;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "manager_id", nullable = false)
-    private Manager manager;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

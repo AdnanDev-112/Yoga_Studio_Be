@@ -6,7 +6,9 @@ import com.enterprise.YogaStudio.repository.StudioRepository;
 import com.enterprise.YogaStudio.service.StudioService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,26 +21,15 @@ public class StudioServiceImpl implements StudioService {
     @Autowired
     private StudioRepository studioRepository;
 
-    @Override
-    public List<StudioDTO> getAllStudioLocations() {
-        return studioRepository.findAll().stream()
-                .map(this::convertToDTO)
-                .collect(Collectors.toList());
+    public List<Studio> getStudioDetails() {
+        return studioRepository.findAll();
     }
 
     @Override
     public Studio getStudioById(Integer id) {
-        return studioRepository.findById(id).orElse(null);
+       return studioRepository.findById(id).orElse(null);
     }
 
-    private StudioDTO convertToDTO(Studio studio) {
-        StudioDTO dto = new StudioDTO();
-        dto.setId(studio.getId());
-        dto.setAddress(studio.getAddress());
-        dto.setTelnum(studio.getTelnum());
-        dto.setLocation(studio.getLocation());
-        return dto;
-    }
 
 
 

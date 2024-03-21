@@ -14,14 +14,14 @@ public interface ScheduleService {
 
     List<ScheduleDTO> getScheduleList();
 
-    Schedule addSchedule(ScheduleFormDTO scheduleForm);
+    Schedule addSchedule(Schedule schedule);
 
     void deleteSchedule(Integer id);
 
     List<?> getScheduleByCategory(String categoryType);
 
 
-    Schedule addNewScheduleEntry(ScheduleRequest newEntry);
+    Schedule addNewScheduleEntry(Schedule schedule);
 
     Schedule getScheduleById(Integer id);
 

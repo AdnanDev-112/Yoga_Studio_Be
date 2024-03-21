@@ -9,6 +9,5 @@ import java.util.List;
 
 @Repository
 public interface StudioRepository extends JpaRepository<Studio, Integer>{
-    @Query("SELECT s FROM Studio s WHERE s.location = : location")
-    List<String> findAllLocations();
+
 }

@@ -53,11 +53,6 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Autowired
     private CourseService courseService;
 
-    // Calculate the discounted price
-    public BigDecimal calculateDiscountedPrice(BigDecimal originalPrice, BigDecimal discountPercent) {
-        return originalPrice.multiply(BigDecimal.ONE.subtract(discountPercent.divide(new BigDecimal("100"))));
-
-    }
 
     @Override
     public List<ScheduleDTO> getScheduleList() {
@@ -67,8 +62,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 
 
     @Override
-    public Schedule addSchedule(ScheduleFormDTO scheduleForm) {
-        Schedule schedule = convertScheduledFormDTOToSchedule(scheduleForm);
+    public Schedule addSchedule(Schedule schedule) {
         return scheduleRepository.save(schedule);
     }
 
@@ -79,21 +73,11 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
 
-    private Schedule convertScheduledFormDTOToSchedule(ScheduleFormDTO scheduleForm) {
-        Schedule schedule = new Schedule();
-        schedule.setCategoryType(scheduleForm.getCategoryType());
-        schedule.setStartTime(scheduleForm.getStartTime());
-        schedule.setDate(scheduleForm.getDate());
-        scheduleForm.setEndTime(scheduleForm.getEndTime());
-        return schedule;
-    }
-
     private ScheduleDTO convertToDto(Schedule schedule) {
         ScheduleDTO dto = new ScheduleDTO();
         dto.setCategoryType(schedule.getCategoryType());
         dto.setStartTime(schedule.getStartTime());
 
-        // Assuming `YogaSession` and `Pricing` are properties of `Schedule`
         if (schedule.getYogaSession() != null) {
             YogaSession yogaSession = schedule.getYogaSession();
             dto.setLevel(yogaSession.getLevel());
@@ -102,10 +86,8 @@ public class ScheduleServiceImpl implements ScheduleService {
             dto.setMaxCapacity(yogaSession.getMaxCapacity());
             dto.setRecurring(yogaSession.getRecurring().booleanValue());
 
-            // Check if Pricing is not null before accessing it
             if (yogaSession.getPricing() != null) {
                 dto.setAmount(yogaSession.getPricing().getAmount());
-                dto.setManagerName(yogaSession.getManager().getManagerName());
             }
 
             if (yogaSession.getStudio() != null) {
@@ -138,20 +120,14 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public Schedule addNewScheduleEntry(ScheduleRequest newEntry) {
-        Schedule schedule = scheduleFormtoDTO(newEntry);
+    public Schedule addNewScheduleEntry(Schedule schedule) {
+        YogaRetreat yogaRetreat = yogaRetreatService.getRetreatById(schedule.getRetreatId());
+        YogaSession yogaSession = yogaSessionService.getYogaSessionById(schedule.getYogasessionId());
+        Course course = courseService.getCourseById(schedule.getCourseId());
+        schedule.setYogaSession(yogaSession);
+        schedule.setRetreat(yogaRetreat);
+        schedule.setCourse(course);
         return scheduleRepository.save(schedule);
-    }
-
-
-    private Schedule scheduleFormtoDTO(ScheduleRequest newEntry) {
-        Schedule schedule = new Schedule();
-        schedule.setCategoryType(newEntry.getCategory_type());
-        schedule.setStartTime(LocalTime.parse(newEntry.getStartTime()));
-        schedule.setDate(newEntry.getDate());
-        schedule.setEndTime(LocalTime.parse(newEntry.getEndTime()));
-        newEntry.setScheduleId(newEntry.getScheduleId());
-        return schedule;
     }
 
     @Override

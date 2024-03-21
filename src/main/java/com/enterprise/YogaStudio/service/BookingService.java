@@ -18,7 +18,5 @@ public interface BookingService {
 
     List<Booking> getBookingsByClientId(Integer clientId);
 
-   Booking addBooking(AddBookingDTO bookingData);
 
-  //  void addSchedule(ScheduleRequest request);
 }

@@ -32,4 +32,5 @@ public class Booking {
     @JoinColumn(name = "discount_id", nullable = true)
     private Discount discountId;
 
+
 }

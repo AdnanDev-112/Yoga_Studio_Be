@@ -18,4 +18,15 @@ public class YogaSessionServiceImpl implements YogaSessionService {
     public List<YogaSession> getAllYogaSessions() {
         return yogaSessionRepository.findAll();
     }
+
+    @Override
+    public List<YogaSession> getYogaSessionsWithRecurring() {
+        return yogaSessionRepository.findClassTypeByRecurring(true);
+    }
+
+    @Override
+    public YogaSession getYogaSessionById(Integer id) {
+        return yogaSessionRepository.findById(id).orElse(null);
+    }
+
 }

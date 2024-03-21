@@ -17,4 +17,9 @@ public class YogaRetreatServiceImpl implements YogaRetreatService {
     public List<YogaRetreat> getAllYogaRetreat() {
         return yogaRetreatRepository.findAll();
     }
+
+    @Override
+    public YogaRetreat getRetreatById(Integer id) {
+        return yogaRetreatRepository.findById(id).orElse(null);
+    }
 }

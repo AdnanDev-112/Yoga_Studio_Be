@@ -29,8 +29,6 @@ public class YogaRetreat {
     @Column(name = "activity_type", nullable = false)
     private String activityType;
 
-    @Column(name = "date")
-    private LocalDate date;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

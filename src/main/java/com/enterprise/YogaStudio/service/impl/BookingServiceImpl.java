@@ -77,46 +77,6 @@ public class BookingServiceImpl implements BookingService {
     }
 
 
-
-    @Override
-    public Booking addBooking(AddBookingDTO bookingData) {
-        Booking booking = new Booking();
-        Client client = clientService.getClientById(bookingData.getClientId());
-        Schedule schedule = new Schedule();
-        // Setters on Objects
-        schedule.setId(bookingData.getScheduleId());
-
-
-//        Processing
-            if (bookingData.getCategory_type().equals("course")) {
-                int clientAge = discountCalculationService.calculateAge(client.getDob());
-                List<Discount> discounts = discountService.getDiscountList();
-                Discount applicableDiscount = discountCalculationService.getApplicableDiscount(clientAge, discounts);
-                booking.setDiscountId(applicableDiscount);
-            }
-
-            // Setters on Booking
-            booking.setClient(client);
-            booking.setSchedule(schedule);
-
-            // Save the booking
-            return bookingRepository.save(booking);
-        }
-
     }
-
-
-//    @Override
-//    public void addSchedule(ScheduleRequest request) {
-//        Schedule schedule = new Schedule();
-//        schedule.setId(request.getScheduleId());
-//        schedule.setCategoryType(request.getCategory_type());
-//        schedule.setStartTime(request.getStartTime());
-//        schedule.setEndTime(request.getEndTime());
-//        schedule.setDate(request.getDate());
-//
-//        // Save booking to the database
-//        bookingRepository.save(schedule);
-//    }
 
 

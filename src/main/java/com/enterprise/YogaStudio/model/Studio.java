@@ -23,7 +23,6 @@ public class Studio {
     @Column(name = "telnum", nullable = false, length = 16)
     private String telnum;
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "manager_id", nullable = false)
     private Manager manager;

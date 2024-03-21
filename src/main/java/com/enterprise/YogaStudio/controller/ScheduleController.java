@@ -22,8 +22,8 @@ public class ScheduleController {
     private ScheduleService scheduleService;
 
     @PostMapping("/addschedule")
-    public ResponseEntity<Schedule> addSchedule(@RequestBody ScheduleFormDTO scheduleform) {
-        scheduleService.addSchedule(scheduleform);
+    public ResponseEntity<Schedule> addSchedule(@RequestBody Schedule schedule) {
+        scheduleService.addSchedule(schedule);
         return ResponseEntity.ok().build();
     }
 
@@ -47,8 +47,8 @@ public class ScheduleController {
     }
 
     @PostMapping("/addnewscheduleentry")
-    public ResponseEntity<Schedule> addNewScheduleEntry(@RequestBody ScheduleRequest newEntry) {
-        Schedule schedule = scheduleService.addNewScheduleEntry(newEntry);
+    public ResponseEntity<Schedule> addNewScheduleEntry(@RequestBody Schedule schedule) {
+        scheduleService.addNewScheduleEntry(schedule);
         return ResponseEntity.ok(schedule);
     }
 

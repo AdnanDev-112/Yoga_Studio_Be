@@ -31,13 +31,6 @@ public class BookingController {
     return ResponseEntity.ok(bookings);
 }
 
-    @PostMapping("/addbooking")
-    public ResponseEntity<Booking> addBooking(@RequestBody AddBookingDTO bookingData) {
-       Booking newBooking =  bookingService.addBooking(bookingData);
-        return ResponseEntity.ok().build();
-
-    }
-
     @GetMapping("/getallbooking")
     public ResponseEntity<List<Booking>> getAllBookings() {
         List<Booking> bookings = bookingService.getAllBookings();

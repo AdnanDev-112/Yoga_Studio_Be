@@ -57,9 +57,10 @@ public class CourseController {
 
     @PostMapping("/addcoursedata")
     public ResponseEntity<Course> addCourseData(@RequestBody Course course){
-        Studio studiodata = studioService.getStudioById(course.getId());
-        YogaSession yogaSession = yogaSessionService.getYogaSessionById(course.getId());
+        Studio studiodata = studioService.getStudioById(course.getStudioId());
+        YogaSession yogaSession = yogaSessionService.getYogaSessionById(course.getYogasessionId());
         course.setStudio(studiodata);
+        course.setPricing(yogaSession.getPricing());
         course.setYogaSession(yogaSession);
         courseService.addCourseData(course);
         return ResponseEntity.ok().build();

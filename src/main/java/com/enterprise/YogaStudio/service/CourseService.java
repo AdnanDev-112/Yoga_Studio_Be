@@ -15,10 +15,14 @@ public interface CourseService {
 
       List<?> getCourses();
 
+    Course addCourseData(Course course);
 
-    List<String> getAllStudioLocations();
+    Course getCourseById(Integer id);
 
-    Course addCourseForm(Course course);
+    List<Course> getCourseList();
 
-    Studio getStudioByIdForLocation(Integer integer);
+    void deleteCourse(Integer id);
+
+    Course updateCourse(Integer id, Course course);
+
 }

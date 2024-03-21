@@ -2,15 +2,20 @@ package com.enterprise.YogaStudio.service.impl;
 
 import com.enterprise.YogaStudio.dto.CourseDTO;
 import com.enterprise.YogaStudio.model.Course;
+import com.enterprise.YogaStudio.model.Pricing;
 import com.enterprise.YogaStudio.model.Studio;
+import com.enterprise.YogaStudio.model.YogaSession;
 import com.enterprise.YogaStudio.repository.CourseRepository;
 import com.enterprise.YogaStudio.repository.StudioRepository;
 import com.enterprise.YogaStudio.service.CourseService;
+import com.enterprise.YogaStudio.service.StudioService;
+import com.enterprise.YogaStudio.service.YogaSessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,6 +27,13 @@ public class CourseServiceImpl implements CourseService {
     @Autowired
     private StudioRepository studioRepository;
 
+    @Autowired
+    private StudioService studioService;
+
+    @Autowired
+    private YogaSessionService yogaSessionService;
+
+
     @Override
     public List<CourseDTO> getAllCourses() {
         List<Course> courses = courseRepository.findAll();
@@ -32,77 +44,42 @@ public class CourseServiceImpl implements CourseService {
         return dtos;
     }
 
-
-
     @Override
     public List<?> getCourses() {
        return courseRepository.findAll();
     }
 
     @Override
-    public List<String> getAllStudioLocations() {
-        return studioRepository.findAllLocations();
+    public Course addCourseData(Course course) {
+        Studio studio = studioService.getStudioById(course.getStudioId());
+        YogaSession yogaSession = yogaSessionService.getYogaSessionById(course.getYogasessionId());
+
+        course.setPricing(yogaSession.getPricing());
+
+        course.setStudio(studio);
+       course.setYogaSession(yogaSession);
+        return courseRepository.save(course);
+
+    }
+    @Override
+    public Course getCourseById(Integer id) {
+        return courseRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Course addCourseForm(Course course) {
+    public List<Course> getCourseList() {
+        return courseRepository.findAll();
+    }
+
+    @Override
+    public void deleteCourse(Integer id) {
+        courseRepository.deleteById(id);
+    }
+
+    @Override
+    public Course updateCourse(Integer id, Course course) {
         return courseRepository.save(course);
     }
-
-    @Override
-    public Studio getStudioByIdForLocation(Integer id) {
-       return (Studio) studioRepository.findAllLocations();
-    }
-
-
-//    public CourseDTO courseFormDTO(Course course){
-//        CourseDTO dto = new CourseDTO();
-//        dto.setCourseId(course.getId());
-//        dto.setCourseName(course.getCourseName());
-//        dto.setStartDate(course.getStartDate());
-//        dto.setEndDate(course.getEndDate());
-//        dto.setNumberOfClasses(course.getNumberOfClasses());
-//        dto.setStudio(convertToStudioDTO(course.getStudio()));
-//        dto.setPrice(course.getPricing().getAmount()); // Assuming pricing is associated with course
-//        return dto;
-//    }
-//
-//    public CourseDTO convertToDTO(Course course) {
-//        CourseDTO dto = new CourseDTO();
-//        dto.setCourseId(course.getId());
-//        dto.setCourseName(course.getCourseName());
-//        dto.setStudio(convertToStudioDTO(course.getStudio()));
-//        // Set other fields similarly
-//        return dto;
-//    }
-//
-//    private StudioDTO convertToStudioDTO(Studio studio) {
-//        if (studio == null) {
-//            return null;
-//        }
-//        StudioDTO studioDTO = new StudioDTO();
-//        studioDTO.setId(studio.getId());
-//        studioDTO.setAddress(studio.getAddress());
-//        studioDTO.setTelnum(studio.getTelnum());
-//        studioDTO.setManager(convertToManagerDTO(studio.getManager()));
-//        return studioDTO;
-//    }
-//
-//    private ManagerDTO convertToManagerDTO(Manager manager) {
-//        if (manager == null) {
-//            return null;
-//        }
-//        ManagerDTO managerDTO = new ManagerDTO();
-//        managerDTO.setId(manager.getId());
-//        managerDTO.setManagerName(manager.getManagerName());
-//        managerDTO.setEmail(manager.getEmail());
-//        return managerDTO;
-//    }
-
-    ///////////for the course form
-
-
-
 
     private CourseDTO convertToDTO(Course course) {
         CourseDTO courseDTO = new CourseDTO();
@@ -116,6 +93,7 @@ public class CourseServiceImpl implements CourseService {
 
         return courseDTO;
     }
+
 
 
 

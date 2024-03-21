@@ -5,8 +5,10 @@ import com.enterprise.YogaStudio.dto.StudioDTO;
 import com.enterprise.YogaStudio.model.Client;
 import com.enterprise.YogaStudio.model.Course;
 import com.enterprise.YogaStudio.model.Studio;
+import com.enterprise.YogaStudio.model.YogaSession;
 import com.enterprise.YogaStudio.service.CourseService;
 import com.enterprise.YogaStudio.service.StudioService;
+import com.enterprise.YogaStudio.service.YogaSessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,25 +28,57 @@ public class CourseController {
     @Autowired
     private StudioService studioService;
 
+    @Autowired
+    private YogaSessionService yogaSessionService;
+
     @GetMapping("/getcoursedetails")
     public ResponseEntity<List<CourseDTO>> getAllCourses() {
         List<CourseDTO> dtos = courseService.getAllCourses();
         return ResponseEntity.ok(dtos);
     }
 
-
-    @GetMapping("/allstudiolocation")
-    public ResponseEntity<List<String>> getAllStudioLocations() {
-        List<String> locations = courseService.getAllStudioLocations();
-        return new ResponseEntity<>(locations, HttpStatus.OK);
+    @GetMapping("/getcoursebyid/{id}")
+    public ResponseEntity<Course> getCourseById(@PathVariable Integer id) {
+        Course course = courseService.getCourseById(id);
+        if (course != null) {
+            return ResponseEntity.ok(course);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
-    @PostMapping("/addcourseformdata")
-    public ResponseEntity<Course> addCourseForm(@RequestBody Course course) {
-        Studio studio = courseService.getStudioByIdForLocation(Integer.valueOf(course.getId()));
-        course.setStudio(studio);
-        courseService.addCourseForm(course);
+    @GetMapping("/getcourselist")
+    public ResponseEntity<List<Course>> getCourseList() {
+        List<Course> courses = courseService.getCourseList();
+        return ResponseEntity.ok(courses);
+
+    }
+
+
+    @PostMapping("/addcoursedata")
+    public ResponseEntity<Course> addCourseData(@RequestBody Course course){
+        Studio studiodata = studioService.getStudioById(course.getId());
+        YogaSession yogaSession = yogaSessionService.getYogaSessionById(course.getId());
+        course.setStudio(studiodata);
+        course.setYogaSession(yogaSession);
+        courseService.addCourseData(course);
         return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/deletecourse/{id}")
+    public ResponseEntity<Void> deleteCourse(@PathVariable Integer id) {
+        courseService.deleteCourse(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/updatecourse/{id}")
+    public ResponseEntity<Course> updateCourse(@PathVariable Integer id, @RequestBody Course course) {
+        Course updatedCourse = courseService.updateCourse(id, course);
+        if (updatedCourse != null) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 }

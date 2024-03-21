@@ -15,7 +15,7 @@ public interface YogaRetreatService {
 
     YogaRetreat getYogaRetreatById(Integer id);
 
-    YogaRetreat updateYogaRetreat(Integer id, YogaRetreatDTO yogaRetreatDetails);
+    YogaRetreat updateYogaRetreat(Integer id, YogaRetreat yogaRetreatDetails);
 
     void deleteYogaRetreat(Integer id);
 }

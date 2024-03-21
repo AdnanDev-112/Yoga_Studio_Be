@@ -20,16 +20,23 @@ public class BookingController {
     @Autowired
     private BookingService bookingService;
 
-    @GetMapping("/getbookingdetails")
-    public ResponseEntity<List<BookingDTO>> getBookingDetails(Integer id) {
-    List<BookingDTO> bookings = bookingService.getBookingDetails(id);
-    return ResponseEntity.ok(bookings);
-}
+//    @GetMapping("/getbookingdetails")
+//    public ResponseEntity<List<BookingDTO>> getBookingDetails(Integer id) {
+//    List<BookingDTO> bookings = bookingService.getBookingDetails(id);
+//    return ResponseEntity.ok(bookings);
+//}
 
     @GetMapping("/getallbooking")
     public ResponseEntity<List<Booking>> getAllBookings() {
         List<Booking> bookings = bookingService.getAllBookings();
         return ResponseEntity.ok(bookings);
+    }
+
+    @PostMapping("/addbooking")
+    public ResponseEntity<Booking> addBooking(@RequestBody AddBookingDTO bookingData) {
+        Booking newBooking =  bookingService.addBooking(bookingData);
+        return ResponseEntity.ok().build();
+
     }
 
 //    @DeleteMapping("/deletebooking/{id}")

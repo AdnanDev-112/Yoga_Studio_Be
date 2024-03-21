@@ -1,10 +1,15 @@
 package com.enterprise.YogaStudio.service.impl;
 
 import com.enterprise.YogaStudio.dto.YogaRetreatDTO;
+import com.enterprise.YogaStudio.model.Instructor;
+import com.enterprise.YogaStudio.model.Pricing;
 import com.enterprise.YogaStudio.model.YogaRetreat;
+import com.enterprise.YogaStudio.model.YogaSession;
 import com.enterprise.YogaStudio.repository.YogaRetreatRepository;
 import com.enterprise.YogaStudio.service.InstructorService;
+import com.enterprise.YogaStudio.service.PricingService;
 import com.enterprise.YogaStudio.service.YogaRetreatService;
+import com.enterprise.YogaStudio.service.YogaSessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,19 +24,33 @@ public class YogaRetreatServiceImpl implements YogaRetreatService {
     @Autowired
     private InstructorService instructorService;
 
+    @Autowired
+    PricingService pricingService;
+
+    @Autowired
+    YogaSessionService yogaSessionService;
+
     @Override
     public List<YogaRetreat> getAllYogaRetreats() {
-        List<YogaRetreat> yogaRetreats = yogaRetreatRepository.findAll();
-        for (YogaRetreat retreat : yogaRetreats) {
-            retreat.setInstructorId(retreat.getInstructor().getId());
-            retreat.setInstructorName(retreat.getInstructor().getInstructorName());
-            retreat.setPricingAmount(retreat.getPricing().getAmount());
-        }
-        return yogaRetreats;
+        return  yogaRetreatRepository.findAll();
+
+
     }
 
     @Override
     public void addYogaRetreat(YogaRetreat yogaRetreat) {
+        Instructor instructor = instructorService.getInstructorById(yogaRetreat.getInstructorId());
+
+        Pricing pricing = pricingService.validateAmountExists(yogaRetreat.getPrice());
+
+        YogaSession yogaSession = yogaSessionService.getYogaSessionById(yogaRetreat.getWorkshopId());
+
+        yogaRetreat.setYogaSession(yogaSession);
+
+        yogaRetreat.setPricing(pricing);
+
+        yogaRetreat.setInstructor(instructor);
+
         yogaRetreatRepository.save(yogaRetreat);
     }
 
@@ -42,17 +61,20 @@ public class YogaRetreatServiceImpl implements YogaRetreatService {
     }
 
     @Override
-    public YogaRetreat updateYogaRetreat(Integer id, YogaRetreatDTO yogaRetreatDetails) {
+    public YogaRetreat updateYogaRetreat(Integer id, YogaRetreat yogaRetreatDetails) {
         return yogaRetreatRepository.findById(id)
                 .map(yogaRetreat -> {
-                    yogaRetreat.setRetreatName(yogaRetreatDetails.getRetreatName());
-                    yogaRetreat.setActivityType(yogaRetreatDetails.getActivityType());
-                    yogaRetreat.setMeal(yogaRetreatDetails.getMeal());
-                    yogaRetreat.setDate(yogaRetreatDetails.getDate());
-
                     yogaRetreat.setInstructor(instructorService.getInstructorById(yogaRetreatDetails.getInstructorId()));
 
-//                    yogaRetreat.setLocation(yogaRetreatDetails.getLocation());
+                    Pricing pricing = pricingService.validateAmountExists(yogaRetreatDetails.getPrice());
+
+                    YogaSession yogaSession = yogaSessionService.getYogaSessionById(yogaRetreatDetails.getWorkshopId());
+
+                    yogaRetreat.setPricing(pricing);
+                    yogaRetreat.setYogaSession(yogaSession);
+
+
+
                     // Set other fields as needed
                     return yogaRetreatRepository.save(yogaRetreat);
                 })

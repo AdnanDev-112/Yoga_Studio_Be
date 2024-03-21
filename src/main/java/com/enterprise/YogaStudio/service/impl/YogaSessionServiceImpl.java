@@ -54,6 +54,8 @@ public class YogaSessionServiceImpl implements YogaSessionService {
         yogaSessionRepository.save(yogaSession);
     }
 
+
+
     @Override
     public YogaSession getYogaSessionById(Integer id) {
         return yogaSessionRepository.findById(id).orElse(null);
@@ -101,6 +103,11 @@ public class YogaSessionServiceImpl implements YogaSessionService {
 
             return yogaSessionRepository.save(yogaSession);
         }).orElse(null);
+    }
+
+    @Override
+    public List<YogaSession> getSessionsByWorkshop() {
+        return yogaSessionRepository.findYogaSessionByWorkshop();
     }
 }
 

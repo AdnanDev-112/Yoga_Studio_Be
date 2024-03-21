@@ -1,10 +1,6 @@
 package com.enterprise.YogaStudio.service.impl;
 
-import com.enterprise.YogaStudio.dto.BookingDTO;
 import com.enterprise.YogaStudio.model.Booking;
-import com.enterprise.YogaStudio.model.YogaSession;
-
-
 import com.enterprise.YogaStudio.dto.AddBookingDTO;
 import com.enterprise.YogaStudio.model.*;
 import com.enterprise.YogaStudio.model.Client;
@@ -60,27 +56,27 @@ public class BookingServiceImpl implements BookingService {
     }
 
 
-    public List<BookingDTO> getBookingDetails(Integer id) {
-        List<Booking> bookings = bookingRepository.findByClientId(id);
-
-        return bookings.stream().map(booking -> {
-            BookingDTO bookingDTO = new BookingDTO();
-            bookingDTO.setCategoryType(booking.getSchedule().getCategoryType());
-            bookingDTO.setStartDate(booking.getSchedule().getDate());
-
-            if (booking.getSchedule().getYogaSession() != null) {
-                YogaSession yogaSession = booking.getSchedule().getYogaSession();
-                bookingDTO.setLevel(yogaSession.getLevel());
-                bookingDTO.setInstructorName(yogaSession.getInstructor().getInstructorName());
-                bookingDTO.setDuration(yogaSession.getDuration());
-                // Check if Pricing is not null before accessing it
-                if (yogaSession.getPricing() != null) {
-                    bookingDTO.setAmount(yogaSession.getPricing().getAmount());
-                }
-            }
-            return bookingDTO;
-        }).collect(Collectors.toList());
-    }
+//    public List<BookingDTO> getBookingDetails(Integer id) {
+//        List<Booking> bookings = bookingRepository.findByClientId(id);
+//
+//        return bookings.stream().map(booking -> {
+//            BookingDTO bookingDTO = new BookingDTO();
+//            bookingDTO.setCategoryType(booking.getSchedule().getCategoryType());
+//            bookingDTO.setStartDate(booking.getSchedule().getDate());
+//
+//            if (booking.getSchedule().getYogaSession() != null) {
+//                YogaSession yogaSession = booking.getSchedule().getYogaSession();
+//                bookingDTO.setLevel(yogaSession.getLevel());
+//                bookingDTO.setInstructorName(yogaSession.getInstructor().getInstructorName());
+//                bookingDTO.setDuration(yogaSession.getDuration());
+//                // Check if Pricing is not null before accessing it
+//                if (yogaSession.getPricing() != null) {
+//                    bookingDTO.setAmount(yogaSession.getPricing().getAmount());
+//                }
+//            }
+//            return bookingDTO;
+//        }).collect(Collectors.toList());
+//    }
 
 
 

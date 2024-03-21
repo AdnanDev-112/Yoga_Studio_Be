@@ -31,20 +31,16 @@ public class YogaRetreat {
     @Column(name = "activity_type", nullable = false)
     private String activityType;
 
-    @Column(name = "date")
-    private LocalDate date;
-
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "pricing_id", nullable = false)
     private Pricing pricing;
 
-    @JsonIgnore
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "yoga_session_id", nullable = false)
     private YogaSession yogaSession;
 
-    @JsonIgnore
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "instructor_id", nullable = false)
     private Instructor instructor;
@@ -53,11 +49,10 @@ public class YogaRetreat {
     @Transient
     private Integer instructorId;
 
-    // Additional fields for JSON representation
     @Transient
-    private String instructorName;
+    private Integer workshopId;
 
     @Transient
-    private BigDecimal pricingAmount;
+    private BigDecimal price;
 
 }

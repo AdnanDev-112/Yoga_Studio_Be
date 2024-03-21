@@ -18,18 +18,15 @@ public class YogaSessionController {
     @Autowired
     private YogaSessionService yogaSessionService;
 
-    @Autowired
-    private StudioService studioService;
-
-    @Autowired
-    private InstructorService instructorService;
-
-    @Autowired
-    private PricingService pricingService;
-
     @GetMapping("/getYogaSessions")
     public List<YogaSession> getYogaSessions() {
         return yogaSessionService.getYogaSession();
+    }
+
+
+    @GetMapping("/getsessionsbyworkshop")
+    public List<YogaSession> getSessionsByWorkshop() {
+        return yogaSessionService.getSessionsByWorkshop();
     }
 
     @PostMapping("/addYogaSession")

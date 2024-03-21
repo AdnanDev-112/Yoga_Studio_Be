@@ -23,6 +23,7 @@ public class YogaRetreatController {
 
     @GetMapping("/getyogaretreat/{id}")
     public ResponseEntity<YogaRetreat> getYogaRetreatById(@PathVariable Integer id) {
+        System.out.println(id);
         YogaRetreat yogaRetreat = yogaRetreatService.getYogaRetreatById(id);
         return yogaRetreat != null ? ResponseEntity.ok(yogaRetreat) : ResponseEntity.notFound().build();
     }

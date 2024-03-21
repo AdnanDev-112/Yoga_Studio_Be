@@ -15,6 +15,8 @@ public interface YogaSessionService {
     void deleteYogaSession(Integer id);
 
     YogaSession updateYogaSession(Integer id, YogaSession yogaSession);
+
+    List<YogaSession> getSessionsByWorkshop();
 }
 
 

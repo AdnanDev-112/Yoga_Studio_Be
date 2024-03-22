@@ -32,8 +32,6 @@ public class Course {
     @Column(name = "number_of_classes", nullable = false)
     private Integer numberOfClasses;
 
-    @Column(name = "price", nullable = false, precision = 13, scale = 2)
-    private BigDecimal price;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

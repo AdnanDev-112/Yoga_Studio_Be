@@ -54,7 +54,7 @@ public class PendingListServiceImpl implements PendingListService {
 //            if (pendingList.getBookedTime().isBefore(LocalDateTime.now().minusHours(24)) && !pendingList.getConfirmedStatus()) {
 //
 //            }
-            if (pendingList.getBookedTime().isBefore(LocalDateTime.now().minusMinutes(1)) && !pendingList.getConfirmedStatus()) {
+            if (pendingList.getBookedTime().isBefore(LocalDateTime.now().minusMinutes(5)) && !pendingList.getConfirmedStatus()) {
                 pendingList.setConfirmedStatus(true);
                 pendingRepository.save(pendingList);
 

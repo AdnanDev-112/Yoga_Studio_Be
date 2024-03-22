@@ -21,4 +21,10 @@ public class Pricing {
     @Column(name = "amount", nullable = false, precision = 13, scale = 2)
     private BigDecimal amount;
 
+    @Transient
+    private BigDecimal discountAppliedPrice;
+
+    @Transient
+    private Integer discountId;
+
 }

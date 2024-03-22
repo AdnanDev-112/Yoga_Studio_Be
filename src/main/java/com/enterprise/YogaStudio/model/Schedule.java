@@ -30,25 +30,22 @@ public class Schedule {
     @Column(name = "end_time")
     private LocalTime endTime;
 
-
     @Lob
     @Column(name = "category_type", nullable = false)
     private String categoryType;
-
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "yoga_session_id")
     private YogaSession yogaSession;
 
 
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "course_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "course_id")
     private Course course;
 
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "retreat_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "retreat_id")
     private YogaRetreat retreat;
 
 }

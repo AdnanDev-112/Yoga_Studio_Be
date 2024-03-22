@@ -32,4 +32,13 @@ public class Booking {
     @JoinColumn(name = "discount_id", nullable = true)
     private Discount discountId;
 
+    @Override
+    public String toString() {
+        return "Booking{" +
+                "id=" + id +
+                ", client=" + client +
+                ", schedule=" + schedule +
+                ", discountId=" + discountId +
+                '}';
+    }
 }

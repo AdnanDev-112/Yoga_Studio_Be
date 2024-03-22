@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Table(name = "pending_list")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+
 public class PendingList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

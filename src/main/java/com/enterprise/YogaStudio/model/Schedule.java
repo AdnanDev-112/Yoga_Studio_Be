@@ -31,10 +31,10 @@ public class Schedule {
     private LocalTime endTime;
 
 
+    @Lob
     @Column(name = "category_type", nullable = false)
     private String categoryType;
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "yoga_session_id")
     private YogaSession yogaSession;
@@ -48,12 +48,12 @@ public class Schedule {
     @Transient
     private Integer retreatId;
 
-    @JsonIgnore
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
     private Course course;
 
-    @JsonIgnore
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "retreat_id")
     private YogaRetreat retreat;

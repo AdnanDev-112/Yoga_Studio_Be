@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Getter
@@ -14,14 +15,8 @@ import java.time.LocalTime;
 @AllArgsConstructor
 public class ScheduleDTO {
     private String categoryType;
-    private String level;
-    private BigDecimal amount;
-    private LocalTime startTime;
-    private String instructorName;
-    private Integer duration;
-    private Integer maxCapacity;
-    private Boolean recurring;
-    private String managerName;
-    private String address;
-
+    private String startTime;
+    private String endTime;
+    private String date;
+    private String selectedSessionId;
 }

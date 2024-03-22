@@ -1,14 +1,10 @@
 package com.enterprise.YogaStudio.controller;
 
 import com.enterprise.YogaStudio.dto.ScheduleDTO;
-import com.enterprise.YogaStudio.dto.ScheduleFormDTO;
-import com.enterprise.YogaStudio.model.*;
-import com.enterprise.YogaStudio.service.ClientService;
+import com.enterprise.YogaStudio.service.*;
 import com.enterprise.YogaStudio.model.Schedule;
-import com.enterprise.YogaStudio.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import com.enterprise.YogaStudio.dto.ScheduleDTO;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,17 +17,33 @@ public class ScheduleController {
     @Autowired
     private ScheduleService scheduleService;
 
+    @Autowired
+    private YogaRetreatService yogaRetreatService;
+
+    @Autowired
+    private YogaSessionService yogaSessionService;
+
+    @Autowired
+    private CourseService courseService;
+
     @PostMapping("/addschedule")
-    public ResponseEntity<Schedule> addSchedule(@RequestBody Schedule schedule) {
+    public ResponseEntity<ScheduleDTO> addSchedule(@RequestBody ScheduleDTO schedule) {
         scheduleService.addSchedule(schedule);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/getschedulelist")
-    public ResponseEntity<List<ScheduleDTO>> getScheduleList() {
-        List<ScheduleDTO> schedule = scheduleService.getScheduleList();
-        return ResponseEntity.ok(schedule);
-    }
+//    @PostMapping("/addcourseclasses")
+//    public ResponseEntity<AddScheduleDTO> addCourseSchedule(@RequestBody List<AddScheduleDTO> addScheduleDTO) throws Exception {
+//        scheduleService.addCourseSchedule(addScheduleDTO);
+//        return ResponseEntity.ok().build();
+//    }
+
+
+//    @GetMapping("/getschedulelist")
+//    public ResponseEntity<List<ScheduleDTO>> getScheduleList() {
+//        List<ScheduleDTO> schedule = scheduleService.getScheduleList();
+//        return ResponseEntity.ok(schedule);
+//    }
 
     @DeleteMapping("/deleteschedule/{id}")
     public ResponseEntity<Void> deleteSchedule(@PathVariable Integer id) {
@@ -44,12 +56,6 @@ public class ScheduleController {
     public ResponseEntity<List<?>> getScheduleByCategory(@RequestParam String categoryType) {
         List<?> schedules = scheduleService.getScheduleByCategory(categoryType);
         return ResponseEntity.ok(schedules);
-    }
-
-    @PostMapping("/addnewscheduleentry")
-    public ResponseEntity<Schedule> addNewScheduleEntry(@RequestBody Schedule schedule) {
-        scheduleService.addNewScheduleEntry(schedule);
-        return ResponseEntity.ok(schedule);
     }
 
     @GetMapping("/getschedule/{id}")

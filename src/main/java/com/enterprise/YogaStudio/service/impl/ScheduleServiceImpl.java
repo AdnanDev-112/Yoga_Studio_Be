@@ -1,43 +1,27 @@
 package com.enterprise.YogaStudio.service.impl;
 
 import com.enterprise.YogaStudio.dto.ScheduleDTO;
-import com.enterprise.YogaStudio.dto.ScheduleFormDTO;
-import com.enterprise.YogaStudio.model.*;
 import com.enterprise.YogaStudio.repository.BookingRepository;
 import com.enterprise.YogaStudio.repository.ScheduleRepository;
 import com.enterprise.YogaStudio.model.Schedule;
 import com.enterprise.YogaStudio.repository.ClientRepository;
 import com.enterprise.YogaStudio.repository.YogaSessionRepository;
 import com.enterprise.YogaStudio.service.*;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.util.stream.Collectors;
-
-import java.math.BigDecimal;
-
 @Service
 public class ScheduleServiceImpl implements ScheduleService {
-
-
-    private List<ScheduleDTO> schedules = new ArrayList<>();
-
     @Autowired
     private ScheduleRepository scheduleRepository;
 
     @Autowired
     private BookingRepository bookingRepository;
-    @Autowired
-    private ClientRepository clientRepository;
-
-    @Autowired
-    private DiscountService discountService;
 
     @Autowired
     private YogaRetreatService yogaRetreatService;
@@ -46,65 +30,55 @@ public class ScheduleServiceImpl implements ScheduleService {
     private YogaSessionService yogaSessionService;
 
     @Autowired
-    private DiscountCalculationService discountCalculationService;
-    @Autowired
-    private YogaSessionRepository yogaSessionRepository;
-
-    @Autowired
     private CourseService courseService;
 
 
-    @Override
-    public List<ScheduleDTO> getScheduleList() {
-        List<Schedule> schedules = scheduleRepository.findAll();
-        return schedules.stream().map(this::convertToDto).collect(Collectors.toList());
-    }
+//    @Override
+//    public List<ScheduleDTO> getScheduleList() {
+//        List<Schedule> schedules = scheduleRepository.findAll();
+//        return schedules.stream().map(this::convertToDto).collect(Collectors.toList());
+//    }
 
-
-    @Override
-    public Schedule addSchedule(Schedule schedule) {
-        return scheduleRepository.save(schedule);
-    }
 
     @Override
     public void deleteSchedule(Integer id) {
         bookingRepository.deleteById(id);
         scheduleRepository.deleteById(id);
     }
-
-
-    private ScheduleDTO convertToDto(Schedule schedule) {
-        ScheduleDTO dto = new ScheduleDTO();
-        dto.setCategoryType(schedule.getCategoryType());
-        dto.setStartTime(schedule.getStartTime());
-
-        if (schedule.getYogaSession() != null) {
-            YogaSession yogaSession = schedule.getYogaSession();
-            dto.setLevel(yogaSession.getLevel());
-            dto.setInstructorName(yogaSession.getInstructor().getInstructorName());
-            dto.setDuration(yogaSession.getDuration());
-            dto.setMaxCapacity(yogaSession.getMaxCapacity());
-            dto.setRecurring(yogaSession.getRecurring().booleanValue());
-
-            if (yogaSession.getPricing() != null) {
-                dto.setAmount(yogaSession.getPricing().getAmount());
-            }
-
-            if (yogaSession.getStudio() != null) {
-                dto.setAddress(yogaSession.getStudio().getAddress());
-            }
-        }
-
-        return dto;
-    }
+//
+//
+//    private ScheduleDTO convertToDto(Schedule schedule) {
+//        ScheduleDTO dto = new ScheduleDTO();
+//        dto.setCategoryType(schedule.getCategoryType());
+//        dto.setStartTime(schedule.getStartTime());
+//
+//        if (schedule.getYogaSession() != null) {
+//            YogaSession yogaSession = schedule.getYogaSession();
+//            dto.setLevel(yogaSession.getLevel());
+//            dto.setInstructorName(yogaSession.getInstructor().getInstructorName());
+//            dto.setDuration(yogaSession.getDuration());
+//            dto.setMaxCapacity(yogaSession.getMaxCapacity());
+//            dto.setRecurring(yogaSession.getRecurring().booleanValue());
+//
+//            if (yogaSession.getPricing() != null) {
+//                dto.setAmount(yogaSession.getPricing().getAmount());
+//            }
+//
+//            if (yogaSession.getStudio() != null) {
+//                dto.setAddress(yogaSession.getStudio().getAddress());
+//            }
+//        }
+//
+//        return dto;
+//    }
 
 
     @Override
     public List<?> getScheduleByCategory(String categoryType) {
         List<?> data = new ArrayList<>();
-        switch (categoryType){
+        switch (categoryType) {
             case "yoga_session":
-                data =  yogaSessionService.getAllYogaSessions();
+                data = yogaSessionService.getAllYogaSessions();
                 break;
 
             case "retreat":
@@ -117,17 +91,6 @@ public class ScheduleServiceImpl implements ScheduleService {
 
         }
         return data;
-    }
-
-    @Override
-    public Schedule addNewScheduleEntry(Schedule schedule) {
-        YogaRetreat yogaRetreat = yogaRetreatService.getRetreatById(schedule.getRetreatId());
-        YogaSession yogaSession = yogaSessionService.getYogaSessionById(schedule.getYogasessionId());
-        Course course = courseService.getCourseById(schedule.getCourseId());
-        schedule.setYogaSession(yogaSession);
-        schedule.setRetreat(yogaRetreat);
-        schedule.setCourse(course);
-        return scheduleRepository.save(schedule);
     }
 
     @Override
@@ -149,5 +112,57 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
 
+    @Override
+    public Schedule addSchedule(ScheduleDTO schedule) {
+        Schedule newSchedule = new Schedule();
+        newSchedule.setCategoryType(schedule.getCategoryType());
+        newSchedule.setDate(LocalDate.parse(schedule.getDate()));
+        newSchedule.setStartTime(LocalTime.parse(schedule.getStartTime()));
+        newSchedule.setEndTime(LocalTime.parse(schedule.getEndTime()));
+        System.out.println(schedule.getCategoryType());
+        switch (schedule.getCategoryType()) {
+            case "yoga_session":
+                newSchedule.setYogaSession(yogaSessionService.getYogaSessionById(Integer.parseInt(schedule.getSelectedSessionId())));
+                break;
+            case "retreat":
+                newSchedule.setRetreat(yogaRetreatService.getRetreatById(Integer.parseInt(schedule.getSelectedSessionId())));
+                break;
+            case "course":
+                newSchedule.setCourse(courseService.getCourseById(Integer.parseInt(schedule.getSelectedSessionId())));
+                break;
+            default:
+                // Handle unsupported category type
+                break;
+        }
+
+        return scheduleRepository.save(newSchedule);
+
+    }
+
+//
+//    public boolean isScheduleConflict(AddScheduleDTO addScheduleDTO) {
+//        List<Schedule> conflictingSchedules = scheduleRepository.findByDateAndTime(
+//                addScheduleDTO.getDate(),
+//                addScheduleDTO.getStartTime(),
+//                addScheduleDTO.getEndTime());
+//        return !conflictingSchedules.isEmpty();
+//    }
+//
+//    @Override
+//    public void addCourseSchedule(List<AddScheduleDTO> addScheduleDTO) throws Exception {
+//        for (AddScheduleDTO addSchedule : addScheduleDTO) {
+//            if (isScheduleConflict(addSchedule)) {
+//                throw new Exception("There is a schedule conflict. Please choose a different date/time.");
+//            }
+//            Schedule schedule = new Schedule();
+//            schedule.setRetreatId(addSchedule.getRetreatId());
+//            schedule.setYogasessionId(addSchedule.getYogasessionId());
+//            schedule.setCourseId(addSchedule.getCourseId());
+//            schedule.setDate(addSchedule.getDate());
+//            schedule.setStartTime(addSchedule.getStartTime());
+//            schedule.setEndTime(addSchedule.getEndTime());
+//            scheduleRepository.save(schedule);
+//        }
+//    }
 }
 

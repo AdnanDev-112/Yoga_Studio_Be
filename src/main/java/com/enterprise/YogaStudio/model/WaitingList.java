@@ -21,25 +21,16 @@ public class WaitingList {
 
     @Column(name = "add_date")
     private LocalDate addDate;
-
-    @Lob
-    @Column(name = "category_type", nullable = false)
-    private String categoryType;
+//
+//    @Lob
+//    @Column(name = "category_type", nullable = false)
+//    private String categoryType;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "client_id", nullable = false)
     private Client client;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "manager_id", nullable = false)
-    private Manager manager;
-
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "pending_id", nullable = false)
-    private PendingList pending;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

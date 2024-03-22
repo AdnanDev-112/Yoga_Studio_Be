@@ -34,9 +34,6 @@ public class Client {
     @Column(name = "DOB")
     private LocalDate dob;
 
-    @Column(name = "client_discount_status", nullable = false)
-    private Boolean clientDiscountStatus = false;
-
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "studio_id", nullable = false)

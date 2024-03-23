@@ -26,6 +26,7 @@ public class ScheduleController {
     @Autowired
     private CourseService courseService;
 
+    //add function for yoga session and yoga retreat
     @PostMapping("/addschedule")
     public ResponseEntity<ScheduleDTO> addSchedule(@RequestBody ScheduleDTO schedule) {
         scheduleService.addSchedule(schedule);

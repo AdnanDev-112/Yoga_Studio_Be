@@ -8,6 +8,8 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -19,4 +21,6 @@ public class ScheduleDTO {
     private String endTime;
     private String date;
     private String selectedSessionId;
+    private ArrayList<Map<String, String>> classes;
 }
+

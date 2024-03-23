@@ -1,6 +1,9 @@
 package com.enterprise.YogaStudio.service.impl;
 
+import com.enterprise.YogaStudio.dto.CourseExtendedDataDTO;
 import com.enterprise.YogaStudio.dto.ScheduleDTO;
+import com.enterprise.YogaStudio.model.Course;
+import com.enterprise.YogaStudio.model.YogaSession;
 import com.enterprise.YogaStudio.repository.BookingRepository;
 import com.enterprise.YogaStudio.repository.ScheduleRepository;
 import com.enterprise.YogaStudio.model.Schedule;
@@ -14,6 +17,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class ScheduleServiceImpl implements ScheduleService {
@@ -32,46 +37,11 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Autowired
     private CourseService courseService;
 
-
-//    @Override
-//    public List<ScheduleDTO> getScheduleList() {
-//        List<Schedule> schedules = scheduleRepository.findAll();
-//        return schedules.stream().map(this::convertToDto).collect(Collectors.toList());
-//    }
-
-
     @Override
     public void deleteSchedule(Integer id) {
         bookingRepository.deleteById(id);
         scheduleRepository.deleteById(id);
     }
-//
-//
-//    private ScheduleDTO convertToDto(Schedule schedule) {
-//        ScheduleDTO dto = new ScheduleDTO();
-//        dto.setCategoryType(schedule.getCategoryType());
-//        dto.setStartTime(schedule.getStartTime());
-//
-//        if (schedule.getYogaSession() != null) {
-//            YogaSession yogaSession = schedule.getYogaSession();
-//            dto.setLevel(yogaSession.getLevel());
-//            dto.setInstructorName(yogaSession.getInstructor().getInstructorName());
-//            dto.setDuration(yogaSession.getDuration());
-//            dto.setMaxCapacity(yogaSession.getMaxCapacity());
-//            dto.setRecurring(yogaSession.getRecurring().booleanValue());
-//
-//            if (yogaSession.getPricing() != null) {
-//                dto.setAmount(yogaSession.getPricing().getAmount());
-//            }
-//
-//            if (yogaSession.getStudio() != null) {
-//                dto.setAddress(yogaSession.getStudio().getAddress());
-//            }
-//        }
-//
-//        return dto;
-//    }
-
 
     @Override
     public List<?> getScheduleByCategory(String categoryType) {
@@ -111,58 +81,63 @@ public class ScheduleServiceImpl implements ScheduleService {
                 .orElse(null);
     }
 
+    private void processSchedule(ScheduleDTO schedule) {
+        ArrayList<Map<String, String>> classesList = schedule.getClasses();
 
-    @Override
-    public Schedule addSchedule(ScheduleDTO schedule) {
-        Schedule newSchedule = new Schedule();
-        newSchedule.setCategoryType(schedule.getCategoryType());
-        newSchedule.setDate(LocalDate.parse(schedule.getDate()));
-        newSchedule.setStartTime(LocalTime.parse(schedule.getStartTime()));
-        newSchedule.setEndTime(LocalTime.parse(schedule.getEndTime()));
-        System.out.println(schedule.getCategoryType());
-        switch (schedule.getCategoryType()) {
-            case "yoga_session":
-                newSchedule.setYogaSession(yogaSessionService.getYogaSessionById(Integer.parseInt(schedule.getSelectedSessionId())));
-                break;
-            case "retreat":
-                newSchedule.setRetreat(yogaRetreatService.getRetreatById(Integer.parseInt(schedule.getSelectedSessionId())));
-                break;
-            case "course":
+            for (Map<String, String> classData : classesList) {
+
+                Schedule newSchedule = new Schedule();
+                newSchedule.setDate(LocalDate.parse(classData.get("classDate")));
+                newSchedule.setStartTime(LocalTime.parse(classData.get("classStartTime")));
+                newSchedule.setEndTime(LocalTime.parse(classData.get("classEndTime")));
+                newSchedule.setCategoryType(schedule.getCategoryType());
                 newSchedule.setCourse(courseService.getCourseById(Integer.parseInt(schedule.getSelectedSessionId())));
-                break;
-            default:
-                // Handle unsupported category type
-                break;
-        }
+                scheduleRepository.save(newSchedule);
+            }
 
-        return scheduleRepository.save(newSchedule);
 
     }
 
-//
-//    public boolean isScheduleConflict(AddScheduleDTO addScheduleDTO) {
-//        List<Schedule> conflictingSchedules = scheduleRepository.findByDateAndTime(
-//                addScheduleDTO.getDate(),
-//                addScheduleDTO.getStartTime(),
-//                addScheduleDTO.getEndTime());
-//        return !conflictingSchedules.isEmpty();
-//    }
-//
-//    @Override
-//    public void addCourseSchedule(List<AddScheduleDTO> addScheduleDTO) throws Exception {
-//        for (AddScheduleDTO addSchedule : addScheduleDTO) {
-//            if (isScheduleConflict(addSchedule)) {
-//                throw new Exception("There is a schedule conflict. Please choose a different date/time.");
-//            }
-//            Schedule schedule = new Schedule();
-//            schedule.setRetreatId(addSchedule.getRetreatId());
-//            schedule.setYogasessionId(addSchedule.getYogasessionId());
-//            schedule.setCourseId(addSchedule.getCourseId());
-//            schedule.setDate(addSchedule.getDate());
-//            schedule.setStartTime(addSchedule.getStartTime());
-//            schedule.setEndTime(addSchedule.getEndTime());
-//            scheduleRepository.save(schedule);
-//        }
-//    }
+
+    @Override
+    public void addSchedule(ScheduleDTO schedule) {
+        Schedule newSchedule = new Schedule();
+        newSchedule.setCategoryType(schedule.getCategoryType());
+
+        if (schedule.getCategoryType().equals("yoga_session") || schedule.getCategoryType().equals("retreat")) {
+            newSchedule.setDate(LocalDate.parse(schedule.getDate()));
+            newSchedule.setStartTime(LocalTime.parse(schedule.getStartTime()));
+            newSchedule.setEndTime(LocalTime.parse(schedule.getEndTime()));
+            switch (schedule.getCategoryType()) {
+                case "yoga_session":
+                    newSchedule.setYogaSession(yogaSessionService.getYogaSessionById(Integer.parseInt(schedule.getSelectedSessionId())));
+                    break;
+                case "retreat":
+                    newSchedule.setRetreat(yogaRetreatService.getRetreatById(Integer.parseInt(schedule.getSelectedSessionId())));
+                    break;
+                default:
+                    break;
+            }
+            scheduleRepository.save(newSchedule);
+        } else {
+            processSchedule(schedule);
+
+    }
+    }
+
+
+
+
+
+    public boolean isScheduleConflict(ScheduleDTO scheduleDTO) {
+        LocalDate date = LocalDate.parse(scheduleDTO.getDate());
+        LocalTime startTime = LocalTime.parse(scheduleDTO.getStartTime());
+        LocalTime endTime = LocalTime.parse(scheduleDTO.getEndTime());
+        List<Schedule> conflictingSchedules = scheduleRepository.findByDateAndTime(date, startTime, endTime);
+        return !conflictingSchedules.isEmpty();
+    }
+
+
 }
+
 

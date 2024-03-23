@@ -11,7 +11,7 @@ public interface ScheduleService {
 
   //  List<ScheduleDTO> getScheduleList();
 
-    Schedule addSchedule(ScheduleDTO schedule);
+    void addSchedule(ScheduleDTO schedule);
 
     void deleteSchedule(Integer id);
 

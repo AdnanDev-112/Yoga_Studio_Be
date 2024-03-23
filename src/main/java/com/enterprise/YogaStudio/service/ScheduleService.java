@@ -2,7 +2,6 @@ package com.enterprise.YogaStudio.service;
 
 import com.enterprise.YogaStudio.dto.ScheduleDTO;
 import com.enterprise.YogaStudio.dto.ScheduleFormDTO;
-import com.enterprise.YogaStudio.model.Client;
 import com.enterprise.YogaStudio.model.Schedule;
 import org.springframework.stereotype.Service;
 
@@ -11,17 +10,21 @@ import java.util.List;
 @Service
 public interface ScheduleService {
 
+  //  List<ScheduleDTO> getScheduleList();
 
+    List<Schedule> getBookingsByCategoryType(String categoryType, String clientID);
 
-    public List<Schedule> getBookingsByCategoryType(String categoryType, String clientID);
-    List<ScheduleDTO> getScheduleList();
+    void addSchedule(ScheduleDTO schedule);
 
-    List<Schedule> getScheduleByCategoryType(String categoryType);
-
-    Schedule addNewScheduleEntry(Schedule newEntry);
-    Schedule addSchedule(ScheduleFormDTO scheduleForm);
+    List<Schedule> getScheduleList();
 
     void deleteSchedule(Integer id);
 
     Schedule getScheduleById(Integer id);
+
+    List<?> getScheduleByCategory(String categoryType);
+
+    Schedule updateSchedule(Integer id, Schedule schedule);
+
+   // void addCourseSchedule(List<AddScheduleDTO> addScheduleDTO) throws Exception;
 }

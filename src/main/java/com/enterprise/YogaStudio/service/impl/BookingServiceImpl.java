@@ -1,5 +1,6 @@
 package com.enterprise.YogaStudio.service.impl;
 
+import com.enterprise.YogaStudio.dto.BookingDTO;
 import com.enterprise.YogaStudio.model.Booking;
 import com.enterprise.YogaStudio.dto.AddBookingDTO;
 import com.enterprise.YogaStudio.model.*;
@@ -17,7 +18,7 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 @Service
 public class BookingServiceImpl implements BookingService {
@@ -67,9 +68,15 @@ public class BookingServiceImpl implements BookingService {
     }
 
 
+
     @Override
     public List<Booking> getAllBookings() {
         return bookingRepository.findAll();
+    }
+
+    @Override
+    public List<BookingDTO> getBookingDetails(Integer clientId) {
+        return null;
     }
 
 

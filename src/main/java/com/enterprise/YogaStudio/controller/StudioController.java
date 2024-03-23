@@ -1,3 +1,4 @@
+
 package com.enterprise.YogaStudio.controller;
 
 import com.enterprise.YogaStudio.model.Studio;
@@ -19,38 +20,18 @@ public class StudioController {
     public List<Studio> getStudioDetails(){
         return studioService.getStudioDetails();
     }
-//
-//    @GetMapping("/getid/{studioID}")
-//    public Studio getStudioIDDetails(@PathVariable Integer studioID){
-//        return studioService.getStudioIDDetails(studioID);
-//    }
-//
-//    @PostMapping("/addDetails")
-//    public Studio saveStudioDetails(@RequestBody Studio studioModel){
-//        return studioService.addStudioDetails(studioModel);
-//    }
-//
-//    @PutMapping("/update/{studioID}")
-//    public ResponseEntity<Void> updateStudioAndManager(@PathVariable Integer studioID, @RequestBody UpdateStudioDetails updateStudioDetails){
-//        studioService.updateStudioAndManager(studioID, updateStudioDetails);
-//        return ResponseEntity.noContent().build();
-//    }
-//
-//    @DeleteMapping("/delete/{studioID}")
-//    public ResponseEntity<Void> deleteStudioId(@PathVariable Integer studioID){
-//        studioService.deleteStudioId(studioID);
-//        return ResponseEntity.noContent().build();
-//    }
 
-
-//@PutMapping("/update/{studioID}")
-//public ResponseEntity<Void> updateStudio(@PathVariable Integer studioID, @RequestBody UpdateStudioRequest updateRequest) {
-//    studioService.updateStudioAndManager(studioID, updateRequest.getStudio(), updateRequest.getManager());
-//    return ResponseEntity.noContent().build();
-//}
+    @GetMapping("/getstudiobyid/{id}")
+    public ResponseEntity<Studio> getStudioById(@PathVariable Integer id) {
+        Studio studio = studioService.getStudioById(id);
+        if (studio != null) {
+            return ResponseEntity.ok(studio);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
 }
-
 
 
 

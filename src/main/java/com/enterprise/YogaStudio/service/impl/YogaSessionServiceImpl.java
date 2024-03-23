@@ -46,7 +46,7 @@ public class YogaSessionServiceImpl implements YogaSessionService {
 
         String priceFromForm = yogaSession.getPrice();
         BigDecimal priceFromFormDecimal = new BigDecimal(priceFromForm);
-        Pricing pricing =  pricingService.validateAmountExists(priceFromFormDecimal);
+        Pricing pricing = pricingService.validateAmountExists(priceFromFormDecimal);
 
         yogaSession.setStudio(studio);
         yogaSession.setPricing(pricing);
@@ -54,7 +54,10 @@ public class YogaSessionServiceImpl implements YogaSessionService {
         yogaSessionRepository.save(yogaSession);
     }
 
-
+    @Override
+    public List<YogaSession> getYogaSessionsWithRecurring() {
+        return yogaSessionRepository.findClassTypeByRecurring(true);
+    }
 
     @Override
     public YogaSession getYogaSessionById(Integer id) {
@@ -89,7 +92,7 @@ public class YogaSessionServiceImpl implements YogaSessionService {
 
             String priceFromForm = yogaSessionDetails.getPrice();
             BigDecimal priceFromFormDecimal = new BigDecimal(priceFromForm);
-            Pricing pricing =  pricingService.validateAmountExists(priceFromFormDecimal);
+            Pricing pricing = pricingService.validateAmountExists(priceFromFormDecimal);
 
 //                    FKS
             yogaSession.setInstructor(instructor);
@@ -112,50 +115,4 @@ public class YogaSessionServiceImpl implements YogaSessionService {
 }
 
 
-//
-//
-//@Override
-//public YogaSession updateYogaSession(Integer id, YogaSession yogaSessionDetails) {
-//    return yogaSessionRepository.findById(id)
-//            .map(yogaSession -> {
-//                // ... existing code ...
-//
-//                BigDecimal newPrice = new BigDecimal(yogaSessionDetails.getPrice());
-//                Pricing existingPricing = pricingService.getPricingById(yogaSession.getPricing().getId());
-//
-//                if (existingPricing.getAmount().compareTo(newPrice) != 0) {
-//                    Pricing newPricing = new Pricing();
-//                    newPricing.setAmount(newPrice);
-//                    newPricing.setLevel(yogaSessionDetails.getLevel());
-//                    newPricing.setType("yoga_session");
-//                    Pricing savedPrice = pricingService.addPricingDetails(newPricing);
-//                    yogaSession.setPricing(savedPrice);
-//                }
-//
-//                // ... existing code ...
-//
-//                return yogaSessionRepository.save(yogaSession);
-//            })
-//            .orElse(null);
-//}
-//
-//@Override
-//public void addYogaSession(YogaSession yogaSession) {
-//    BigDecimal newPrice = new BigDecimal(yogaSession.getPrice());
-//    Pricing existingPricing = pricingService.getPricingByAmount(newPrice);
-//
-//    if (existingPricing == null) {
-//        Pricing pricing = new Pricing();
-//        pricing.setAmount(newPrice);
-//        pricing.setLevel(yogaSession.getLevel());
-//        pricing.setType("yoga_session");
-//        Pricing savedPrice = pricingService.addPricingDetails(pricing);
-//        yogaSession.setPricing(savedPrice);
-//    } else {
-//        yogaSession.setPricing(existingPricing);
-//    }
-//
-//    // ... existing code ...
-//
-//    yogaSessionRepository.save(yogaSession);
-//}
+

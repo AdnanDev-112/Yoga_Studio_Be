@@ -1,6 +1,7 @@
 
 package com.enterprise.YogaStudio.dto;
 
+import com.enterprise.YogaStudio.model.Studio;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,5 +22,5 @@ public class CourseDTO {
     private LocalDate endDate;
     private Integer numberOfClasses;
     private BigDecimal price;
-    private StudioDTO studio;
+    private Studio studio;
 }

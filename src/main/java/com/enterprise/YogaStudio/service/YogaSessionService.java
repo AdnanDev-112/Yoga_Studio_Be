@@ -12,6 +12,8 @@ public interface YogaSessionService {
     void addYogaSession(YogaSession yogaSession);
     public YogaSession getYogaSessionById(Integer id);
 
+    List<YogaSession> getYogaSessionsWithRecurring();
+
     void deleteYogaSession(Integer id);
 
     YogaSession updateYogaSession(Integer id, YogaSession yogaSession);

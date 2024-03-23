@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -32,16 +33,23 @@ public class Course {
     @Column(name = "number_of_classes", nullable = false)
     private Integer numberOfClasses;
 
+    @Transient
+    private Integer studioId;
 
-    @JsonIgnore
+    @Transient
+    private Integer yogasessionId;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "studio_id", nullable = false)
     private Studio studio;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "pricing_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pricing_id")
     private Pricing pricing;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "yoga_session_id")
+    private YogaSession yogaSession;
 
 
 }

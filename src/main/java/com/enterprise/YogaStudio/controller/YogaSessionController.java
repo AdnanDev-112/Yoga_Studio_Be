@@ -1,14 +1,11 @@
 package com.enterprise.YogaStudio.controller;
 import com.enterprise.YogaStudio.model.YogaSession;
-import com.enterprise.YogaStudio.service.InstructorService;
-import com.enterprise.YogaStudio.service.PricingService;
-import com.enterprise.YogaStudio.service.StudioService;
 import com.enterprise.YogaStudio.service.YogaSessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
+
 import java.util.List;
 
 @RestController
@@ -27,6 +24,16 @@ public class YogaSessionController {
     @GetMapping("/getsessionsbyworkshop")
     public List<YogaSession> getSessionsByWorkshop() {
         return yogaSessionService.getSessionsByWorkshop();
+    }
+
+    @GetMapping("/getactivitytype")
+    public ResponseEntity<List<YogaSession>> getYogaSessionsWithRecurring() {
+        List<YogaSession> yogaSessions = yogaSessionService.getYogaSessionsWithRecurring();
+        if (!yogaSessions.isEmpty()) {
+            return ResponseEntity.ok(yogaSessions);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping("/addYogaSession")
@@ -52,7 +59,7 @@ public class YogaSessionController {
         }
     }
 
-    @GetMapping("/getoneyogasession/{id}")
+    @GetMapping("/getyogasessionbyid/{id}")
     public ResponseEntity<YogaSession> getYogaSessionById(@PathVariable Integer id) {
         YogaSession yogaSession = yogaSessionService.getYogaSessionById(id);
         if (yogaSession != null) {
@@ -61,4 +68,5 @@ public class YogaSessionController {
             return ResponseEntity.notFound().build();
         }
     }
+
 }

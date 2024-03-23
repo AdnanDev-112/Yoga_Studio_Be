@@ -30,6 +30,7 @@ public class Schedule {
     @Column(name = "end_time")
     private LocalTime endTime;
 
+
     @Lob
     @Column(name = "category_type", nullable = false)
     private String categoryType;
@@ -37,6 +38,15 @@ public class Schedule {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "yoga_session_id")
     private YogaSession yogaSession;
+
+    @Transient
+    private Integer yogasessionId;
+
+    @Transient
+    private Integer courseId;
+
+    @Transient
+    private Integer retreatId;
 
 
     @ManyToOne(fetch = FetchType.LAZY)

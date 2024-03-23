@@ -15,5 +15,6 @@ public class AddBookingDTO {
         private Integer clientId;
         private Integer scheduleId;
         private String category_type;
+        private String categorySubType;
 }
 

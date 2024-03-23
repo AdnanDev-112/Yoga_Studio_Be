@@ -36,6 +36,13 @@ public class PendingListServiceImpl implements PendingListService {
     }
 
 
+    @Override
+    @Transactional
+    public List<PendingList> getPendingDataForSchedule(Integer yogaSessionId) {
+        return pendingRepository.getSchedulesByYogaSessionClasses(yogaSessionId);
+    }
+
+
     //    @Scheduled(cron = "0 0 * * * *")
 //public void handlePendingLists() {
 //    List<PendingList> pendingLists = pendingListService.getpendingLists();
@@ -46,15 +53,15 @@ public class PendingListServiceImpl implements PendingListService {
 //        }
 //    }
 //}
-    @Scheduled(cron = "0 * * * * *") // This cron expression means the method will be executed every minute
-    @Transactional
+//    @Scheduled(cron = "0 * * * * *") // This cron expression means the method will be executed every minute
+//    @Transactional
     public void handlePendingLists() {
         List<PendingList> pendingLists = getpendingLists();
         for (PendingList pendingList : pendingLists) {
 //            if (pendingList.getBookedTime().isBefore(LocalDateTime.now().minusHours(24)) && !pendingList.getConfirmedStatus()) {
 //
 //            }
-            if (pendingList.getBookedTime().isBefore(LocalDateTime.now().minusMinutes(5)) && !pendingList.getConfirmedStatus()) {
+            if (pendingList.getBookedTime().isBefore(LocalDateTime.now().minusMinutes(1)) && !pendingList.getConfirmedStatus()) {
                 pendingList.setConfirmedStatus(true);
                 pendingRepository.save(pendingList);
 

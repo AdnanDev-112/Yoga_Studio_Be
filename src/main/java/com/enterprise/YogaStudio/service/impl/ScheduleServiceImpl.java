@@ -81,6 +81,11 @@ public class ScheduleServiceImpl implements ScheduleService {
         scheduleRepository.deleteById(id);
     }
 
+    @Override
+    public Schedule getScheduleById(Integer id) {
+        return scheduleRepository.findById(id).orElse(null);
+    }
+
     private Schedule convertScheduledFormDTOToSchedule(ScheduleFormDTO scheduleForm) {
         Schedule schedule = new Schedule();
         schedule.setCategoryType(scheduleForm.getCategoryType());

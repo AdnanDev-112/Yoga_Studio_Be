@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,7 +37,23 @@ public class BookingServiceImpl implements BookingService {
     private ClientService clientService;
 
     @Autowired
-    private PendingRepository pendingRepository;
+    private ScheduleService scheduleService;
+
+    @Autowired
+    private WaitingListService waitingListService;
+
+    //    Methods
+    private void createAndSavePendingList(Client client, Booking newBooking) {
+        LocalDateTime date = LocalDateTime.now();
+        PendingList pendingList = new PendingList();
+        pendingList.setBookedTime(date);
+        pendingList.setClient(client);
+        pendingList.setBooking(newBooking);
+        pendingList.setConfirmedStatus(false);
+
+        // Save the pending list
+        pendingListService.addPendingList(pendingList);
+    }
 
     @Override
     public List<Booking> getAllBooking() {
@@ -47,7 +65,6 @@ public class BookingServiceImpl implements BookingService {
 
         return bookingRepository.findByClientId(2);
     }
-
 
 
     @Override
@@ -79,16 +96,11 @@ public class BookingServiceImpl implements BookingService {
 //    }
 
 
-
     @Override
     public Booking addBooking(AddBookingDTO bookingData) {
         Booking booking = new Booking();
         Client client = clientService.getClientById(bookingData.getClientId());
-
-        Schedule schedule = new Schedule();
-        // Setters on Objects
-        schedule.setId(bookingData.getScheduleId());
-
+        Schedule schedule = scheduleService.getScheduleById(bookingData.getScheduleId());
 
 //        Processing
         if (bookingData.getCategory_type().equals("course")) {
@@ -97,31 +109,53 @@ public class BookingServiceImpl implements BookingService {
             Discount applicableDiscount = discountCalculationService.getApplicableDiscount(clientAge, discounts);
             booking.setDiscountId(applicableDiscount);
         }
-
         // Setters on Booking
         booking.setClient(client);
         booking.setSchedule(schedule);
 
         // Save the booking
-        Booking newBooking =  bookingRepository.save(booking);
+        Booking newBooking = bookingRepository.save(booking);
 
-//        Creating a new Pending List
-        LocalDateTime date = LocalDateTime.now();
-        PendingList pendingList = new PendingList();
-        pendingList.setBookedTime(date);
-        pendingList.setClient(client);
-        pendingList.setBooking(newBooking);
-        pendingList.setConfirmedStatus(false);
-
-        //Save the pending list
-        pendingListService.addPendingList(pendingList);
+//        Check Capacity and Bookings
+        if (bookingData.getCategory_type().equals("yoga_session") && bookingData.getCategorySubType().equals("Class")) {
+//            Calculate Capacity
+            int maxCapacity = schedule.getYogaSession().getMaxCapacity();
+            int currentCapacity = pendingListService.getPendingDataForSchedule(schedule.getYogaSession().getId()).size();
 
 
+            System.out.println("Max Capacity: " + maxCapacity);
+            System.out.println("Current Capacity: " + currentCapacity);
+
+            if (currentCapacity >= maxCapacity) {
+                System.out.println("Class is full");
+                System.out.println("Waiting List Initiated");
+
+                WaitingList waitingList = new WaitingList();
+                waitingList.setClient(client);
+                waitingList.setBooking(newBooking);
+                waitingList.setAddDate(new Timestamp(System.currentTimeMillis()));
+                waitingList.setYogaSession(newBooking.getSchedule().getYogaSession());
+                waitingListService.addWaitingList(waitingList);
+                System.out.println("Waiting List Added");
+            } else {
+                createAndSavePendingList(client, newBooking);
+
+            }
+
+        } else {
+
+            createAndSavePendingList(client, newBooking);
+        }
 
 
         return newBooking;
     }
 
+    @Override
+    public void removeBooking(Integer bookingId) {
+        bookingRepository.deleteById(bookingId);
+        System.out.println("Booking Removed");
+    }
 
 
 }

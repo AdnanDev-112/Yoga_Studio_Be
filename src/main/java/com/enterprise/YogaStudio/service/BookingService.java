@@ -22,5 +22,7 @@ public interface BookingService {
 
     Booking addBooking(AddBookingDTO bookingData);
 
+    void removeBooking(Integer bookingId);
+
   //  void addSchedule(ScheduleRequest request);
 }

@@ -12,6 +12,8 @@ public interface PendingListService {
 
     List<PendingList> getpendingLists();
 
+    List<PendingList> getPendingDataForSchedule(Integer yogaSessionId);
+
 
 }
 

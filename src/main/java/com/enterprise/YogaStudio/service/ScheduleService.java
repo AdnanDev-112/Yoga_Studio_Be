@@ -22,4 +22,6 @@ public interface ScheduleService {
     Schedule addSchedule(ScheduleFormDTO scheduleForm);
 
     void deleteSchedule(Integer id);
+
+    Schedule getScheduleById(Integer id);
 }

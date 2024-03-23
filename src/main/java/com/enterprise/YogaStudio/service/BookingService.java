@@ -12,12 +12,10 @@ public interface BookingService {
 
     List<Booking> getAllBookings();
 
-    List<BookingDTO> getBookingDetails(Integer clientId);
+    List<Booking> getBookingDetails(Integer clientId);
   //  List<Booking> getAllBooking();
 
-    List<Booking> getAllBooking();
-
-    List<Booking> getBookingsByClientId(Integer clientId);
+   // List<Booking> getBookingsByClientId(Integer clientId);
 
     Booking addBooking(AddBookingDTO bookingData);
 

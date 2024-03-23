@@ -1,8 +1,10 @@
 package com.enterprise.YogaStudio.service.impl;
 
+import com.enterprise.YogaStudio.model.Booking;
 import com.enterprise.YogaStudio.model.PendingList;
 import com.enterprise.YogaStudio.model.Reservation;
 import com.enterprise.YogaStudio.model.Schedule;
+import com.enterprise.YogaStudio.repository.BookingRepository;
 import com.enterprise.YogaStudio.repository.PendingRepository;
 import com.enterprise.YogaStudio.service.PendingListService;
 import com.enterprise.YogaStudio.service.ReservationService;
@@ -22,12 +24,20 @@ public class PendingListServiceImpl implements PendingListService {
 
     @Autowired
     ReservationService reservationService;
+    @Autowired
+    private BookingRepository bookingRepository;
+
 
     @Override
     public void addPendingList(PendingList pendingList) {
         pendingRepository.save(pendingList);
 
 
+    }
+
+    @Override
+    public List<PendingList> getPendingListByClientId(Integer clientId) {
+        return pendingRepository.getPendingListByClientId(clientId);
     }
 
     @Override
@@ -42,6 +52,18 @@ public class PendingListServiceImpl implements PendingListService {
         return pendingRepository.getSchedulesByYogaSessionClasses(yogaSessionId);
     }
 
+    @Override
+    public Booking cancelBooking(Integer id) {
+        PendingList pendingList = pendingRepository.findById(id).get();
+        Booking bookedFor = pendingList.getBooking();
+        Integer bookingId = bookedFor.getId();
+
+        bookingRepository.deleteById(bookingId);
+        pendingRepository.deleteById(id);
+        System.out.println("Booking Cancelled");
+        return bookedFor;
+    }
+
 
     //    @Scheduled(cron = "0 0 * * * *")
 //public void handlePendingLists() {
@@ -53,15 +75,15 @@ public class PendingListServiceImpl implements PendingListService {
 //        }
 //    }
 //}
-//    @Scheduled(cron = "0 * * * * *") // This cron expression means the method will be executed every minute
-//    @Transactional
+    @Scheduled(cron = "0 * * * * *") // This cron expression means the method will be executed every minute
+    @Transactional
     public void handlePendingLists() {
         List<PendingList> pendingLists = getpendingLists();
         for (PendingList pendingList : pendingLists) {
 //            if (pendingList.getBookedTime().isBefore(LocalDateTime.now().minusHours(24)) && !pendingList.getConfirmedStatus()) {
 //
 //            }
-            if (pendingList.getBookedTime().isBefore(LocalDateTime.now().minusMinutes(1)) && !pendingList.getConfirmedStatus()) {
+            if (pendingList.getBookedTime().isBefore(LocalDateTime.now().minusMinutes(2)) && !pendingList.getConfirmedStatus()) {
                 pendingList.setConfirmedStatus(true);
                 pendingRepository.save(pendingList);
 

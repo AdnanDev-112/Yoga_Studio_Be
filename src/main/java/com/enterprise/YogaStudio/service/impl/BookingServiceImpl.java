@@ -56,16 +56,11 @@ public class BookingServiceImpl implements BookingService {
         pendingListService.addPendingList(pendingList);
     }
 
-    @Override
-    public List<Booking> getAllBooking() {
-        return bookingRepository.findAll();
-    }
-
-    @Override
-    public List<Booking> getBookingsByClientId(Integer clientId) {
-
-        return bookingRepository.findByClientId(2);
-    }
+//    @Override
+//    public List<Booking> getBookingsByClientId(Integer clientId) {
+//
+//        return bookingRepository.findByClientId(2);
+//    }
 
 
 
@@ -75,8 +70,8 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public List<BookingDTO> getBookingDetails(Integer clientId) {
-        return null;
+    public List<Booking> getBookingDetails(Integer clientId) {
+        return bookingRepository.findByClientId(clientId);
     }
 
 

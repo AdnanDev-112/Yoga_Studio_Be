@@ -26,7 +26,7 @@ public class YogaSessionController {
         return yogaSessionService.getSessionsByWorkshop();
     }
 
-    @GetMapping("/getactivitytype")
+    @GetMapping("/getsessionswithrecurring")
     public ResponseEntity<List<YogaSession>> getYogaSessionsWithRecurring() {
         List<YogaSession> yogaSessions = yogaSessionService.getYogaSessionsWithRecurring();
         if (!yogaSessions.isEmpty()) {

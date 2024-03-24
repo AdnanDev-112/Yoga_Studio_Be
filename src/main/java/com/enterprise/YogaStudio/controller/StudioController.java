@@ -1,6 +1,7 @@
 
 package com.enterprise.YogaStudio.controller;
 
+import com.enterprise.YogaStudio.dto.StudioInsightsDTO;
 import com.enterprise.YogaStudio.model.Studio;
 import com.enterprise.YogaStudio.service.StudioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,11 @@ public class StudioController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/getstudiodinsights/{id}")
+    public StudioInsightsDTO getStudiodInsights(@PathVariable Integer id){
+        return studioService.getStudiodInsights(id);
     }
 
 }

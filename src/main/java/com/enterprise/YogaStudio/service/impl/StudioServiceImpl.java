@@ -51,6 +51,7 @@ public class StudioServiceImpl implements StudioService {
         return null;
     }
 
+
     private StudioInsightsDTO convertToDto(StudioInsightsDTO insights) {
         StudioInsightsDTO dto = new StudioInsightsDTO();
         dto.setStudioId(insights.getStudioId());

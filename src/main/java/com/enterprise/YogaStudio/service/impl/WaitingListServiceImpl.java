@@ -11,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class WaitingListServiceImpl implements WaitingListService {
@@ -104,6 +101,19 @@ public class WaitingListServiceImpl implements WaitingListService {
         waitingListDTO.setCurrentCapacity(String.valueOf(currentCapacity));
 
         return waitingListDTO;
+    }
+
+    @Override
+    public void moveFirstout(Integer cancellationId) {
+        Booking cancelledBooking = pendingListService.cancelBooking(cancellationId);
+
+        List<WaitingList> waitingListItems = waitingListRepository.findAll();
+        for (WaitingList waitingList : waitingListItems) {
+            if (Objects.equals(waitingList.getYogaSession().getId(), cancelledBooking.getSchedule().getYogaSession().getId())){
+                approveWaitingList(waitingList.getId());
+                return;
+            }
+        }
     }
 
     @Override

@@ -22,4 +22,6 @@ public interface WaitingListService {
 
     WaitingListDTO getWaitingListStats(Integer yogaSessionId);
 
+    void moveFirstout(Integer bookingId);
+
 }

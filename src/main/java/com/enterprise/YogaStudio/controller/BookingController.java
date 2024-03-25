@@ -14,45 +14,21 @@ import java.util.List;
 @RequestMapping("/booking")
 @CrossOrigin(origins = "http://localhost:3000")
 public class BookingController {
-
     @Autowired
     private BookingService bookingService;
-
     @GetMapping("/getbookingdetails/{id}")
     public ResponseEntity<List<Booking>> getBookingDetails(@PathVariable Integer id) {
     List<Booking> bookings = bookingService.getBookingDetails(id);
     return ResponseEntity.ok(bookings);
 }
-
     @GetMapping("/getallbooking")
     public ResponseEntity<List<Booking>> getAllBookings() {
         List<Booking> bookings = bookingService.getAllBookings();
         return ResponseEntity.ok(bookings);
     }
-
     @PostMapping("/addbooking")
     public ResponseEntity<Booking> addBooking(@RequestBody AddBookingDTO bookingData) {
         bookingService.addBooking(bookingData);
         return ResponseEntity.ok().build();
-
     }
-
-//    @DeleteMapping("/deletebooking/{id}")
-//    public ResponseEntity<Void> deleteBooking(@PathVariable Integer id) {
-//        bookingService.deleteBooking(id);
-//        return ResponseEntity.noContent().build();
-//    }
-
-//    @PostMapping("/addschedule")
-//    public ResponseEntity<?> addSchedule(@RequestBody ScheduleRequest request) {
-//        try {
-//            bookingService.addSchedule(request);
-//            return ResponseEntity.ok("Booking added successfully!");
-//        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error adding booking: " + e.getMessage());
-//        }
-//    }
-
-
-
 }

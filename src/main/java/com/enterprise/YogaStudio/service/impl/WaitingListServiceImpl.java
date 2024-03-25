@@ -19,13 +19,10 @@ import java.util.*;
 public class WaitingListServiceImpl implements WaitingListService {
     @Autowired
     private WaitingListRepository waitingListRepository;
-
     @Autowired
     private BookingRepository bookingRepository;
-
     @Autowired
     private PendingListService pendingListService;
-
     @Autowired
     private ReservationService reservationService;
 
@@ -36,7 +33,6 @@ public class WaitingListServiceImpl implements WaitingListService {
     public WaitingList addWaitingList(WaitingList waitingList) {
         return waitingListRepository.save(waitingList);
     }
-
     @Override
     public void removeWaitingList(Integer waitingListID) {
 //        On Decline remove the waiting list and clear the booking
@@ -46,11 +42,8 @@ public class WaitingListServiceImpl implements WaitingListService {
         }
         Booking newBooking = waitingList.getBooking();
         bookingRepository.deleteById(newBooking.getId());
-
         waitingListRepository.deleteById(waitingListID);
-
     }
-
     @Override
     public void approveWaitingList(Integer waitingListID) {
         WaitingList waitingList = waitingListRepository.findById(waitingListID).orElse(null);
@@ -58,7 +51,6 @@ public class WaitingListServiceImpl implements WaitingListService {
             return;
         }
         Booking newBooking = waitingList.getBooking();
-
         //        Save pendin List
         LocalDateTime date = LocalDateTime.now();
         PendingList pendingList = new PendingList();
@@ -66,19 +58,15 @@ public class WaitingListServiceImpl implements WaitingListService {
         pendingList.setClient(newBooking.getClient());
         pendingList.setBooking(newBooking);
         pendingList.setConfirmedStatus(true);
-
         // Save the pending list
         pendingListService.addPendingList(pendingList);
-
 //        Confirm the Reservation
         Reservation reservation = new Reservation();
         Schedule schedule = pendingList.getBooking().getSchedule();
-
 //                Setter Methods
         reservation.setClient(pendingList.getClient());
         reservation.setPending(pendingList);
         reservation.setSchedule(schedule);
-
         String categoryType = pendingList.getBooking().getSchedule().getCategoryType();
         reservation.setCategoryType(categoryType);
         switch (categoryType) {
@@ -92,10 +80,7 @@ public class WaitingListServiceImpl implements WaitingListService {
                 reservation.setRetreat(schedule.getRetreat());
                 break;
         }
-
         reservationService.addReservation(reservation);
-
-
         waitingListRepository.deleteById(waitingListID);
 
 
@@ -110,20 +95,16 @@ public class WaitingListServiceImpl implements WaitingListService {
 
         mailService.reservationConfirmationMail(newBooking.getClient().getEmail(), reservationMailDTO);
     }
-
     @Override
     public WaitingListDTO getWaitingListStats(Integer yogaSessionId) {
         int currentCapacity = pendingListService.getPendingDataForSchedule(yogaSessionId).size();
         WaitingListDTO waitingListDTO = new WaitingListDTO();
         waitingListDTO.setCurrentCapacity(String.valueOf(currentCapacity));
-
         return waitingListDTO;
     }
-
     @Override
     public void moveFirstout(Integer cancellationId) {
         Booking cancelledBooking = pendingListService.cancelBooking(cancellationId);
-
         List<WaitingList> waitingListItems = waitingListRepository.findAll();
         for (WaitingList waitingList : waitingListItems) {
             if (Objects.equals(waitingList.getYogaSession().getId(), cancelledBooking.getSchedule().getYogaSession().getId())){
@@ -132,13 +113,11 @@ public class WaitingListServiceImpl implements WaitingListService {
             }
         }
     }
-
     @Override
     public List<Map<String, Object>> getCustomData() {
         List<WaitingList> waitingListItems = getWaitingListItems();
         Map<Integer, List<WaitingList>> sessionIdToWaitingList = new HashMap<>();
         Map<Integer, String> sessionIdToSessionName = new HashMap<>();
-
         for (WaitingList waitingList : waitingListItems) {
             Integer sessionId = waitingList.getYogaSession().getId();
             String sessionName = waitingList.getYogaSession().getSessionName();
@@ -148,7 +127,6 @@ public class WaitingListServiceImpl implements WaitingListService {
             sessionIdToWaitingList.get(sessionId).add(waitingList);
             sessionIdToSessionName.put(sessionId, sessionName);
         }
-
         List<Map<String, Object>> result = new ArrayList<>();
         for (Map.Entry<Integer, List<WaitingList>> entry : sessionIdToWaitingList.entrySet()) {
             Map<String, Object> entryMap = new HashMap<>();
@@ -158,11 +136,8 @@ public class WaitingListServiceImpl implements WaitingListService {
             int currentCapacity = pendingListService.getPendingDataForSchedule(entry.getKey()).size();
             entryMap.put("currentCapacity", currentCapacity);
         }
-
         return result;
     }
-
-
     @Override
     public List<WaitingList> getWaitingListItems() {
         return waitingListRepository.findAll();

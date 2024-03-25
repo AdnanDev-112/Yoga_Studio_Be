@@ -12,9 +12,6 @@ import java.util.List;
 public interface YogaSessionRepository extends JpaRepository<YogaSession, Integer>{
     @Query("SELECT b FROM YogaSession b WHERE b.recurring = false")
     List<YogaSession> findYogaSessionByWorkshop();
-
-
     @Query("SELECT y FROM YogaSession y WHERE y.recurring = :recurring")
     List<YogaSession> findClassTypeByRecurring(@Param("recurring") boolean recurring);
-
 }

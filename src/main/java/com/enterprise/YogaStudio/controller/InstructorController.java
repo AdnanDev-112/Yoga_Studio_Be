@@ -12,10 +12,8 @@ import java.util.List;
 @RequestMapping("/instructor")
 @CrossOrigin(origins = "http://localhost:3000")
 public class InstructorController {
-
     @Autowired
     private InstructorService instructorService;
-
     @GetMapping("/getinstructorslist")
     public List<Instructor> getInstructorsList() {
         return instructorService.getInstructorsList();
@@ -29,13 +27,11 @@ public class InstructorController {
         return ResponseEntity.notFound().build();
     }
     }
-
     @PostMapping("/addinstructor")
     public ResponseEntity<Instructor> addInstructor(@RequestBody Instructor instructor) {
      instructorService.addInstructor(instructor);
     return ResponseEntity.ok().build();
     }
-
     @PutMapping("/updateinstructor/{id}")
     public ResponseEntity<Instructor> updateInstructor(@PathVariable Integer id, @RequestBody Instructor instructorDetails) {
     Instructor updatedInstructor = instructorService.updateInstructor(id, instructorDetails);
@@ -45,7 +41,6 @@ public class InstructorController {
         return ResponseEntity.notFound().build();
     }
 }
-
     @DeleteMapping("/deleteinstructor/{id}")
     public ResponseEntity<Void> deleteInstructor(@PathVariable Integer id) {
     instructorService.deleteInstructor(id);

@@ -12,28 +12,22 @@ import java.util.List;
 public class InstructorServiceImpl implements InstructorService {
     @Autowired
     private InstructorRepository instructorRepository;
-
     public List<Instructor> getInstructorsList() {
         return instructorRepository.findAll();
     }
-
     @Override
     public Instructor getInstructorById(Integer id) {
     return instructorRepository.findById(id).orElse(null);
     }
-
-
     @Override
     public void deleteInstructor(Integer id) {
         instructorRepository.deleteById(id);
     }
-
     @Override
     public void addInstructor(Instructor instructor) {
         instructorRepository.save(instructor);
 
     }
-
     @Override
 public Instructor updateInstructor(Integer id, Instructor instructorDetails) {
     return instructorRepository.findById(id)

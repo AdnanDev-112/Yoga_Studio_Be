@@ -40,7 +40,7 @@ public class Reservation {
     @JoinColumn(name = "schedule_id", nullable = false)
     private Schedule schedule;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "pending_id", nullable = false)
     private PendingList pending;
 

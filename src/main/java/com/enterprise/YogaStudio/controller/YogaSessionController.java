@@ -14,18 +14,14 @@ import java.util.List;
 public class YogaSessionController {
     @Autowired
     private YogaSessionService yogaSessionService;
-
     @GetMapping("/getYogaSessions")
     public List<YogaSession> getYogaSessions() {
         return yogaSessionService.getYogaSession();
     }
-
-
     @GetMapping("/getsessionsbyworkshop")
     public List<YogaSession> getSessionsByWorkshop() {
         return yogaSessionService.getSessionsByWorkshop();
     }
-
     @GetMapping("/getsessionswithrecurring")
     public ResponseEntity<List<YogaSession>> getYogaSessionsWithRecurring() {
         List<YogaSession> yogaSessions = yogaSessionService.getYogaSessionsWithRecurring();
@@ -35,20 +31,16 @@ public class YogaSessionController {
             return ResponseEntity.notFound().build();
         }
     }
-
     @PostMapping("/addYogaSession")
     public ResponseEntity<YogaSession> addYogaSession(@RequestBody YogaSession yogaSession) {
         yogaSessionService.addYogaSession(yogaSession);
         return ResponseEntity.ok().build();
     }
-
     @DeleteMapping("/deletesession/{id}")
     public ResponseEntity<Void> deleteSchedule(@PathVariable Integer id) {
         yogaSessionService.deleteYogaSession(id);
         return ResponseEntity.noContent().build();
     }
-
-
     @PutMapping("/updatesession/{id}")
     public ResponseEntity<YogaSession> updatesession(@PathVariable Integer id, @RequestBody YogaSession yogaSession) {
         YogaSession updatedyogaSession = yogaSessionService.updateYogaSession(id, yogaSession);
@@ -58,7 +50,6 @@ public class YogaSessionController {
             return ResponseEntity.notFound().build();
         }
     }
-
     @GetMapping("/getyogasessionbyid/{id}")
     public ResponseEntity<YogaSession> getYogaSessionById(@PathVariable Integer id) {
         YogaSession yogaSession = yogaSessionService.getYogaSessionById(id);
@@ -68,5 +59,4 @@ public class YogaSessionController {
             return ResponseEntity.notFound().build();
         }
     }
-
 }

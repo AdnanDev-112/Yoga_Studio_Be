@@ -24,30 +24,13 @@ public class WaitingList {
     @Column(name = "add_date")
     private Timestamp addDate;
 
-//    @Lob
-//    @Column(name = "category_type", nullable = false)
-//    private String categoryType;
-
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "client_id", nullable = false)
     private Client client;
 
-//    @JsonIgnore
-//    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-//    @JoinColumn(name = "manager_id", nullable = false)
-//    private Manager manager;
-
-//    @JsonIgnore
-//    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-//    @JoinColumn(name = "pending_id", nullable = false)
-//    private PendingList pending;
-
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "booking_id", nullable = false)
     private Booking booking;
-
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "yoga_session_id", nullable = false)

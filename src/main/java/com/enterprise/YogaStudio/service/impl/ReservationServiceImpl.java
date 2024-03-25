@@ -8,10 +8,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ReservationServiceImpl implements ReservationService {
-
     @Autowired
     private ReservationRepository ReservationRepository;
-
     @Override
     public Reservation addReservation(Reservation reservation) {
         return ReservationRepository.save(reservation);

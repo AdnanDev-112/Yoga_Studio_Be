@@ -18,7 +18,6 @@ public class Pricing {
     @Column(name = "pricing_id", nullable = false)
     private Integer id;
 
-
     @Column(name = "amount", nullable = false, precision = 13, scale = 2)
     private BigDecimal amount;
 

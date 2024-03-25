@@ -31,7 +31,6 @@ public class YogaSession {
     @Column(name = "session_name", nullable = false)
     private String sessionName;
 
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "pricing_id", nullable = false)
     private Pricing pricing;
@@ -42,7 +41,6 @@ public class YogaSession {
     @Column(name = "recurring", nullable = false)
     private Boolean recurring = false;
 
-
     @Transient
     private String instructorId;
 
@@ -52,12 +50,9 @@ public class YogaSession {
     @Transient
     private String price;
 
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "instructor_id", nullable = false)
     private Instructor instructor;
-
-
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "studio_id", nullable = false)

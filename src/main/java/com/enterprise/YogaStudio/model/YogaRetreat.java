@@ -35,16 +35,13 @@ public class YogaRetreat {
     @JoinColumn(name = "pricing_id", nullable = false)
     private Pricing pricing;
 
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "yoga_session_id", nullable = false)
     private YogaSession yogaSession;
 
-
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "instructor_id", nullable = false)
     private Instructor instructor;
-
     // Additional fields for JSON representation
     @Transient
     private Integer instructorId;
@@ -54,5 +51,4 @@ public class YogaRetreat {
 
     @Transient
     private BigDecimal price;
-
 }

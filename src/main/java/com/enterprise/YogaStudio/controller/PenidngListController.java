@@ -16,19 +16,12 @@ public class PenidngListController {
     private PendingListService pendingListService;
     @Autowired
     private WaitingListService waitingListService;
-
-
-
     @GetMapping("/getbyclientid/{clientId}")
     public List<PendingList> getPendingListByClientId(@PathVariable Integer clientId) {
         return pendingListService.getPendingListByClientId(clientId);
     }
-
     @PutMapping("/cancelbooking/{id}")
     public void cancelBooking(@PathVariable Integer id) {
         waitingListService.moveFirstout(id);
     }
 }
-
-
-//getPendingListByClientId

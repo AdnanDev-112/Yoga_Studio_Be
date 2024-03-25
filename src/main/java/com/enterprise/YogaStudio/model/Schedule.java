@@ -54,5 +54,4 @@ public class Schedule {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "retreat_id")
     private YogaRetreat retreat;
-
 }

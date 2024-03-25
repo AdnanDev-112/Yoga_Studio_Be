@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en"
+        xmlns:th="http://www.thymeleaf.org"
+    >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Waiting List Notification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        p {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        .highlight {
+            font-weight: bold;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Waiting List Notification</h1>
+    <p>Dear <span th:text="${clientName}"></span>,</p>
+    <p>We regret to inform you that the class you requested at our studio is currently full. However, we have added you to the waiting list for the following class:</p>
+    <p><span class="highlight">Class Details:</span><br>
+        - Class: <span th:text="${sessionName}"></span><br>
+        - Date: <span th:text="${sessionDate}"></span><br>
+        - Time: <span th:text="${sessionTime}"></span><br>
+        - Instructor: <span th:text="${sessionInstructor}"></span></p>
+
+    <p>We will notify you as soon as a spot becomes available. In the meantime, if you have any questions or need further assistance, please don't hesitate to contact our studio managers.</p>
+    <p>Thank you for your understanding.</p>
+    <p>Best regards,<br>
+        <span>White Lotus</span><br>
+        <span th:text="${studioLocation}"></span></p>
+</div>
+
+</body>
+</html>

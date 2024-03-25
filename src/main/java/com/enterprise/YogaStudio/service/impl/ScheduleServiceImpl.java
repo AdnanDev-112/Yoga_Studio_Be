@@ -50,7 +50,6 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
     @Override
     public void deleteSchedule(Integer id) {
-        bookingRepository.deleteById(id);
         scheduleRepository.deleteById(id);
     }
     @Override
@@ -85,9 +84,9 @@ public class ScheduleServiceImpl implements ScheduleService {
         return scheduleRepository.findById(id)
                 .map(schedule1 -> {
                     schedule1.setCategoryType(schedule.getCategoryType());
-                    schedule1.setDate(schedule1.getDate());
-                    schedule1.setStartTime(schedule1.getStartTime());
-                    schedule1.setEndTime(schedule1.getEndTime());
+                    schedule1.setDate(schedule.getDate());
+                    schedule1.setStartTime(schedule.getStartTime());
+                    schedule1.setEndTime(schedule.getEndTime());
                     return scheduleRepository.save(schedule1);
                 })
                 .orElse(null);

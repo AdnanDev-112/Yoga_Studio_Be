@@ -1,6 +1,7 @@
 package com.enterprise.YogaStudio.controller;
 
 import com.enterprise.YogaStudio.dto.ScheduleDTO;
+import com.enterprise.YogaStudio.model.Client;
 import com.enterprise.YogaStudio.service.*;
 import com.enterprise.YogaStudio.model.Schedule;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,16 @@ public class ScheduleController {
         Schedule schedule = scheduleService.getScheduleById(id);
         if (schedule != null) {
             return ResponseEntity.ok(schedule);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("/updateschedule/{id}")
+    public ResponseEntity<Client> updateSchedule(@PathVariable Integer id, @RequestBody Schedule schedule) {
+        Schedule updatedSchedule = scheduleService.updateSchedule(id, schedule);
+        if (updatedSchedule != null) {
+            return ResponseEntity.ok().build();
         } else {
             return ResponseEntity.notFound().build();
         }

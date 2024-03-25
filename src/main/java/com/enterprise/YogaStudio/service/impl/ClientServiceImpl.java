@@ -11,27 +11,21 @@ import java.util.List;
 public class ClientServiceImpl implements ClientService {
     @Autowired
     private ClientRepository clientRepository;
-
     public List<Client> getClientList() {
         return clientRepository.findAll();
     }
-
     @Override
     public Client getClientById(Integer id) {
         return clientRepository.findById(id).orElse(null);
     }
-
-
     @Override
     public void deleteClient(Integer id) {
         clientRepository.deleteById(id);
     }
-
     @Override
     public void addClient(Client client) {
         clientRepository.save(client);
     }
-
     @Override
     public Client updateClient(Integer id, Client clientdetails) {
         return clientRepository.findById(id)
@@ -45,7 +39,4 @@ public class ClientServiceImpl implements ClientService {
                 })
                 .orElse(null);
     }
-
-
-
 }

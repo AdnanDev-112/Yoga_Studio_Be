@@ -14,30 +14,23 @@ import java.util.List;
 public class WaitingListController {
     @Autowired
     private WaitingListService waitingListService;
-
     @GetMapping("/getwaitinglist")
     public ResponseEntity<List<?>> getAllWaitingLists() {
         List<?> dataToSend = waitingListService.getCustomData();
         return ResponseEntity.ok(dataToSend);
     }
-
     @GetMapping("/getwaitingliststats/{yogaSessionId}")
     public ResponseEntity<?> getWaitingListStats(@PathVariable Integer yogaSessionId) {
         return ResponseEntity.ok(waitingListService.getWaitingListStats(yogaSessionId));
     }
-
-
     @DeleteMapping("/removewaitinglist/{waitingListID}")
     public ResponseEntity<?> removeWaitingList(@PathVariable Integer waitingListID) {
         waitingListService.removeWaitingList(waitingListID);
         return ResponseEntity.ok().build();
     }
-
     @PutMapping("/approvewaitinglist/{waitingListID}")
     public ResponseEntity<?> approveWaitingList(@PathVariable Integer waitingListID) {
         waitingListService.approveWaitingList(waitingListID);
         return ResponseEntity.ok().build();
     }
-
-
 }

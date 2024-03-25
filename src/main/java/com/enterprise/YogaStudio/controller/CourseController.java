@@ -21,22 +21,17 @@ import java.util.stream.Collectors;
 @RequestMapping("/course")
 @CrossOrigin(origins = "http://localhost:3000")
 public class CourseController {
-
     @Autowired
     private CourseService courseService;
-
     @Autowired
     private StudioService studioService;
-
     @Autowired
     private YogaSessionService yogaSessionService;
-
     @GetMapping("/getcoursedetails")
     public ResponseEntity<List<CourseDTO>> getAllCourses() {
         List<CourseDTO> dtos = courseService.getAllCourses();
         return ResponseEntity.ok(dtos);
     }
-
     @GetMapping("/getcoursebyid/{id}")
     public ResponseEntity<Course> getCourseById(@PathVariable Integer id) {
         Course course = courseService.getCourseById(id);
@@ -46,15 +41,11 @@ public class CourseController {
             return ResponseEntity.notFound().build();
         }
     }
-
     @GetMapping("/getcourselist")
     public ResponseEntity<List<Course>> getCourseList() {
         List<Course> courses = courseService.getCourseList();
         return ResponseEntity.ok(courses);
-
     }
-
-
     @PostMapping("/addcoursedata")
     public ResponseEntity<Course> addCourseData(@RequestBody Course course){
         Studio studiodata = studioService.getStudioById(course.getStudioId());
@@ -65,13 +56,11 @@ public class CourseController {
         courseService.addCourseData(course);
         return ResponseEntity.ok().build();
     }
-
     @DeleteMapping("/deletecourse/{id}")
     public ResponseEntity<Void> deleteCourse(@PathVariable Integer id) {
         courseService.deleteCourse(id);
         return ResponseEntity.noContent().build();
     }
-
     @PutMapping("/updatecourse/{id}")
     public ResponseEntity<Course> updateCourse(@PathVariable Integer id, @RequestBody Course course) {
         Course updatedCourse = courseService.updateCourse(id, course);
@@ -81,5 +70,4 @@ public class CourseController {
             return ResponseEntity.notFound().build();
         }
     }
-
 }

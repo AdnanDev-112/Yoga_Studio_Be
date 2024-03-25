@@ -13,26 +13,19 @@ import java.util.List;
 
 @Service
 public class PricingServiceImpl implements PricingService {
-
     @Autowired
     private PriceRepository pricingRepository;
-
     @Override
     public Pricing addPricingDetails(Pricing pricingModel) {
         return pricingRepository.save(pricingModel);
-
     }
-
     public Pricing getPricingById(Integer pricingID) {
         return pricingRepository.findById(pricingID).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pricing ID not found. " + pricingID));
     }
-
     @Override
     public List<Pricing> getPricingDetails() {
         return pricingRepository.findAll();
     }
-
-
     public Pricing validateAmountExists(BigDecimal amount) {
         List<Pricing> pricingList = pricingRepository.findAll();
 
@@ -47,8 +40,6 @@ public class PricingServiceImpl implements PricingService {
             newPricing.setAmount(amount);
             newPricing = addPricingDetails(newPricing);
         }
-
-
         return  newPricing;
     }
 }

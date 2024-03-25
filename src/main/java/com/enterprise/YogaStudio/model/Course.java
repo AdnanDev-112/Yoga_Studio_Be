@@ -50,6 +50,4 @@ public class Course {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "yoga_session_id")
     private YogaSession yogaSession;
-
-
 }

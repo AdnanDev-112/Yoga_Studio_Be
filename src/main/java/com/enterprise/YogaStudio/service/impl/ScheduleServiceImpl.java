@@ -24,69 +24,39 @@ import java.math.BigDecimal;
 public class ScheduleServiceImpl implements ScheduleService {
     @Autowired
     private ScheduleRepository scheduleRepository;
-
     @Autowired
     private BookingRepository bookingRepository;
-
     @Autowired
     private YogaRetreatService yogaRetreatService;
-
     @Autowired
     private YogaSessionService yogaSessionService;
-
     @Autowired
     private CourseService courseService;
-
     @Autowired
     private DiscountService discountService;
-
     @Autowired
     private DiscountCalculationService discountCalculationService;
-
     @Autowired
     private ClientRepository clientRepository;
-
-
-
     // Calculate the discounted price
-
     @Override
     public List<Schedule> getScheduleList() {
         List<Schedule> schedules = scheduleRepository.findAll();
         return schedules;
     }
-
     @Override
     public List<Schedule> getScheduleByDescending() {
         return scheduleRepository.getScheduleByDescending();
     }
-
-//    @Override
-//    public List<Schedule> getScheduleByCategoryType(String categoryType) {
-//        List<Schedule> scheduleList = scheduleRepository.findByCategoryType(categoryType);
-//        return scheduleList;
-//    }
-
-
-//    @Override
-//    public void addSchedule(ScheduleFormDTO scheduleForm) {
-//        Schedule schedule = convertScheduledFormDTOToSchedule(scheduleForm);
-//        scheduleRepository.save(schedule);
-//    }
-
-
-
     @Override
     public void deleteSchedule(Integer id) {
         bookingRepository.deleteById(id);
         scheduleRepository.deleteById(id);
     }
-
     @Override
     public Schedule getScheduleById(Integer id) {
         return scheduleRepository.findById(id).orElse(null);
     }
-
     private Schedule convertScheduledFormDTOToSchedule(ScheduleFormDTO scheduleForm) {
         Schedule schedule = new Schedule();
         schedule.setCategoryType(scheduleForm.getCategoryType());
@@ -95,35 +65,22 @@ public class ScheduleServiceImpl implements ScheduleService {
         scheduleForm.setEndTime(scheduleForm.getEndTime());
         return schedule;
     }
-
-
     public List<?> getScheduleByCategory(String categoryType) {
         List<?> data = new ArrayList<>();
         switch (categoryType) {
             case "yoga_session":
                 data = yogaSessionService.getYogaSession();
                 break;
-
-
             case "retreat":
                 data = yogaRetreatService.getAllYogaRetreats();
                 break;
-
             case "course":
                 data = courseService.getCourses();
                 break;
         }
         return data;
     }
-
-//    @Override
-//    public List<Schedule> getScheduleByCategoryType(String categoryType) {
-//        return null;
-//    }
-
-
     @Override
-
     public Schedule updateSchedule(Integer id, Schedule schedule) {
         return scheduleRepository.findById(id)
                 .map(schedule1 -> {
@@ -135,12 +92,9 @@ public class ScheduleServiceImpl implements ScheduleService {
                 })
                 .orElse(null);
     }
-
     private void processSchedule(ScheduleDTO schedule) {
         ArrayList<Map<String, String>> classesList = schedule.getClasses();
-
         for (Map<String, String> classData : classesList) {
-
             Schedule newSchedule = new Schedule();
             newSchedule.setDate(LocalDate.parse(classData.get("classDate")));
             newSchedule.setStartTime(LocalTime.parse(classData.get("classStartTime")));
@@ -149,50 +103,32 @@ public class ScheduleServiceImpl implements ScheduleService {
             newSchedule.setCourse(courseService.getCourseById(Integer.parseInt(schedule.getSelectedSessionId())));
             scheduleRepository.save(newSchedule);
         }
-
-
     }
-
     @Override
     public List<Schedule> getBookingsByCategoryType(String categoryType, String clientID) {
         List<Schedule> scheduleList = scheduleRepository.findByCategoryType(categoryType);
-
         Client client = clientRepository.findById(Integer.parseInt(clientID)).orElse(null);
         List<Discount> discounts = discountService.getDiscountList();
-
         LocalDate dob = client.getDob();
-
         int age = discountCalculationService.calculateAge(dob);
-        System.out.println("Age is " + age);
-
-
         if (categoryType.equals("course")) {
             for (int i = 0; i < scheduleList.size(); i++) {
                 Schedule oneSchedule = scheduleList.get(i);
                 BigDecimal amount = oneSchedule.getCourse().getPricing().getAmount();
-
                 Discount applicableDiscount = discountCalculationService.getApplicableDiscount(age, discounts);
                 BigDecimal originalPrice = new BigDecimal(String.valueOf(amount));
                 BigDecimal discountPercent = new BigDecimal(applicableDiscount.getDiscountValue());
                 BigDecimal discountedPrice = discountCalculationService.calculateDiscountedPrice(originalPrice, discountPercent);
                 oneSchedule.getCourse().getPricing().setDiscountAppliedPrice(discountedPrice);
                 oneSchedule.getCourse().getPricing().setDiscountId(applicableDiscount.getId());
-
-
             }
-
-
         }
-
-
-
         return scheduleList;
     }
     @Override
     public void addSchedule (ScheduleDTO schedule){
         Schedule newSchedule = new Schedule();
         newSchedule.setCategoryType(schedule.getCategoryType());
-
         if (schedule.getCategoryType().equals("yoga_session") || schedule.getCategoryType().equals("retreat")) {
             newSchedule.setDate(LocalDate.parse(schedule.getDate()));
             newSchedule.setStartTime(LocalTime.parse(schedule.getStartTime()));
@@ -210,20 +146,8 @@ public class ScheduleServiceImpl implements ScheduleService {
             scheduleRepository.save(newSchedule);
         } else {
             processSchedule(schedule);
-
         }
     }
-
-
-    public boolean isScheduleConflict (ScheduleDTO scheduleDTO){
-        LocalDate date = LocalDate.parse(scheduleDTO.getDate());
-        LocalTime startTime = LocalTime.parse(scheduleDTO.getStartTime());
-        LocalTime endTime = LocalTime.parse(scheduleDTO.getEndTime());
-        List<Schedule> conflictingSchedules = scheduleRepository.findByDateAndTime(date, startTime, endTime);
-        return !conflictingSchedules.isEmpty();
-    }
-
-
 }
 
 

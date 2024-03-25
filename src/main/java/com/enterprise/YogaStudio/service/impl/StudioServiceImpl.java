@@ -17,19 +17,15 @@ import java.util.List;
 @Service
 @Transactional
 public class StudioServiceImpl implements StudioService {
-
     @Autowired
     private StudioRepository studioRepository;
-
     public List<Studio> getStudioDetails() {
         return studioRepository.findAll();
     }
-
     @Override
     public Studio getStudioById(Integer id) {
         return studioRepository.findById(id).orElse(null);
     }
-
     @Override
     public StudioInsightsDTO getStudiodInsights(Integer id) {
         List<StudioInsightsDTO> hardcodedInsights = new ArrayList<>();
@@ -61,5 +57,4 @@ public class StudioServiceImpl implements StudioService {
         dto.setRevenue(insights.getRevenue());
         return dto;
     }
-
-        }
+}

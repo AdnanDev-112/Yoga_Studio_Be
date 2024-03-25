@@ -13,15 +13,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/studio")
 public class StudioController {
-
     @Autowired
     private StudioService studioService;
-
     @GetMapping("/getstudioslist")
     public List<Studio> getStudioDetails(){
         return studioService.getStudioDetails();
     }
-
     @GetMapping("/getstudiobyid/{id}")
     public ResponseEntity<Studio> getStudioById(@PathVariable Integer id) {
         Studio studio = studioService.getStudioById(id);
@@ -31,12 +28,10 @@ public class StudioController {
             return ResponseEntity.notFound().build();
         }
     }
-
     @GetMapping("/getstudiodinsights/{id}")
     public StudioInsightsDTO getStudiodInsights(@PathVariable Integer id){
         return studioService.getStudiodInsights(id);
     }
-
 }
 
 

@@ -34,10 +34,8 @@ public class Client {
     @Column(name = "DOB")
     private LocalDate dob;
 
-
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "studio_id", nullable = false)
     private Studio studio;
-
 }

@@ -24,25 +24,18 @@ import java.util.List;
 public class BookingServiceImpl implements BookingService {
     @Autowired
     private BookingRepository bookingRepository;
-
     @Autowired
     private PendingListService pendingListService;
-
     @Autowired
     private DiscountCalculationService discountCalculationService;
-
     @Autowired
     private DiscountService discountService;
-
     @Autowired
     private ClientService clientService;
-
     @Autowired
     private ScheduleService scheduleService;
-
     @Autowired
     private WaitingListService waitingListService;
-
     //    Methods
     private void createAndSavePendingList(Client client, Booking newBooking) {
         LocalDateTime date = LocalDateTime.now();
@@ -55,15 +48,6 @@ public class BookingServiceImpl implements BookingService {
         // Save the pending list
         pendingListService.addPendingList(pendingList);
     }
-
-//    @Override
-//    public List<Booking> getBookingsByClientId(Integer clientId) {
-//
-//        return bookingRepository.findByClientId(2);
-//    }
-
-
-
     @Override
     public List<Booking> getAllBookings() {
         return bookingRepository.findAll();
@@ -73,31 +57,6 @@ public class BookingServiceImpl implements BookingService {
     public List<Booking> getBookingDetails(Integer clientId) {
         return bookingRepository.findByClientId(clientId);
     }
-
-
-//    public List<BookingDTO> getBookingDetails(Integer id) {
-//        List<Booking> bookings = bookingRepository.findByClientId(id);
-//
-//        return bookings.stream().map(booking -> {
-//            BookingDTO bookingDTO = new BookingDTO();
-//            bookingDTO.setCategoryType(booking.getSchedule().getCategoryType());
-//            bookingDTO.setStartDate(booking.getSchedule().getDate());
-//
-//            if (booking.getSchedule().getYogaSession() != null) {
-//                YogaSession yogaSession = booking.getSchedule().getYogaSession();
-//                bookingDTO.setLevel(yogaSession.getLevel());
-//                bookingDTO.setInstructorName(yogaSession.getInstructor().getInstructorName());
-//                bookingDTO.setDuration(yogaSession.getDuration());
-//                // Check if Pricing is not null before accessing it
-//                if (yogaSession.getPricing() != null) {
-//                    bookingDTO.setAmount(yogaSession.getPricing().getAmount());
-//                }
-//            }
-//            return bookingDTO;
-//        }).collect(Collectors.toList());
-//    }
-
-
     @Override
     public Booking addBooking(AddBookingDTO bookingData) {
         Booking booking = new Booking();
@@ -123,8 +82,6 @@ public class BookingServiceImpl implements BookingService {
 //            Calculate Capacity
             int maxCapacity = schedule.getYogaSession().getMaxCapacity();
             int currentCapacity = pendingListService.getPendingDataForSchedule(schedule.getYogaSession().getId()).size();
-
-
             System.out.println("Max Capacity: " + maxCapacity);
             System.out.println("Current Capacity: " + currentCapacity);
 
@@ -141,23 +98,15 @@ public class BookingServiceImpl implements BookingService {
                 System.out.println("Waiting List Added");
             } else {
                 createAndSavePendingList(client, newBooking);
-
             }
-
         } else {
-
             createAndSavePendingList(client, newBooking);
         }
-
-
         return newBooking;
     }
-
     @Override
     public void removeBooking(Integer bookingId) {
         bookingRepository.deleteById(bookingId);
         System.out.println("Booking Removed");
     }
-
-
 }

@@ -13,10 +13,8 @@ import java.util.List;
 @RequestMapping("/client")
 @CrossOrigin(origins = "http://localhost:3000")
 public class ClientController {
-
     @Autowired
     private ClientService clientService;
-
     @GetMapping("/getclientlist")
     public List<Client> getClientList() {
         return clientService.getClientList();
@@ -30,7 +28,6 @@ public class ClientController {
             return ResponseEntity.notFound().build();
         }
     }
-
     @PostMapping("/addclient")
     public ResponseEntity<Client> addClient(@RequestBody Client client) {
         Studio std = new Studio();
@@ -39,7 +36,6 @@ public class ClientController {
         clientService.addClient(client);
         return ResponseEntity.ok().build();
     }
-
     @PutMapping("/updateclient/{id}")
     public ResponseEntity<Client> updateClient(@PathVariable Integer id, @RequestBody Client client) {
         Client updatedClient = clientService.updateClient(id, client);
@@ -49,7 +45,6 @@ public class ClientController {
             return ResponseEntity.notFound().build();
         }
     }
-
     @DeleteMapping("/deleteclient/{id}")
     public ResponseEntity<Void> deleteClient(@PathVariable Integer id) {
         clientService.deleteClient(id);

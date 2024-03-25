@@ -24,7 +24,7 @@ public class Studio {
     private String telnum;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "manager_id", nullable = false)
     private Manager manager;
 

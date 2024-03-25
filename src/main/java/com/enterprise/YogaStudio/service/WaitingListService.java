@@ -11,17 +11,10 @@ import java.util.Map;
 public interface WaitingListService {
 //    List all the CRUD methods
     WaitingList addWaitingList(WaitingList waitingList);
-
     void removeWaitingList(Integer waitingListID);
-
     List<WaitingList> getWaitingListItems();
-
     List<Map<String, Object>> getCustomData();
-
     void approveWaitingList(Integer waitingListID);
-
     WaitingListDTO getWaitingListStats(Integer yogaSessionId);
-
     void moveFirstout(Integer bookingId);
-
 }

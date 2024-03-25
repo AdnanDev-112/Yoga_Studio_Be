@@ -20,19 +20,17 @@ public class PendingList {
     @Column(name = "pending_id", nullable = false)
     private Integer id;
 
-
     @Column(name = "booked_time")
     private LocalDateTime bookedTime;
 
     @Column(name = "confirmed_status")
     private Boolean confirmedStatus;
 
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "client_id", nullable = false)
     private Client client;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "booking_id", nullable = false)
     private Booking booking;
 

@@ -12,7 +12,6 @@ import java.util.List;
 public class DiscountServiceImpl implements DiscountService {
     @Autowired
     private DiscountRepository discountRepository;
-
     @Override
     public List<Discount> getDiscountList() {
         return discountRepository.findAll();

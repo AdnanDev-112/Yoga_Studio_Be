@@ -20,20 +20,14 @@ import java.util.stream.Collectors;
 
 @Service
 public class CourseServiceImpl implements CourseService {
-
     @Autowired
     private CourseRepository courseRepository;
-
     @Autowired
     private StudioRepository studioRepository;
-
     @Autowired
     private StudioService studioService;
-
     @Autowired
     private YogaSessionService yogaSessionService;
-
-
     @Override
     public List<CourseDTO> getAllCourses() {
         List<Course> courses = courseRepository.findAll();
@@ -43,12 +37,10 @@ public class CourseServiceImpl implements CourseService {
         }
         return dtos;
     }
-
     @Override
     public List<?> getCourses() {
        return courseRepository.findAll();
     }
-
     @Override
     public Course addCourseData(Course course) {
         Studio studio = studioService.getStudioById(course.getStudioId());
@@ -59,28 +51,23 @@ public class CourseServiceImpl implements CourseService {
         course.setStudio(studio);
        course.setYogaSession(yogaSession);
         return courseRepository.save(course);
-
     }
     @Override
     public Course getCourseById(Integer id) {
         return courseRepository.findById(id).orElse(null);
     }
-
     @Override
     public List<Course> getCourseList() {
         return courseRepository.findAll();
     }
-
     @Override
     public void deleteCourse(Integer id) {
         courseRepository.deleteById(id);
     }
-
     @Override
     public Course updateCourse(Integer id, Course course) {
         return courseRepository.save(course);
     }
-
     private CourseDTO convertToDTO(Course course) {
         CourseDTO courseDTO = new CourseDTO();
         courseDTO.setCourseId(course.getId());
@@ -93,8 +80,4 @@ public class CourseServiceImpl implements CourseService {
 
         return courseDTO;
     }
-
-
-
-
 }

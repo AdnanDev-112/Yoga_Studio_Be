@@ -1,6 +1,7 @@
 package com.enterprise.YogaStudio.service.impl;
 
 import com.enterprise.YogaStudio.dto.BookingDTO;
+import com.enterprise.YogaStudio.dto.WaitingListEmailDTO;
 import com.enterprise.YogaStudio.model.Booking;
 import com.enterprise.YogaStudio.dto.AddBookingDTO;
 import com.enterprise.YogaStudio.model.*;
@@ -43,6 +44,9 @@ public class BookingServiceImpl implements BookingService {
     @Autowired
     private WaitingListService waitingListService;
 
+    @Autowired
+    private MailService mailService;
+
     //    Methods
     private void createAndSavePendingList(Client client, Booking newBooking) {
         LocalDateTime date = LocalDateTime.now();
@@ -61,7 +65,6 @@ public class BookingServiceImpl implements BookingService {
 //
 //        return bookingRepository.findByClientId(2);
 //    }
-
 
 
     @Override
@@ -139,6 +142,17 @@ public class BookingServiceImpl implements BookingService {
                 waitingList.setYogaSession(newBooking.getSchedule().getYogaSession());
                 waitingListService.addWaitingList(waitingList);
                 System.out.println("Waiting List Added");
+
+//                Initiated Email
+                WaitingListEmailDTO waitingListEmailDTO = new WaitingListEmailDTO();
+                waitingListEmailDTO.setClientName(client.getClientName());
+                waitingListEmailDTO.setSessionName(newBooking.getSchedule().getYogaSession().getSessionName());
+                waitingListEmailDTO.setSessionDate(newBooking.getSchedule().getDate().toString());
+                waitingListEmailDTO.setSessionTime(newBooking.getSchedule().getStartTime().toString());
+                waitingListEmailDTO.setSessionInstructor(newBooking.getSchedule().getYogaSession().getInstructor().getInstructorName());
+                waitingListEmailDTO.setStudioLocation(newBooking.getSchedule().getYogaSession().getStudio().getLocation());
+
+                mailService.waitingListMail(client.getEmail(),waitingListEmailDTO) ;
             } else {
                 createAndSavePendingList(client, newBooking);
 

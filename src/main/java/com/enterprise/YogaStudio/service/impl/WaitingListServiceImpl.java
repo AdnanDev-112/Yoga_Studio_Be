@@ -1,9 +1,11 @@
 package com.enterprise.YogaStudio.service.impl;
 
+import com.enterprise.YogaStudio.dto.ReservationMailDTO;
 import com.enterprise.YogaStudio.dto.WaitingListDTO;
 import com.enterprise.YogaStudio.model.*;
 import com.enterprise.YogaStudio.repository.BookingRepository;
 import com.enterprise.YogaStudio.repository.WaitingListRepository;
+import com.enterprise.YogaStudio.service.MailService;
 import com.enterprise.YogaStudio.service.PendingListService;
 import com.enterprise.YogaStudio.service.ReservationService;
 import com.enterprise.YogaStudio.service.WaitingListService;
@@ -26,6 +28,9 @@ public class WaitingListServiceImpl implements WaitingListService {
 
     @Autowired
     private ReservationService reservationService;
+
+    @Autowired
+    private MailService mailService;
 
     @Override
     public WaitingList addWaitingList(WaitingList waitingList) {
@@ -92,6 +97,18 @@ public class WaitingListServiceImpl implements WaitingListService {
 
 
         waitingListRepository.deleteById(waitingListID);
+
+
+//        Generate Email
+        ReservationMailDTO reservationMailDTO = new ReservationMailDTO();
+        reservationMailDTO.setClientName(newBooking.getClient().getClientName());
+        reservationMailDTO.setSessionName(newBooking.getSchedule().getYogaSession().getSessionName());
+        reservationMailDTO.setSessionDate(newBooking.getSchedule().getDate().toString());
+        reservationMailDTO.setSessionTime(newBooking.getSchedule().getStartTime().toString());
+        reservationMailDTO.setSessionInstructor(newBooking.getSchedule().getYogaSession().getInstructor().getInstructorName());
+        reservationMailDTO.setStudioLocation(newBooking.getSchedule().getYogaSession().getStudio().getLocation());
+
+        mailService.reservationConfirmationMail(newBooking.getClient().getEmail(), reservationMailDTO);
     }
 
     @Override

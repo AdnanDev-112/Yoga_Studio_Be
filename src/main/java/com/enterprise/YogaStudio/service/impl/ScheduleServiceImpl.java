@@ -56,6 +56,11 @@ public class ScheduleServiceImpl implements ScheduleService {
         return schedules;
     }
 
+    @Override
+    public List<Schedule> getScheduleByDescending() {
+        return scheduleRepository.getScheduleByDescending();
+    }
+
 //    @Override
 //    public List<Schedule> getScheduleByCategoryType(String categoryType) {
 //        List<Schedule> scheduleList = scheduleRepository.findByCategoryType(categoryType);

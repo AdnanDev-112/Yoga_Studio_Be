@@ -19,6 +19,8 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Integer> {
     @Query("SELECT s FROM Schedule s WHERE s.date = :date AND s.startTime = :startTime AND s.endTime = :endTime")
     List<Schedule> findByDateAndTime(@Param("date") LocalDate date, @Param("startTime") LocalTime startTime, @Param("endTime") LocalTime endTime);
 
+    @Query("SELECT s FROM Schedule s ORDER BY s.date DESC, s.startTime DESC")
+    List<Schedule> getScheduleByDescending();
 }
 
 

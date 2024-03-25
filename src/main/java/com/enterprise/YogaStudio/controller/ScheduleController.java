@@ -53,6 +53,12 @@ public class ScheduleController {
         return ResponseEntity.ok(schedules);
     }
 
+    @GetMapping("/getschedulelistdesc")
+    public ResponseEntity<List<Schedule>> getScheduleByDescending() {
+        List<Schedule> schedules = scheduleService.getScheduleByDescending();
+        return ResponseEntity.ok(schedules);
+    }
+
 
 
 

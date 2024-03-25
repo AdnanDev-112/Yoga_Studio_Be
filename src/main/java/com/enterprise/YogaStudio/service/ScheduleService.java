@@ -13,17 +13,16 @@ public interface ScheduleService {
   //  List<ScheduleDTO> getScheduleList();
 
     List<Schedule> getBookingsByCategoryType(String categoryType, String clientID);
-
-    void addSchedule(ScheduleDTO schedule);
-
     List<Schedule> getScheduleList();
 
-    void deleteSchedule(Integer id);
+    List<Schedule> getScheduleByDescending();
 
     Schedule getScheduleById(Integer id);
 
     List<?> getScheduleByCategory(String categoryType);
 
+    void addSchedule(ScheduleDTO schedule);
+    void deleteSchedule(Integer id);
     Schedule updateSchedule(Integer id, Schedule schedule);
 
    // void addCourseSchedule(List<AddScheduleDTO> addScheduleDTO) throws Exception;

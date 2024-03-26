@@ -113,6 +113,12 @@ public class WaitingListServiceImpl implements WaitingListService {
             }
         }
     }
+
+    @Override
+    public List<WaitingList> getWaitingListByClientId(Integer clientid) {
+        return waitingListRepository.findByClientId(clientid);
+    }
+
     @Override
     public List<Map<String, Object>> getCustomData() {
         List<WaitingList> waitingListItems = getWaitingListItems();

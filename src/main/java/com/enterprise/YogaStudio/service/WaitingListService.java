@@ -17,4 +17,6 @@ public interface WaitingListService {
     void approveWaitingList(Integer waitingListID);
     WaitingListDTO getWaitingListStats(Integer yogaSessionId);
     void moveFirstout(Integer bookingId);
+
+    List<WaitingList> getWaitingListByClientId(Integer clientid);
 }

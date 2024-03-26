@@ -33,4 +33,9 @@ public class WaitingListController {
         waitingListService.approveWaitingList(waitingListID);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/getwaitinglistbyclientid/{clientid}")
+    public ResponseEntity<?> getWaitingListByClientId(@PathVariable Integer clientid) {
+        return ResponseEntity.ok(waitingListService.getWaitingListByClientId(clientid));
+    }
 }

@@ -48,6 +48,7 @@ public class WaitingListServiceImpl implements WaitingListService {
     public void approveWaitingList(Integer waitingListID) {
         WaitingList waitingList = waitingListRepository.findById(waitingListID).orElse(null);
         if (waitingList == null) {
+            System.out.println("Waiting List not found");
             return;
         }
         Booking newBooking = waitingList.getBooking();

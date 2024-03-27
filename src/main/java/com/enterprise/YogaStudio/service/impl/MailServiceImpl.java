@@ -16,6 +16,8 @@ import org.thymeleaf.context.Context;
 
 import java.io.UnsupportedEncodingException;
 
+import org.springframework.mail.SimpleMailMessage;
+
 @Service
 public class MailServiceImpl implements MailService {
 
@@ -31,6 +33,14 @@ public class MailServiceImpl implements MailService {
     @Value("${spring.mail.from.alias}")
     private String fromAlias;
 
+
+    public void sendEmail(String to, String subject, String body) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(to);
+        message.setSubject(subject);
+        message.setText(body);
+        mailSender.send(message);
+    }
 
     @Override
     public void waitingListMail(String to, WaitingListEmailDTO mail)   {
@@ -54,7 +64,10 @@ public class MailServiceImpl implements MailService {
             throw new MailSendException("Failed to send email", e);
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
-        }
+        }catch (Exception e){
+    System.out.println("Exception while sending email: " + e.getMessage());
+    e.printStackTrace();
+}
 
 
     }
@@ -77,6 +90,7 @@ public class MailServiceImpl implements MailService {
             helper.setText(htmlTemplate, true);
             helper.setFrom(username, fromAlias);
             mailSender.send(mimeMessage);
+            System.out.println("Email Sent");
         }catch (MessagingException e) {
             throw new MailSendException("Failed to send email", e);
         } catch (UnsupportedEncodingException e) {

@@ -57,18 +57,15 @@ public class PendingListServiceImpl implements PendingListService {
     public void handlePendingLists() {
         List<PendingList> pendingLists = getpendingLists();
         for (PendingList pendingList : pendingLists) {
-            if (pendingList.getBookedTime().isBefore(LocalDateTime.now().minusMinutes(2)) && !pendingList.getConfirmedStatus()) {
+            if (pendingList.getBookedTime().isBefore(LocalDateTime.now().minusHours(1)) && !pendingList.getConfirmedStatus()) {
                 pendingList.setConfirmedStatus(true);
                 pendingRepository.save(pendingList);
-
                 Reservation reservation = new Reservation();
                 Schedule schedule = pendingList.getBooking().getSchedule();
-
             //Setter Methods
                 reservation.setClient(pendingList.getClient());
                 reservation.setPending(pendingList);
                 reservation.setSchedule(schedule);
-
                 String categoryType = pendingList.getBooking().getSchedule().getCategoryType();
                 reservation.setCategoryType(categoryType);
                 switch (categoryType) {
@@ -83,7 +80,6 @@ public class PendingListServiceImpl implements PendingListService {
                         break;
                 }
                 reservationService.addReservation(reservation);
-
                 System.out.println("Pending List ITEM Confirmed");
             }
         }
